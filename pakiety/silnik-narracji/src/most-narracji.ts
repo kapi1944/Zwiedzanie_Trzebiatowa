@@ -3,6 +3,7 @@ import type {
   PowiazanieNarracji,
   TagNarracji,
 } from "./modele.js";
+import { parsujTagiNarracji } from "./tagi.js";
 
 export class MostNarracji {
   readonly #powiazania: readonly PowiazanieNarracji[];
@@ -51,8 +52,9 @@ export class MostNarracji {
   odczytajSygnaly(tagi: readonly TagNarracji[]): string[] {
     return tagi
       .filter(
-        (tag) => tag.rodzaj === "sygnal" && tag.wartosc === "odkryto_trop",
+        (tag) => tag.rodzaj === "sygnal" && typeof tag.wartosc === "string",
       )
+      .flatMap((tag) => parsujTagiNarracji([`sygnal:${tag.wartosc}`]))
       .map((tag) => tag.wartosc);
   }
 

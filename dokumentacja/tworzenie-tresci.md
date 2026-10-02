@@ -1,6 +1,6 @@
 # Tworzenie treści Ink
 
-Etap 2 zawiera tylko historię demonstracyjną `tresc/trzebiatow-v1/narracja/testowa.ink`. Nie jest to scenariusz ani historia Trzebiatowa. Nadal obowiązują [zasady treści](zasady-tresci.md): źródła, klasyfikacja historyczna i rekonesans przed zatwierdzeniem zagadek.
+Etap 2 zawiera tylko historię demonstracyjną `pakiety/silnik-narracji/testy/fixtures/testowa.ink`. Nie jest to scenariusz ani historia Trzebiatowa. Nadal obowiązują [zasady treści](zasady-tresci.md): źródła, klasyfikacja historyczna i rekonesans przed zatwierdzeniem zagadek.
 
 ## Narzędzie autora
 
@@ -9,11 +9,10 @@ Etap 2 zawiera tylko historię demonstracyjną `tresc/trzebiatow-v1/narracja/tes
 W repo kompilujemy przez inkjs 2.4.0. Po zmianie historii uruchom:
 
 ```sh
-npm run build --workspace=@zwiedzanie/silnik-narracji
-npm run test
+npm run test --workspace=@zwiedzanie/silnik-narracji
 ```
 
-Build używa `inkjs-compiler -o dist/testowa.json ../../tresc/trzebiatow-v1/narracja/testowa.ink`, wykonywanego z katalogu pakietu. Nie edytuj wygenerowanego JSON. Runtime przyjmuje JSON, nie źródło `.ink`. Przed użyciem eksportu Inky sprawdź go z naszą wersją runtime i testami; sam zgodny numer formatu nie zastępuje testu.
+Testy kompilują fixture w pamięci przez `inkjs/full`. Build Silnika Narracji buduje tylko runtime. Docelowa granica to Pakiet Gry → kompilacja treści → Silnik Narracji; kompilacja treści należy do procesu przygotowania Pakietu Gry. Nie dodajemy teraz produkcyjnego procesu budowania kampanii. Nie edytuj wygenerowanego JSON. Runtime przyjmuje JSON, nie źródło `.ink`. Przed użyciem eksportu Inky sprawdź go z naszą wersją runtime i testami; sam zgodny numer formatu nie zastępuje testu.
 
 ## Pisanie Warkocza
 
@@ -36,7 +35,7 @@ Dane mechaniki zostaną przekazane przez [Most Narracji](silnik-narracji.md). Zm
 
 Przykład: `Czytasz kartkę. #dzwiek:przewrocenie_kartki #nastroj:tajemnica`.
 
-Dozwolone są wyłącznie wartości wymienione w [specyfikacji silnika](silnik-narracji.md). Audio nie jest jeszcze zaimplementowane. Nie wpisuj ścieżek plików, URL, kodu ani dowolnych poleceń w tagach. Parser odrzuca nierozpoznane wartości.
+Dozwolone są wyłącznie wartości wymienione w [specyfikacji silnika](silnik-narracji.md). Audio nie jest jeszcze zaimplementowane. Nie wpisuj ścieżek plików, URL, kodu ani dowolnych poleceń w tagach. Parser odrzuca nierozpoznane wartości prezentacyjne oraz sygnały niespełniające formatu `sygnal:[a-z][a-z0-9_]*`. Runtime i Most Narracji transportują sygnały, a przyszły Silnik Gry będzie interpretował ich znaczenie.
 
 Tekst i etykiety wyborów są zwykłymi tekstami; przyszły interfejs powinien wyświetlać je jako tekst, bez interpretowania HTML. Własne symbole Ink zapisuj po polsku bez polskich znaków, treść dla czytelnika — poprawną polszczyzną.
 

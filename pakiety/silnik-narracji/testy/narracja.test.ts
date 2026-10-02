@@ -29,13 +29,7 @@ function kompiluj(zrodlo: string): string {
 }
 
 const tresc = kompiluj(
-  odczytajPlik(
-    new URL(
-      "../../../tresc/trzebiatow-v1/narracja/testowa.ink",
-      import.meta.url,
-    ),
-    "utf8",
-  ),
+  odczytajPlik(new URL("./fixtures/testowa.ink", import.meta.url), "utf8"),
 );
 
 function czytajDoWyboru(sesja: SesjaNarracji): RamkaNarracji {
@@ -193,16 +187,43 @@ opisz("Silnik Narracji w Node", () => {
     }
   });
 
-  testuj("CLI buduje JSON wykonywalny w Node", () => {
-    const json = odczytajPlik(
-      new URL("../dist/testowa.json", import.meta.url),
-      "utf8",
+  testuj("pakiet runtime nie zalezy od tresci konkretnej gry", () => {
+    const katalog = new URL("../", import.meta.url);
+    const pliki = [
+      "package.json",
+      "tsconfig.json",
+      ...odczytajKatalog(new URL("src/", katalog)).map(
+        (nazwa) => `src/${nazwa}`,
+      ),
+    ];
+    for (const plik of pliki) {
+      oczekuj(odczytajPlik(new URL(plik, katalog), "utf8")).not.toMatch(
+        /tresc[\\/]trzebiatow-v1/,
+      );
+    }
+    const manifest = JSON.parse(
+      odczytajPlik(new URL("package.json", katalog), "utf8"),
     );
-    oczekuj(czytajDoWyboru(utworzSesjeNarracji(json)).opcje).toHaveLength(2);
+    oczekuj(manifest.scripts.build).toBe("tsc");
+    oczekuj(czytajDoWyboru(utworzSesjeNarracji(tresc)).opcje).toHaveLength(2);
   });
 });
 
 opisz("Kontrolowane tagi i Most Narracji", () => {
+  testuj(
+    "transportuje nowy sygnal z Ink bez zmiany danych kanonicznych",
+    () => {
+      const kopia = structuredClone(kontekst);
+      const most = new MostNarracji(kontekst);
+      const sesja = utworzSesjeNarracji(
+        kompiluj("Tekst. #sygnal:zakonczono_scene\n-> END"),
+        most,
+      );
+      const ramka = czytajDoWyboru(sesja);
+      oczekuj(most.odczytajSygnaly(ramka.tagi)).toEqual(["zakonczono_scene"]);
+      oczekuj(kontekst).toEqual(kopia);
+    },
+  );
   testuj("rozpoznaje cztery dozwolone rodzaje i wartosci", () => {
     oczekuj(
       parsujTagiNarracji([
@@ -222,7 +243,9 @@ opisz("Kontrolowane tagi i Most Narracji", () => {
   testuj("nieznane i zlosliwe tagi sa ignorowane bez wykonania kodu", () => {
     const tagi = [
       "kod:globalThis.__wykonano = true",
-      "sygnal:nieznany",
+      "sygnal:obcy_kod()",
+      "sygnal:https://obcy",
+      "sygnal:../plik",
       "dzwiek:../plik",
       "constructor:odkryto_trop",
       "nastroj:tajemnica:obcy",
@@ -325,9 +348,11 @@ opisz("Kontrolowane tagi i Most Narracji", () => {
         most.odczytajSygnaly([
           { rodzaj: "sygnal", wartosc: "odkryto_trop" },
           { rodzaj: "sygnal", wartosc: "obcy" },
+          { rodzaj: "sygnal", wartosc: "obcy_kod()" },
+          { rodzaj: "sygnal", wartosc: "../plik" },
           { rodzaj: "nastroj", wartosc: "tajemnica" },
         ]),
-      ).toEqual(["odkryto_trop"]);
+      ).toEqual(["odkryto_trop", "obcy"]);
       oczekuj(kontekst.flagi.trop).toBe(true);
     },
   );

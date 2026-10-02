@@ -12,7 +12,7 @@ Research wykonano 2026-10-02 przed instalacją, na podstawie dokumentacji i meta
 | inkjs | 2.4.0 | MIT | Port wskazywany przez twórców Ink, runtime Node i przeglądarkowy bez DOM i zależności runtime; wbudowany kompilator |
 | Vitest | 5.0.3 | MIT | Testy jednostkowe w środowisku Node, wyłącznie zależność deweloperska pakietu |
 
-Nie instalujemy silnika C# Ink, inklecate ani Inky do aplikacji. Build używa CLI `inkjs-compiler` dostarczanego przez inkjs, a testy kompilatora z `inkjs/full`. Runtime importuje tylko `inkjs`, bez kompilatora. Ink 1.2.1 i inkjs 2.4.0 deklarują format historii 21; nie oznacza to automatycznej zgodności dowolnych przyszłych skryptów i zapisów. Historia demonstracyjna została skompilowana i uruchomiona w Node.
+Nie instalujemy silnika C# Ink, inklecate ani Inky do aplikacji. Build pakietu kompiluje wyłącznie uniwersalny runtime TypeScript. Testy kompilują lokalny fixture przez `inkjs/full`. Runtime importuje tylko `inkjs`, bez kompilatora. Ink 1.2.1 i inkjs 2.4.0 deklarują format historii 21; nie oznacza to automatycznej zgodności dowolnych przyszłych skryptów i zapisów. Historia demonstracyjna została skompilowana i uruchomiona w Node.
 
 Źródła: [wydanie Ink 1.2.1](https://github.com/inkle/ink/releases/tag/v1.2.1), [licencja Ink](https://github.com/inkle/ink/blob/v1.2.1/LICENSE.txt), [dokumentacja inkjs 2.4.0](https://github.com/y-lohse/inkjs/tree/v2.4.0), [licencja inkjs](https://github.com/y-lohse/inkjs/blob/v2.4.0/LICENSE.md), [API runtime Ink](https://github.com/inkle/ink/blob/master/Documentation/RunningYourInk.md).
 
@@ -25,7 +25,7 @@ Docelowy przepływ: Silnik Gry ↔ Most Narracji ↔ Silnik Narracji / inkjs →
 - Most Narracji przekazuje wyłącznie jawne powiązania zmiennych oraz odczytuje dozwolone sygnały.
 - Przyszły Silnik Gry będzie właścicielem mechaniki i danych kanonicznych. Obecnie pozostaje pustym pakietem.
 
-Wynik zagadki, posiadany przedmiot, stan wątku, GPS i zakończenia mechaniczne nie są rozstrzygane przez Ink. Sygnał `odkryto_trop` jest prośbą do przyszłej mechaniki, a nie automatycznym przyznaniem tropu.
+Wynik zagadki, posiadany przedmiot, stan wątku, GPS i zakończenia mechaniczne nie są rozstrzygane przez Ink. Silnik Narracji transportuje bezpieczne identyfikatory sygnałów bez znajomości ich znaczenia. Przyszły Silnik Gry będzie interpretował sygnały i rozstrzygał mechanikę.
 
 ## Publiczne API
 
@@ -55,7 +55,7 @@ Most przyjmuje kontekst i listę `PowiazanieNarracji`: `zmiennaInk`, `obszar`, `
 
 ## Model Warkocza
 
-Demonstracja `tresc/trzebiatow-v1/narracja/testowa.ink` łączy:
+Demonstracja `pakiety/silnik-narracji/testy/fixtures/testowa.ink` łączy:
 
 START → zapis albo pamięć → różne krótkie fragmenty → wspólny plac → późniejszy tekst zależny od zmiennej `droga` → kolejny wybór.
 
@@ -71,15 +71,16 @@ Zapis obejmuje tylko narrację, nie kanoniczny stan gry i nie historię już wy�
 
 ## Tagi
 
-Allow-list obejmuje dokładnie:
+Allow-list wartości prezentacyjnych obejmuje:
 
 - `dzwiek:przewrocenie_kartki`
 - `nastroj:tajemnica`
 - `kronika:hansken`
-- `sygnal:odkryto_trop`
 
-Parser przyjmuje zapis z opcjonalnym początkowym `#`, usuwa zewnętrzne odstępy i kontroluje zarówno rodzaj, jak i wartość. Nieznane lub niepoprawne tagi są ignorowane. Nowe wartości wymagają jawnej zmiany parsera i testów. Tagi dźwięku nie odtwarzają audio; identyfikatory kroniki nie są twierdzeniami historycznymi. Nie interpretujemy tekstu jako JavaScript.
+Sygnały mają postać `sygnal:<identyfikator>`, gdzie identyfikator spełnia `[a-z][a-z0-9_]*`. Nie ma listy znaczeń mechanicznych. Most ponownie waliduje strukturę również dla tagów przekazanych bezpośrednio do `odczytajSygnaly`.
+
+Parser przyjmuje zapis z opcjonalnym początkowym `#`, usuwa zewnętrzne odstępy i kontroluje zarówno rodzaj, jak i wartość. Nieznane lub niepoprawne tagi są ignorowane. Nowe wartości prezentacyjne wymagają jawnej zmiany parsera i testów. Nowe poprawne identyfikatory sygnałów nie wymagają zmiany runtime. Tagi dźwięku nie odtwarzają audio; identyfikatory kroniki nie są twierdzeniami historycznymi. Nie interpretujemy tekstu jako JavaScript.
 
 ## Weryfikacja
 
-`npm run build` kompiluje moduł i historię do `pakiety/silnik-narracji/dist/testowa.json`. Artefakt nie jest wersjonowany. `npm run typecheck` obejmuje również testy i konfigurację Vitest. `npm run test` buduje repo, uruchamia dotychczasowe smoke testy oraz Vitest w Node. Testy obejmują obie drogi, pamięć wyboru, konwergencję, zapis/przywrócenie, końce historii, błędne dane, most i odrzucenie zewnętrznych funkcji.
+Granica zależności: Pakiet Gry → kompilacja treści → Silnik Narracji. Pakiet Gry dostarcza skompilowany JSON, a runtime nie odwołuje się do katalogu konkretnej gry. `npm run build --workspace=@zwiedzanie/silnik-narracji` buduje wyłącznie moduł i deklaracje typów. Fixture techniczny jest kompilowany w pamięci podczas testów i nie trafia do produkcyjnego builda. `npm run typecheck` obejmuje również testy i konfigurację Vitest. `npm run test` buduje repo, uruchamia dotychczasowe smoke testy oraz Vitest w Node. Testy obejmują obie drogi, pamięć wyboru, konwergencję, zapis/przywrócenie, końce historii, błędne dane, most i odrzucenie zewnętrznych funkcji.

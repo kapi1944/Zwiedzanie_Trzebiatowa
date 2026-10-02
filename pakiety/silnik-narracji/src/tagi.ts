@@ -4,7 +4,7 @@ const dozwoloneTagi: Readonly<Record<RodzajTagu, readonly string[]>> = {
   dzwiek: ["przewrocenie_kartki"],
   nastroj: ["tajemnica"],
   kronika: ["hansken"],
-  sygnal: ["odkryto_trop"],
+  sygnal: [],
 };
 
 export function parsujTagiNarracji(tagi: readonly string[]): TagNarracji[] {
@@ -15,7 +15,10 @@ export function parsujTagiNarracji(tagi: readonly string[]): TagNarracji[] {
     const [, rodzaj, wartosc] = dopasowanie;
     if (!rodzaj || !wartosc || !Object.hasOwn(dozwoloneTagi, rodzaj)) continue;
     const rodzajTagu = rodzaj as RodzajTagu;
-    if (dozwoloneTagi[rodzajTagu].includes(wartosc)) {
+    if (
+      rodzajTagu === "sygnal" ||
+      dozwoloneTagi[rodzajTagu].includes(wartosc)
+    ) {
       wynik.push({ rodzaj: rodzajTagu, wartosc });
     }
   }
