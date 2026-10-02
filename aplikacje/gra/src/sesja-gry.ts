@@ -36,6 +36,8 @@ export interface WidokSesji {
   zagadka: DefinicjeGry["zagadki"][number] | undefined;
   opcje: RamkaNarracji["opcje"];
   profil: ProfilZakonczenia | undefined;
+  wynikZagadki: WynikZagadki | undefined;
+  dostepneZaliczenia: DefinicjeGry["zagadki"][number]["alternatywneZaliczenia"];
 }
 
 export class SesjaGry {
@@ -140,9 +142,7 @@ export class SesjaGry {
           (miejsce) =>
             miejsce.id === element.idLokalizacji &&
             miejsce.idSceny === this.#stan.aktualnaScena,
-        ) &&
-        (!this.#stan.wynikiZagadek[element.id] ||
-          this.#stan.wynikiZagadek[element.id]?.wynik === "NIEUDANA"),
+        ) && !this.#stan.wynikiZagadek[element.id],
     );
     const opcje = this.#ramka.opcje.filter((opcja) => {
       const sygnaly = this.#most.odczytajSygnaly(opcja.tagi);
@@ -158,12 +158,25 @@ export class SesjaGry {
       );
     });
     return {
+      dostepneZaliczenia:
+        zagadka?.alternatywneZaliczenia.filter((sposob) =>
+          ocenWarunek(sposob.warunek, this.#stan),
+        ) ?? [],
       stan: this.#stan,
       ramka: this.#ramka,
       komunikaty: [...this.#komunikaty],
       zagadka,
       opcje,
       profil: this.#profil,
+      wynikZagadki: this.definicje.zagadki
+        .filter((element) =>
+          this.definicje.lokalizacje.some(
+            (miejsce) =>
+              miejsce.id === element.idLokalizacji &&
+              miejsce.idSceny === this.#stan.aktualnaScena,
+          ),
+        )
+        .map((element) => this.#stan.wynikiZagadek[element.id]?.wynik)[0],
     };
   }
 
@@ -215,51 +228,58 @@ export class SesjaGry {
   }
 
   odpowiedz(odpowiedz: string) {
-    const zagadka = this.odczytaj().zagadka;
-    if (!zagadka?.odpowiedz) throw new Error("Zagadka wymaga rekonesansu.");
-    const wynik =
-      odpowiedz === zagadka.odpowiedz
-        ? (this.#stan.uzytePodpowiedzi[zagadka.id] ?? 0) > 0
-          ? "ROZWIAZANA_Z_PODPOWIEDZIA"
-          : "ROZWIAZANA_SAMODZIELNIE"
-        : "NIEUDANA";
-    return this.#zakoncz(wynik);
+    return this.#zdarzenieZagadki((idZagadki) => ({
+      rodzaj: "UDZIEL_ODPOWIEDZI",
+      idZagadki,
+      odpowiedz,
+    }));
   }
-
+  potwierdzObserwacje() {
+    return this.#zdarzenieZagadki((idZagadki) => ({
+      rodzaj: "POTWIERDZ_OBSERWACJE",
+      idZagadki,
+    }));
+  }
+  pomoc() {
+    return this.#zdarzenieZagadki((idZagadki) => ({
+      rodzaj: "POTRZEBUJE_POMOCY",
+      idZagadki,
+    }));
+  }
+  zaliczZPomoca() {
+    return this.#zdarzenieZagadki((idZagadki) => ({
+      rodzaj: "ZAKONCZ_ZAGADKE",
+      idZagadki,
+      wynik: "ROZWIAZANA_Z_POMOCA",
+    }));
+  }
+  zakonczBezRozwiazania() {
+    return this.#zdarzenieZagadki((idZagadki) => ({
+      rodzaj: "ZAKONCZ_ZAGADKE",
+      idZagadki,
+      wynik: "NIEUDANA",
+    }));
+  }
+  alternatywnie(idSposobu: string) {
+    return this.#zdarzenieZagadki((idZagadki) => ({
+      rodzaj: "ZALICZ_ALTERNATYWNIE",
+      idZagadki,
+      idSposobu,
+    }));
+  }
   pomin() {
-    return this.#zakoncz("POMINIETA");
+    return this.#zdarzenieZagadki((idZagadki) => ({
+      rodzaj: "POMIN_ZAGADKE",
+      idZagadki,
+    }));
   }
 
-  symulujHansken() {
-    if (
-      !import.meta.env.DEV ||
-      this.odczytaj().zagadka?.id !== "zagadka_hansken"
-    )
-      throw new Error("Symulacja dostepna tylko w DEV dla Hansken.");
-    return this.#zakoncz(
-      (this.#stan.uzytePodpowiedzi.zagadka_hansken ?? 0) > 0
-        ? "ROZWIAZANA_Z_PODPOWIEDZIA"
-        : "ROZWIAZANA_SAMODZIELNIE",
-    );
-  }
-
-  #zakoncz(wynik: WynikZagadki) {
+  #zdarzenieZagadki(utworz: (id: string) => DaneZdarzenia) {
     const zagadka = this.odczytaj().zagadka;
-    if (!zagadka) throw new Error("Brak aktywnej zagadki.");
+    if (!zagadka) return this.odczytaj();
     this.#komunikaty = [];
-    this.#wykonaj(
-      wynik === "POMINIETA"
-        ? { rodzaj: "POMIN_ZAGADKE", idZagadki: zagadka.id }
-        : { rodzaj: "ZAKONCZ_ZAGADKE", idZagadki: zagadka.id, wynik },
-    );
-    this.#komunikaty.push(
-      wynik === "NIEUDANA"
-        ? "To nie ta warstwa opowieści. Spróbuj ponownie albo pomiń zagadkę."
-        : wynik === "POMINIETA"
-          ? "Zagadka pominięta. Możesz kontynuować opowieść."
-          : "Wynik zapisany w twojej Kronice. Możesz kontynuować.",
-    );
-    if (wynik === "NIEUDANA") this.#rozpocznijZagadke();
+    this.#wykonaj(utworz(zagadka.id));
+    this.#most.aktualizujKontekst(this.#kontekst());
     return this.odczytaj();
   }
 }

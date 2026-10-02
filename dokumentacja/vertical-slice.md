@@ -91,9 +91,9 @@ Testy negatywne: duplikat/brak ID, brak źródła, przedmiotu i wątku, niepopra
 | B | pamięć | z podpowiedzią | legenda | STRAŻNIK OPOWIEŚCI |
 | C | obie perspektywy | pominięta | obie warstwy | ŁĄCZNIK |
 
-Enumerator sprawdza 900 kombinacji: 3 prologi × 5 wyników Hansken × 2 decyzje notatki × 2 decyzje Kościoła × 5 wyników Baszty × 3 finały. Dodaje 270 wariantów z dostępną scenką: **1170 dróg**. Każda dochodzi do mini-finału, zamyka wymagane wątki, ma profil i przechodzi odpowiadające wybory Ink. Brak scenki nie blokuje żadnego podstawowego wariantu. Drogi A/B/C sprawdzają także epilogi i bonus.
+Enumerator sprawdza 900 kombinacji: 3 prologi × 5 wyników Hansken × 2 decyzje notatki × 2 decyzje Kościoła × 5 wyników Baszty × 3 finały. Po aktualizacji Etapu 6 dodaje 180 wariantów z dostępną scenką: **1080 dróg**. Pomoc nie daje fragmentu za obserwację; wszystkie pięć wyników zachowuje kontynuację. Każda dochodzi do mini-finału, zamyka wymagane wątki, ma profil i przechodzi odpowiadające wybory Ink. Brak scenki nie blokuje żadnego podstawowego wariantu. Drogi A/B/C sprawdzają także epilogi i bonus.
 
-Dowód dotyczy zdefiniowanych skończonych dróg, w tym wyjścia z nieudanej próby przez pominięcie. Nie obejmuje dowolnych zmian kampanii, nieskończonych powtórzeń ani warunków spaceru w mieście. Build ponawia enumerację po zmianie danych.
+Dowód dotyczy zdefiniowanych skończonych dróg, w tym świadomego zakończenia zadania bez rozwiązania i pominięcia. Nie obejmuje dowolnych zmian kampanii, nieskończonych powtórzeń ani warunków spaceru w mieście. Build ponawia enumerację po zmianie danych.
 
 ## Rekonesans — NIETESTOWANE
 
@@ -107,4 +107,4 @@ Nie przeprowadzono wizyty terenowej. Brak dat `zweryfikowanoTerenowoDnia`.
 | Baszta | Publiczne dojście i miejsce postoju; bez wymogu wejścia na obiekt. |
 | Cała trasa | Czas spaceru, bariery dostępności, jezdnie i czas czytania na telefonie. |
 
-Gotowość techniczna do Etapu 5 nie oznacza zatwierdzenia zagadki terenowej ani finalnej fabuły. Etap 5 nie jest rozpoczęty.
+Etapy 5 i 6 rozszerzają interfejs i mechanikę, bez zatwierdzania zagadki terenowej ani finalnej fabuły. Aktualny kontrakt opisują [zagadki i zadania](zagadki-i-zadania.md).

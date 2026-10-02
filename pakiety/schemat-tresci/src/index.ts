@@ -167,14 +167,129 @@ const schematKonsekwencji = z.strictObject({
   zmiany: z.array(schematZmianyGry),
   efekty: z.array(schematEfektuGry),
 });
-export const schematDefinicjiZagadki = z.strictObject({
+export const schematNormalizacjiOdpowiedzi = z.strictObject({
+  trim: z.boolean(),
+  ignorujWielkoscLiter: z.boolean(),
+  usunPolskieZnaki: z.boolean(),
+});
+export function normalizujOdpowiedz(
+  tekst: string,
+  zasady: z.infer<typeof schematNormalizacjiOdpowiedzi>,
+): string {
+  let wynik = tekst.normalize("NFC");
+  if (zasady.trim) wynik = wynik.trim();
+  if (zasady.ignorujWielkoscLiter) wynik = wynik.toLocaleLowerCase("pl-PL");
+  if (zasady.usunPolskieZnaki) {
+    const zamiany: Record<string, string> = {
+      ą: "a",
+      ć: "c",
+      ę: "e",
+      ł: "l",
+      ń: "n",
+      ó: "o",
+      ś: "s",
+      ź: "z",
+      ż: "z",
+      Ą: "A",
+      Ć: "C",
+      Ę: "E",
+      Ł: "L",
+      Ń: "N",
+      Ó: "O",
+      Ś: "S",
+      Ź: "Z",
+      Ż: "Z",
+    };
+    wynik = wynik.replace(
+      /[ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]/g,
+      (znak) => zamiany[znak] ?? znak,
+    );
+  }
+  return wynik;
+}
+const polaZagadki = {
   ...polaElementu,
   idLokalizacji: schematId,
-  pytanie: z.string().min(1).optional(),
-  odpowiedz: z.string().min(1).nullable().optional(),
+  pytanie: z.string().min(1),
   podpowiedzi: z.array(z.string().min(1)),
+  pomoc: z
+    .strictObject({ tekst: z.string().min(1), pozwalaZaliczyc: z.boolean() })
+    .optional(),
+  moznaPominac: z.boolean().default(true),
+  moznaZakonczycBezRozwiazania: z.boolean().default(false),
+  limitProb: z.number().int().min(1).max(100).optional(),
+  alternatywneZaliczenia: z
+    .array(
+      z.strictObject({
+        id: schematId,
+        nazwa: z.string().min(1),
+        warunek: schematWarunku,
+        wynik: z.enum(["ROZWIAZANA_SAMODZIELNIE", "ROZWIAZANA_Z_POMOCA"]),
+      }),
+    )
+    .default([]),
   konsekwencje: z.record(schematWynikuZagadki, schematKonsekwencji),
-});
+};
+export const schematDefinicjiZagadki = z
+  .discriminatedUnion("typ", [
+    z.strictObject({
+      ...polaZagadki,
+      typ: z.literal("WYBOR"),
+      odpowiedzi: z
+        .array(z.strictObject({ id: schematId, tekst: z.string().min(1) }))
+        .min(2),
+      poprawneOdpowiedzi: z.array(schematId).min(1),
+    }),
+    z.strictObject({
+      ...polaZagadki,
+      typ: z.literal("TEKST"),
+      poprawneOdpowiedzi: z.array(z.string().min(1)).min(1),
+      normalizacja: schematNormalizacjiOdpowiedzi,
+    }),
+    z.strictObject({
+      ...polaZagadki,
+      typ: z.literal("OBSERWACJA"),
+      potwierdzenie: z.string().min(1),
+      odpowiedz: z.null().optional(),
+    }),
+  ])
+  .superRefine((zagadka, kontekst) => {
+    const zglos = (komunikat: string) =>
+      kontekst.addIssue({ code: "custom", message: komunikat });
+    if (
+      zagadka.limitProb &&
+      !zagadka.moznaPominac &&
+      !zagadka.moznaZakonczycBezRozwiazania &&
+      !zagadka.pomoc?.pozwalaZaliczyc
+    )
+      zglos("Limit prob wymaga bezwarunkowej drogi kontynuacji.");
+    if (
+      new Set(zagadka.alternatywneZaliczenia.map((element) => element.id))
+        .size !== zagadka.alternatywneZaliczenia.length
+    )
+      zglos("Duplikat alternatywnego zaliczenia.");
+    if (
+      zagadka.typ === "WYBOR" &&
+      (new Set(zagadka.odpowiedzi.map((element) => element.id)).size !==
+        zagadka.odpowiedzi.length ||
+        zagadka.poprawneOdpowiedzi.some(
+          (id) => !zagadka.odpowiedzi.some((element) => element.id === id),
+        ) ||
+        new Set(zagadka.poprawneOdpowiedzi).size !==
+          zagadka.poprawneOdpowiedzi.length)
+    )
+      zglos("Niepoprawna lista odpowiedzi.");
+    if (zagadka.typ === "TEKST") {
+      const odpowiedzi = zagadka.poprawneOdpowiedzi.map((tekst) =>
+        normalizujOdpowiedz(tekst, zagadka.normalizacja),
+      );
+      if (
+        odpowiedzi.some((tekst) => !tekst.length) ||
+        new Set(odpowiedzi).size !== odpowiedzi.length
+      )
+        zglos("Pusta lub powtorzona odpowiedz po normalizacji.");
+    }
+  });
 export type DefinicjaZagadki = z.infer<typeof schematDefinicjiZagadki>;
 export const schematDefinicjiScenkiOpcjonalnej = z.strictObject({
   ...polaElementu,
@@ -329,6 +444,8 @@ export const schematDefinicjiGry = schematPakietu.superRefine(
     };
     dane.wybory.forEach(sprawdzKonsekwencje);
     for (const zagadka of dane.zagadki) {
+      for (const sposob of zagadka.alternatywneZaliczenia)
+        sprawdzWarunek(sposob.warunek);
       for (const konsekwencja of Object.values(zagadka.konsekwencje))
         sprawdzKonsekwencje(konsekwencja);
     }
@@ -384,7 +501,26 @@ export const schematZdarzeniaGry = z.discriminatedUnion("rodzaj", [
     ...polaZdarzenia,
     rodzaj: z.literal("ZAKONCZ_ZAGADKE"),
     idZagadki: schematId,
-    wynik: schematWynikuZagadki,
+    wynik: z.enum(["ROZWIAZANA_Z_POMOCA", "NIEUDANA"]),
+  }),
+  ...(["POTRZEBUJE_POMOCY", "POTWIERDZ_OBSERWACJE"] as const).map((rodzaj) =>
+    z.strictObject({
+      ...polaZdarzenia,
+      rodzaj: z.literal(rodzaj),
+      idZagadki: schematId,
+    }),
+  ),
+  z.strictObject({
+    ...polaZdarzenia,
+    rodzaj: z.literal("UDZIEL_ODPOWIEDZI"),
+    idZagadki: schematId,
+    odpowiedz: z.string().min(1).max(1000),
+  }),
+  z.strictObject({
+    ...polaZdarzenia,
+    rodzaj: z.literal("ZALICZ_ALTERNATYWNIE"),
+    idZagadki: schematId,
+    idSposobu: schematId,
   }),
   z.strictObject({
     ...polaZdarzenia,
@@ -423,6 +559,8 @@ export type ZdarzenieGry = z.infer<typeof schematZdarzeniaGry>;
 const schematPostepuZagadki = z.strictObject({
   liczbaProb: z.number().int().nonnegative(),
   liczbaPodpowiedzi: z.number().int().nonnegative(),
+  potrzebujePomocy: z.boolean().default(false),
+  ostatniaOdpowiedzPoprawna: z.boolean().optional(),
 });
 const listaId = z
   .array(schematId)

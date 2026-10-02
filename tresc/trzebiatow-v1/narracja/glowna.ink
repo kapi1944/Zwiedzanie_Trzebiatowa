@@ -26,7 +26,7 @@ FABULARYZOWANE: Wyobraź sobie pustą kartę Kroniki. Nikt nie każe ci wybiera�
 === hansken ===
 FAKT [wzp_hansken]: Przy Rynku 26 znajduje się sgraffito wiązane ze słonicą Hansken. Samorządowy opis podaje jej wizytę w Trzebiatowie w 1639 roku. To informacja źródłowa; nie twierdzenie, że wizerunek jest kopią Rembrandta.
 FABULARYZOWANE: Obraz można oglądać, ale nie wszystkie jego znaczenia zobaczysz od razu. Zatrzymaj się przy granicy między własną obserwacją a cudzym objaśnieniem. Fragment Kroniki, który możesz otrzymać, jest przedmiotem gry, nie odnalezionym dokumentem historycznym.
-ZADANIE ROBOCZE: detal i odpowiedź obserwacyjna wymagają rekonesansu. Bez niego wynik można jedynie zasymulować w teście. Pominięcie zawsze pozwala kontynuować.
+ZADANIE ROBOCZE: detal i odpowiedź obserwacyjna wymagają rekonesansu. Deklaracja zapisuje udział w zadaniu, bez zatwierdzania szczegółu terenowego. Pomoc i pominięcie pozwalają kontynuować.
 * [Otwieram miejsce na własną notatkę. #sygnal:hansken_zapis]
     -> kosciol
 * [Najpierw słucham, jak obraz staje się opowieścią. #sygnal:hansken_slucham]
@@ -43,7 +43,16 @@ TRADYCJA / INFORMACJA DO DALSZEGO SPRAWDZENIA [gmina_zabytki]: Materiał gminny 
 - else:
     FABULARYZOWANE — opóźniona konsekwencja: Dwie kolumny z rynku spotykają się znowu. Jedna mieści opis zabytku, druga pytania o pamięć. Nadal możesz je zestawiać, nie zacierając granicy.
 }
-{ hansken_wynik == "POMINIETA":
+{
+- hansken_wynik == "ROZWIAZANA_SAMODZIELNIE":
+    Własna obserwacja zostaje zapisana obok źródła. Fragment Kroniki przypomina o odróżnianiu tego, co widzisz, od interpretacji.
+- hansken_wynik == "ROZWIAZANA_Z_PODPOWIEDZIA":
+    Podpowiedź towarzyszy twojej notatce. Fragment Kroniki zachowuje drogę, którą doszedłeś do rozróżnienia.
+- hansken_wynik == "ROZWIAZANA_Z_POMOCA":
+    Pomoc źródłowa prowadzi dalej. Zostawiasz miejsce na własną obserwację; tym razem nie otrzymujesz fragmentu.
+- hansken_wynik == "NIEUDANA":
+    Pytanie o obserwację zostaje otwarte. Świadome zakończenie zadania nie zatrzymuje opowieści.
+- hansken_wynik == "POMINIETA":
     Nie masz fragmentu Kroniki Hansken. Puste miejsce w notatce nie zamyka dalszej drogi.
 - else:
     Pamięć wyniku Hansken zostaje z tobą; sposób przejścia nie musi być identyczny z drogą innej osoby.

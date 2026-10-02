@@ -188,7 +188,6 @@ pre {
   overflow-wrap: anywhere;
   font-size: 0.8rem;
 }
-.symulacja,
 .debug {
   border-top: 1px solid #c2cbbb;
   margin-top: 20px;
@@ -228,4 +227,48 @@ pre {
     animation: none;
     transition: none;
   }
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+  margin: 18px 0;
+  min-width: 0;
+}
+legend {
+  font-weight: 650;
+  margin-bottom: 16px;
+}
+.odpowiedz {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  min-height: 48px;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #a6afa4;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.odpowiedz input {
+  flex: 0 0 auto;
+  width: 22px;
+  height: 22px;
+  accent-color: #304a39;
+  margin: 2px 0;
+}
+input[type="text"] {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  font: inherit;
+  border: 1px solid #a6afa4;
+  border-radius: 10px;
+  padding: 12px;
+  margin: 8px 0 18px;
+  color: #28372e;
+  background: #fffdf7;
+}
+.zadanie h3 {
+  margin-top: 28px;
 }

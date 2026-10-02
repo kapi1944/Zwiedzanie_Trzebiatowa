@@ -1,8 +1,8 @@
-# Etap 5 — test ręczny grywalnego vertical slice
+# Etap 6 — test ręczny grywalnego vertical slice
 
 TEKST ROBOCZY — NIE JEST TO FINALNA WERSJA FABULY.
 
-Wymagane: Node >=24.15 i npm >=11. Z katalogu repozytorium uruchom `npm run dev:gra` i otwórz URL podany przez Vite (domyślnie `http://localhost:5173/`). Polecenie buduje rdzeń, waliduje 1170 dróg, generuje JSON kampanii i uruchamia interfejs. Nie wymaga wcześniejszego ręcznego eksportu Ink.
+Wymagane: Node >=24.15 i npm >=11. Z katalogu repozytorium uruchom `npm run dev:gra` i otwórz URL podany przez Vite (domyślnie `http://localhost:5173/`). Polecenie buduje rdzeń, waliduje 1080 dróg, generuje JSON kampanii i uruchamia interfejs. Nie wymaga wcześniejszego ręcznego eksportu Ink.
 
 ## Droga C — dostępna również w buildzie produkcyjnym
 
@@ -22,14 +22,14 @@ Wymagane: Node >=24.15 i npm >=11. Z katalogu repozytorium uruchom `npm run dev:
 | 12 | Otwórz Wątki. | Dwa wątki opisane jako „Ukończony”; brak surowych statusów i liczb powinowactw. |
 | 13 | Wróć do Opowieści, potem na Start i do Opowieści. | Ten sam finał; zmiana widoku nie rozpoczyna nowej sesji. |
 
-## Drogi A/B — symulacja Hansken tylko w DEV
+## Drogi A/B — robocza deklaracja obserwacji
 
-Hansken nie ma zatwierdzonej odpowiedzi terenowej. W DEV rozwijany panel „Próba demonstracyjna · tylko środowisko testowe” pozwala zasymulować wynik przez prawdziwe zdarzenie Silnika Gry. Nie jest to sprawdzanie obserwacji. Panel i debug nie występują w produkcyjnym UI.
+Hansken nie ma zatwierdzonej odpowiedzi terenowej. Zaznacz pole deklaracji i wybierz „Zapisz obserwację”. To deklaracja użytkownika; komunikat roboczej treści pozostaje widoczny także w produkcji. Nie jest to zatwierdzenie szczegółu terenowego.
 
 | Droga | Konkretne decyzje | Oczekiwany profil |
 | --- | --- | --- |
-| A | Dowód w prologu → „Symuluj rozwiązanie Hansken” bez podpowiedzi → własna notatka → „Zestawiam obie notatki” → powrót → zapis źródła → odpowiedź o misce kaszy → pierwszeństwo śladów. | KRONIKARZ; fragment, scenka, bonus „Dwie warstwy”, dwa epilogi. |
-| B | Pamięć w prologu → podpowiedź Hansken → symulacja rozwiązania → słuchanie → pytanie o pamięć Kościoła → podpowiedź Baszty → odpowiedź o misce kaszy → pierwszeństwo opowieści. | STRAŻNIK OPOWIEŚCI; fragment, dwa epilogi, brak bonusu samodzielnego Hansken. |
+| A | Dowód w prologu → deklaracja obserwacji bez podpowiedzi → własna notatka → „Zestawiam obie notatki” → powrót → zapis źródła → odpowiedź o misce kaszy → pierwszeństwo śladów. | KRONIKARZ; fragment, scenka, bonus „Dwie warstwy”, dwa epilogi. |
+| B | Pamięć w prologu → podpowiedź Hansken → deklaracja obserwacji → słuchanie → pytanie o pamięć Kościoła → podpowiedź Baszty → odpowiedź o misce kaszy → pierwszeństwo opowieści. | STRAŻNIK OPOWIEŚCI; fragment, dwa epilogi, brak bonusu samodzielnego Hansken. |
 
 Przed kolejną drogą odśwież stronę. Zapis pozostaje wyłącznie w pamięci bieżącej sesji; nie ma localStorage, IndexedDB ani produkcyjnego mechanizmu wznowienia.
 
@@ -61,7 +61,15 @@ Wynik testu zapisuj jako PASS / FAIL / NIETESTOWANE. Przy FAIL zanotuj krok, wid
 | Przejście C w przeglądarce, również po błędnej odpowiedzi Baszty | PASS |
 | Start z Enter i przeniesienie fokusu na scenę | PASS |
 | Widoki 320, 390 i 1024 px; brak poziomego przewijania | PASS |
-| Produkcyjna droga C, Kronika, Wątki; debug i symulacja wyłączone | PASS |
+| Produkcyjna droga C, Kronika, Wątki; debug wyłączony (pomiar Etapu 5) | PASS |
 | Fizyczny telefon, teren, czytnik ekranu | NIETESTOWANE |
 
-Treść, źródła i rekonesans: [vertical slice Etapu 4](vertical-slice.md). Nie dodano mapy, GPS, audio, PWA, trwałego zapisu ani backendu. Etap 6 nie jest rozpoczęty.
+Treść, źródła i rekonesans: [vertical slice Etapu 4](vertical-slice.md). Nie dodano mapy, GPS, audio, PWA, trwałego zapisu ani backendu. Kontrakt Etapu 6: [zagadki i zadania](zagadki-i-zadania.md). Etap 7 nie jest rozpoczęty.
+
+## Dodatkowe próby Etapu 6
+
+- Hansken: sprawdź każdą z pięciu dróg (deklaracja; podpowiedź i deklaracja; pomoc i kontynuacja; pominięcie; świadome zakończenie bez rozstrzygnięcia). Każda otwiera wybory i Kościół; tylko dwie pierwsze przyznają fragment.
+- Baszta: zaznacz radio i wyślij odpowiedź. Błędny wybór zwiększa liczbę prób, bez wyniku NIEUDANA. Po trzech błędnych odpowiedziach formularz blokuje następne próby; pomoc nadal umożliwia finał.
+- Po uzyskaniu fragmentu lub odwiedzeniu scenki sprawdź oferowane alternatywne zaliczenia Baszty.
+- Dwukrotne szybkie wysłanie nie może podwoić liczby prób ani nagrody; formularz znika po wyniku.
+- Sprawdź etykiety, legendę, komunikaty statusu oraz radio/checkbox z klawiatury. Czytnik ekranu i teren wymagają osobnego sprawdzenia.

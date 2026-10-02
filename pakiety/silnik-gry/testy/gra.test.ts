@@ -143,33 +143,49 @@ opisz("Deterministyczny Silnik Gry", () => {
           rodzaj: "POPROS_O_PODPOWIEDZ",
           idZagadki: "zagadka",
         });
-      const nowy = krok(stan, {
-        rodzaj: "ZAKONCZ_ZAGADKE",
-        idZagadki: "zagadka",
+      if (wynik === "ROZWIAZANA_Z_POMOCA")
+        stan = krok(stan, {
+          rodzaj: "POTRZEBUJE_POMOCY",
+          idZagadki: "zagadka",
+        });
+      const nowy =
+        wynik === "POMINIETA"
+          ? krok(stan, { rodzaj: "POMIN_ZAGADKE", idZagadki: "zagadka" })
+          : wynik === "NIEUDANA" || wynik === "ROZWIAZANA_Z_POMOCA"
+            ? krok(stan, {
+                rodzaj: "ZAKONCZ_ZAGADKE",
+                idZagadki: "zagadka",
+                wynik,
+              })
+            : krok(stan, {
+                rodzaj: "POTWIERDZ_OBSERWACJE",
+                idZagadki: "zagadka",
+              });
+      oczekuj(nowy.wynikiZagadek.zagadka).toMatchObject({
         wynik,
-      });
-      oczekuj(nowy.wynikiZagadek.zagadka).toEqual({
-        wynik,
-        liczbaProb: 1,
+        liczbaProb:
+          wynik === "ROZWIAZANA_SAMODZIELNIE" ||
+          wynik === "ROZWIAZANA_Z_PODPOWIEDZIA"
+            ? 1
+            : 0,
         liczbaPodpowiedzi: wynik === "ROZWIAZANA_Z_PODPOWIEDZIA" ? 1 : 0,
+        potrzebujePomocy: wynik === "ROZWIAZANA_Z_POMOCA",
       });
       oczekuj(nowy.powinowactwa.dowod).toBe(indeks + 1);
       oczekuj(nowy.aktywnaZagadka).toBeNull();
     });
   }
-  testuj("nieudana proba pozwala ponowic lub pominac zagadke", () => {
+  testuj("swiadome zakonczenie bez rozwiazania jest terminalne", () => {
     const stan = krok(
       krok(wejdz(), { rodzaj: "ROZPOCZNIJ_ZAGADKE", idZagadki: "zagadka" }),
       { rodzaj: "ZAKONCZ_ZAGADKE", idZagadki: "zagadka", wynik: "NIEUDANA" },
     );
-    oczekuj(
-      krok(stan, { rodzaj: "ROZPOCZNIJ_ZAGADKE", idZagadki: "zagadka" })
-        .postepyZagadek.zagadka?.liczbaProb,
-    ).toBe(2);
-    oczekuj(
-      krok(stan, { rodzaj: "POMIN_ZAGADKE", idZagadki: "zagadka" })
-        .pominieteZagadki,
-    ).toEqual(["zagadka"]);
+    oczekuj(() =>
+      krok(stan, { rodzaj: "ROZPOCZNIJ_ZAGADKE", idZagadki: "zagadka" }),
+    ).toThrow();
+    oczekuj(() =>
+      krok(stan, { rodzaj: "POMIN_ZAGADKE", idZagadki: "zagadka" }),
+    ).toThrow();
   });
   testuj("pomija zagadke bez proby i nie przyznaje wyniku ponownie", () => {
     const stan = krok(wejdz(), {
@@ -190,7 +206,7 @@ opisz("Deterministyczny Silnik Gry", () => {
       krok(stan, {
         rodzaj: "ZAKONCZ_ZAGADKE",
         idZagadki: "zagadka",
-        wynik: "ROZWIAZANA_Z_PODPOWIEDZIA",
+        wynik: "ROZWIAZANA_Z_POMOCA",
       }),
     ).toThrow();
     const zPodpowiedzia = krok(stan, {
@@ -204,13 +220,12 @@ opisz("Deterministyczny Silnik Gry", () => {
         idZagadki: "zagadka",
       }),
     ).toThrow();
-    oczekuj(() =>
+    oczekuj(
       krok(zPodpowiedzia, {
-        rodzaj: "ZAKONCZ_ZAGADKE",
+        rodzaj: "POTWIERDZ_OBSERWACJE",
         idZagadki: "zagadka",
-        wynik: "ROZWIAZANA_SAMODZIELNIE",
-      }),
-    ).toThrow();
+      }).wynikiZagadek.zagadka?.wynik,
+    ).toBe("ROZWIAZANA_Z_PODPOWIEDZIA");
   });
   testuj("aktywuje i konczy watek tylko w legalnej kolejnosci", () => {
     const stan = rozpocznij();

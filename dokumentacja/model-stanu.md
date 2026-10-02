@@ -1,4 +1,4 @@
-# Model stanu gry — Etap 3
+# Model stanu gry — aktualizacja Etapu 6
 
 `StanGry` jest serializowalnym obiektem JSON walidowanym przez `schematStanuGry` z `@zwiedzanie/schemat-tresci`. Silnik zwraca nowy obiekt po kroku. Nie ma danych osobowych ani pozycji GPS.
 
@@ -9,8 +9,8 @@
 | idSesji | identyfikator przekazany w starcie |
 | aktualnaScena | identyfikator narracyjnej sceny |
 | odwiedzoneLokalizacje, potwierdzoneLokalizacje | osobne zbiory wizyt i deklarowanych potwierdzeń |
-| wynikiZagadek | słownik `{ wynik, liczbaProb, liczbaPodpowiedzi }` |
-| postepyZagadek, aktywnaZagadka | liczniki prób i podpowiedzi, jedno aktywne id lub null |
+| wynikiZagadek | słownik `{ wynik, liczbaProb, liczbaPodpowiedzi, potrzebujePomocy, ostatniaOdpowiedzPoprawna? }` |
+| postepyZagadek, aktywnaZagadka | liczniki prób i podpowiedzi, flaga pomocy i ostatnia ocena; jedno aktywne id lub null |
 | dokonaneWybory | identyfikatory dokonanych wyborów |
 | flagi | słownik boolean |
 | sladyIPrzedmioty | identyfikatory posiadanych elementów |
@@ -22,7 +22,7 @@
 | odblokowaneLokalizacje | trwałe odblokowania |
 | dziennikZdarzen | przyjęte zdarzenia domenowe z id i czasem wejściowym |
 
-Wyniki: ROZWIAZANA_SAMODZIELNIE, ROZWIAZANA_Z_PODPOWIEDZIA, ROZWIAZANA_Z_POMOCA, POMINIETA, NIEUDANA. Nie zastępujemy ich booleanem. Pierwsze cztery zamykają zagadkę; NIEUDANA umożliwia ponowną próbę lub pominięcie. Licznik prób rośnie na rozpoczęciu. Pominięcie bez próby ma liczbaProb=0.
+Wyniki: ROZWIAZANA_SAMODZIELNIE, ROZWIAZANA_Z_PODPOWIEDZIA, ROZWIAZANA_Z_POMOCA, POMINIETA, NIEUDANA. Nie zastępujemy ich booleanem. Wszystkie zamykają zagadkę; NIEUDANA oznacza świadome zakończenie bez rozwiązania. Błędna odpowiedź pozostawia aktywne zadanie bez wyniku. Licznik prób rośnie na odpowiedzi lub potwierdzeniu obserwacji, a rozpoczęcie zapisuje zero. Szczegóły: [zagadki i zadania](zagadki-i-zadania.md).
 
 Stany wątku: ZABLOKOWANY, DOSTEPNY, AKTYWNY, UKONCZONY, POMINIETY. Start inicjalizuje wątki, a spełnienie warunku daje dostępność. Zdarzenia aktywacji/zakończenia wymagają poprzedniego stanu; pominięcie dotyczy tylko niewymaganego opcjonalnego wątku.
 

@@ -46,6 +46,11 @@ export function utworzDefinicjeTestowe(): DefinicjeGry {
         ...opis,
         id: "zagadka",
         idLokalizacji: "plac",
+        typ: "OBSERWACJA",
+        pytanie: "Potwierdz probe techniczna.",
+        potwierdzenie: "Wykonano probe.",
+        moznaZakonczycBezRozwiazania: true,
+        pomoc: { tekst: "Pomoc techniczna.", pozwalaZaliczyc: true },
         podpowiedzi: ["Podpowiedź techniczna."],
         konsekwencje: Object.fromEntries(
           schematWynikuZagadki.options.map((wynik, indeks) => [

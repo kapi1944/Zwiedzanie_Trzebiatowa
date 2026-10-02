@@ -2,7 +2,7 @@
 
 Projekt wielowątkowej i wielozakończeniowej gry terenowej w Trzebiatowie oraz strony marketingowej prezentującej grę i umożliwiającej zakup, a później aktywację i obsługę konta.
 
-Aktualny status: Etap 5 — grywalny interfejs mobile-first łączący React, Silnik Gry, runtime Ink i Pakiet Gry. Treść pozostaje robocza i wymaga rekonesansu. Strona marketingowa ma ekran startowy; PWA nie jest zaimplementowane.
+Aktualny status: Etap 6 — zagadki wyboru, tekstowe i obserwacyjne, stopniowane podpowiedzi, pomoc oraz alternatywne zaliczenia w grywalnym interfejsie mobile-first. Treść pozostaje robocza i wymaga rekonesansu. Strona marketingowa ma ekran startowy; PWA nie jest zaimplementowane.
 
 Gra będzie projektowana przede wszystkim na smartfony i do działania bez internetu, z decyzjami oraz wynikami zagadek wpływającymi na późniejszą narrację i kompozytowe zakończenia.
 
@@ -40,3 +40,5 @@ Pakiety `silnik-gry`, `silnik-narracji` i `schemat-tresci` zawierają czysty rdz
 - [Zakończenia](dokumentacja/zakonczenia.md)
 - [Vertical slice](dokumentacja/vertical-slice.md)
 - [Test ręczny interfejsu](dokumentacja/test-reczny-vertical-slice.md)
+
+- [Zagadki i zadania](dokumentacja/zagadki-i-zadania.md)

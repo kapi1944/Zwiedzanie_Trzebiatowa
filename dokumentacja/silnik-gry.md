@@ -15,8 +15,8 @@ Zdarzenie zawiera `idZdarzenia` i `czas` (nieujemna liczba całkowita, milisekun
 | `ROZPOCZNIJ_GRE` | `idSesji`; inicjalizacja i scena startowa |
 | `WEJDZ_DO_LOKALIZACJI` | `idLokalizacji`; wymaga odblokowania, zapisuje wizytę i scenę |
 | `POTWIERDZ_OBECNOSC` | `idLokalizacji`; wymaga wcześniejszej wizyty, bez sprawdzania GPS |
-| `ROZPOCZNIJ_ZAGADKE` | `idZagadki`; wymaga wizyty i braku aktywnej zagadki, zwiększa licznik prób |
-| `ZAKONCZ_ZAGADKE` | `idZagadki`, `wynik`; wymaga aktywnej zagadki |
+| `ROZPOCZNIJ_ZAGADKE` | `idZagadki`; wymaga wizyty, braku wyniku i aktywnej zagadki; inicjuje zero prób |
+| `ZAKONCZ_ZAGADKE` | `idZagadki`, `wynik`; tylko pomoc albo świadome NIEUDANA zgodnie z polityką |
 | `POPROS_O_PODPOWIEDZ` | `idZagadki`; kolejna zdefiniowana podpowiedź, zwiększa licznik |
 | `POMIN_ZAGADKE` | `idZagadki`; wynik POMINIETA również bez rozpoczętej próby |
 | `DOKONAJ_WYBORU` | `idWyboru`; wymaga właściwej sceny i warunku, zapisuje wybór i konsekwencje |
@@ -27,7 +27,7 @@ Zdarzenie zawiera `idZdarzenia` i `czas` (nieujemna liczba całkowita, milisekun
 | `OTWORZ_SCENKE` | `idScenki`; wymaga warunku, zapisuje odkrycie i pokazuje scenę |
 | `WZNOW_GRE` | ponownie deklaruje prezentację aktualnej sceny |
 
-Nieudana zagadka dopuszcza ponowną próbę lub pominięcie. Pozostałe wyniki są końcowe. Wynik samodzielny jest odrzucany po podpowiedzi; wynik z podpowiedzią wymaga jej użycia. Samo zakończenie nie ocenia odpowiedzi: odbiorca wysyła rozstrzygnięty wynik. Każde przyjęte zakończenie próby stosuje konsekwencje danego wyniku; definicje powinny uwzględniać, że NIEUDANA może wystąpić wielokrotnie.
+Aktualizacja Etapu 6: wszystkie wyniki są końcowe, a błędna odpowiedź pozostawia zagadkę aktywną bez wyniku. Silnik ocenia WYBOR/TEKST przez UDZIEL_ODPOWIEDZI oraz deklarację OBSERWACJA przez POTWIERDZ_OBSERWACJE. POTRZEBUJE_POMOCY udostępnia pomoc; ZALICZ_ALTERNATYWNIE sprawdza warunek sposobu w definicji. Sukces uwzględnia historię podpowiedzi i pomocy. Konsekwencje stosowane są raz. Pełny kontrakt: [zagadki i zadania](zagadki-i-zadania.md).
 
 ## Definicje i efekty
 

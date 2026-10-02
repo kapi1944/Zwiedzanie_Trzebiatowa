@@ -116,11 +116,8 @@ test.each([
       "Otwieram miejsce na własną notatkę.",
     );
     if (nazwa === "B") await kliknij("Poproś o podpowiedź");
-    await kliknij(
-      nazwa === "C"
-        ? "Pomiń zagadkę i idź dalej"
-        : "Symuluj rozwiązanie Hansken",
-    );
+    if (nazwa === "C") await kliknij("Pomiń zagadkę i idź dalej");
+    else await potwierdzObserwacje();
     expect(document.activeElement).toBe(
       kontener.querySelector("#wybierz-droge"),
     );
@@ -142,11 +139,8 @@ test.each([
     );
     expect(kontener.querySelector("h1")?.textContent).toBe("Baszta Kaszana");
     if (nazwa === "B") await kliknij("Poproś o podpowiedź");
-    await kliknij(
-      nazwa === "C"
-        ? "Pomiń zagadkę i idź dalej"
-        : "Opowieść o misce gorącej kaszy",
-    );
+    if (nazwa === "C") await kliknij("Pomiń zagadkę i idź dalej");
+    else await odpowiedzNaZagadke("Opowieść o misce gorącej kaszy");
     await kliknij(final);
     expect(kontener.textContent).toContain("Podróż zapisana");
     expect(sesja.odczytaj().profil?.zakonczenieGlowne).toBe(profil);
@@ -191,11 +185,12 @@ test("bledna odpowiedz Baszty pozwala ponowic i zakonczyc zagadke", async () => 
   await kliknij("Pomiń zagadkę i idź dalej");
   await kliknij("Najpierw słucham, jak obraz staje się opowieścią.");
   await kliknij("Zapisuję informację i jej źródło.");
-  await kliknij("Zachowana baszta obronna");
-  expect(sesja.odczytaj().stan.wynikiZagadek.zagadka_baszta?.wynik).toBe(
-    "NIEUDANA",
+  await odpowiedzNaZagadke("Zachowana baszta obronna");
+  expect(sesja.odczytaj().stan.wynikiZagadek.zagadka_baszta).toBeUndefined();
+  expect(sesja.odczytaj().stan.postepyZagadek.zagadka_baszta?.liczbaProb).toBe(
+    1,
   );
-  await kliknij("Opowieść o misce gorącej kaszy");
+  await odpowiedzNaZagadke("Opowieść o misce gorącej kaszy");
   expect(sesja.odczytaj().stan.wynikiZagadek.zagadka_baszta?.wynik).toBe(
     "ROZWIAZANA_SAMODZIELNIE",
   );
@@ -273,5 +268,202 @@ test("debug jest ukryty domyslnie i dostepny tylko po wlaczeniu", async () => {
   await kliknij("Wątki");
   expect(kontener.querySelector(".debug")?.textContent).toContain(
     "ostatnieZdarzenia",
+  );
+});
+
+async function potwierdzObserwacje() {
+  const pole = kontener.querySelector<HTMLInputElement>(
+    'input[type="checkbox"]',
+  );
+  if (!pole) throw new Error("Brak potwierdzenia obserwacji.");
+  await wykonajReact(() => pole.click());
+  await kliknij("Zapisz obserwację");
+}
+async function odpowiedzNaZagadke(tekst: string) {
+  const etykieta = [...kontener.querySelectorAll("label")].find(
+    (element) => element.textContent?.trim() === tekst,
+  );
+  const pole = etykieta?.querySelector<HTMLInputElement>("input");
+  if (!pole) throw new Error("Brak odpowiedzi wyboru.");
+  await wykonajReact(() => pole.click());
+  await kliknij("Sprawdź odpowiedź");
+}
+
+test.each([
+  "ROZWIAZANA_SAMODZIELNIE",
+  "ROZWIAZANA_Z_PODPOWIEDZIA",
+  "ROZWIAZANA_Z_POMOCA",
+  "POMINIETA",
+  "NIEUDANA",
+])("UI Hansken %s otwiera dalsza scene i zachowuje wynik", async (wynik) => {
+  await pokaz();
+  await kliknij("Rozpocznij opowieść");
+  await kliknij("Najpierw chcę wysłuchać obu stron.");
+  expect(kontener.querySelector("fieldset legend")?.textContent).toContain(
+    "sgraffito",
+  );
+  const pole = kontener.querySelector<HTMLInputElement>(
+    'input[type="checkbox"]',
+  );
+  expect(pole?.required).toBe(true);
+  expect(pole?.closest("label")?.textContent).toContain("bez zatwierdzania");
+  expect(przycisk("Zapisz obserwację").disabled).toBe(true);
+  if (wynik === "ROZWIAZANA_Z_PODPOWIEDZIA") {
+    await kliknij("Poproś o podpowiedź");
+    await kliknij("Poproś o podpowiedź");
+    expect(kontener.querySelectorAll(".zadanie ol li")).toHaveLength(2);
+    expect(przycisk("Poproś o podpowiedź").disabled).toBe(true);
+  }
+  if (wynik === "ROZWIAZANA_Z_POMOCA") {
+    await kliknij("Potrzebuję pomocy");
+    expect(
+      sesja.odczytaj().stan.postepyZagadek.zagadka_hansken?.potrzebujePomocy,
+    ).toBe(true);
+    await kliknij("Kontynuuj z pomocą");
+  } else if (wynik === "POMINIETA") await kliknij("Pomiń zagadkę i idź dalej");
+  else if (wynik === "NIEUDANA")
+    await kliknij("Zakończ zadanie bez rozstrzygnięcia");
+  else await potwierdzObserwacje();
+  expect(sesja.odczytaj().stan.wynikiZagadek.zagadka_hansken?.wynik).toBe(
+    wynik,
+  );
+  expect(kontener.textContent).not.toContain(wynik);
+  expect(kontener.querySelector(".zadanie")).toBeNull();
+  await kliknij("Najpierw słucham, jak obraz staje się opowieścią.");
+  expect(kontener.querySelector("h1")?.textContent).toContain("Kościół");
+  expect(sesja.odczytaj().stan.wynikiZagadek.zagadka_hansken?.wynik).toBe(
+    wynik,
+  );
+});
+
+test("podwojne wyslanie obserwacji zapisuje tylko jedna probe i nagrode", async () => {
+  await pokaz();
+  await kliknij("Rozpocznij opowieść");
+  await kliknij("Najpierw chcę wysłuchać obu stron.");
+  const pole = kontener.querySelector<HTMLInputElement>(
+    'input[type="checkbox"]',
+  );
+  if (!pole) throw new Error("Brak obserwacji.");
+  await wykonajReact(() => pole.click());
+  const formularz = kontener.querySelector("form");
+  if (!formularz) throw new Error("Brak formularza.");
+  await wykonajReact(() => {
+    formularz.requestSubmit();
+    formularz.requestSubmit();
+  });
+  const stan = structuredClone(sesja.odczytaj().stan);
+  expect(stan.wynikiZagadek.zagadka_hansken?.liczbaProb).toBe(1);
+  expect(
+    stan.dziennikZdarzen.filter(
+      (wpis) => wpis.rodzaj === "POTWIERDZ_OBSERWACJE",
+    ),
+  ).toHaveLength(1);
+  expect(
+    stan.sladyIPrzedmioty.filter((id) => id === "fragment_kroniki_hansken"),
+  ).toHaveLength(1);
+  sesja.potwierdzObserwacje();
+  expect(sesja.odczytaj().stan).toEqual(stan);
+});
+
+async function dojdzDoBaszty() {
+  await kliknij("Rozpocznij opowieść");
+  await kliknij("Najpierw chcę wysłuchać obu stron.");
+  await kliknij("Pomiń zagadkę i idź dalej");
+  await kliknij("Najpierw słucham, jak obraz staje się opowieścią.");
+  await kliknij("Zapisuję informację i jej źródło.");
+}
+
+test("limit odpowiedzi nie zamyka zadania i pozostawia pomoc oraz final", async () => {
+  await pokaz();
+  await dojdzDoBaszty();
+  expect(kontener.querySelectorAll('input[type="radio"]')).toHaveLength(2);
+  for (const pole of kontener.querySelectorAll<HTMLInputElement>(
+    'input[type="radio"]',
+  )) {
+    expect(pole.required).toBe(true);
+    expect(pole.closest("label")?.textContent?.trim()).not.toBe("");
+  }
+  for (let proba = 0; proba < 3; proba++)
+    await odpowiedzNaZagadke("Zachowana baszta obronna");
+  expect(sesja.odczytaj().stan.wynikiZagadek.zagadka_baszta).toBeUndefined();
+  expect(sesja.odczytaj().stan.postepyZagadek.zagadka_baszta?.liczbaProb).toBe(
+    3,
+  );
+  expect(przycisk("Sprawdź odpowiedź").disabled).toBe(true);
+  await kliknij("Potrzebuję pomocy");
+  await kliknij("Kontynuuj z pomocą");
+  await kliknij("Zachowuję obie wersje i zaznaczam ich różny charakter.");
+  expect(kontener.textContent).toContain("Podróż zapisana");
+});
+
+test.each([false, true])(
+  "alternatywa Baszty z notatki, scenka=%s",
+  async (scenka) => {
+    await pokaz();
+    await kliknij("Rozpocznij opowieść");
+    await kliknij("Szukam tego, co można udowodnić.");
+    await potwierdzObserwacje();
+    await kliknij("Otwieram miejsce na własną notatkę.");
+    if (scenka) {
+      await kliknij("Zestawiam obie notatki.");
+      await kliknij("Wracam do wspólnej drogi.");
+    }
+    await kliknij("Zapisuję informację i jej źródło.");
+    await kliknij(
+      scenka
+        ? "Zastosuj rozróżnienie z dwóch notatek"
+        : "Skorzystaj z notatki i fragmentu Kroniki",
+    );
+    expect(sesja.odczytaj().stan.wynikiZagadek.zagadka_baszta).toMatchObject({
+      wynik: scenka ? "ROZWIAZANA_SAMODZIELNIE" : "ROZWIAZANA_Z_POMOCA",
+      liczbaProb: 0,
+    });
+    await kliknij("Najpierw zapisuję to, co potwierdzają ślady.");
+    expect(kontener.textContent).toContain("Podróż zapisana");
+  },
+);
+
+test("formularz TEKST ma etykiete i przekazuje odpowiedz do realnego silnika", async () => {
+  await pokaz(async () => {
+    const definicje = structuredClone(new SesjaGry().definicje);
+    const zagadki = definicje.zagadki.map((zagadka) => {
+      if (zagadka.id !== "zagadka_baszta") return zagadka;
+      const dane: Record<string, unknown> = { ...zagadka };
+      delete dane.odpowiedzi;
+      return {
+        ...dane,
+        typ: "TEKST",
+        poprawneOdpowiedzi: ["kasza"],
+        normalizacja: {
+          trim: true,
+          ignorujWielkoscLiter: true,
+          usunPolskieZnaki: false,
+        },
+      };
+    });
+    sesja = new SesjaGry({ ...definicje, zagadki });
+    return sesja;
+  });
+  await dojdzDoBaszty();
+  const pole = kontener.querySelector<HTMLInputElement>("#odpowiedz-zagadki");
+  if (!pole) throw new Error("Brak odpowiedzi tekstowej.");
+  expect(
+    kontener.querySelector('label[for="odpowiedz-zagadki"]')?.textContent,
+  ).toBe("Twoja odpowiedź");
+  expect(pole.required).toBe(true);
+  expect(kontener.querySelector("fieldset legend")?.textContent).toContain(
+    "legendę",
+  );
+  const wpisz = Object.getOwnPropertyDescriptor(
+    HTMLInputElement.prototype,
+    "value",
+  )?.set;
+  await wykonajReact(() => {
+    wpisz?.call(pole, " KASZA ");
+    pole.dispatchEvent(new Event("input", { bubbles: true }));
+  });
+  await kliknij("Sprawdź odpowiedź");
+  expect(sesja.odczytaj().stan.wynikiZagadek.zagadka_baszta?.wynik).toBe(
+    "ROZWIAZANA_SAMODZIELNIE",
   );
 });

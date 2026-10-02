@@ -6,6 +6,7 @@ import {
   useState as uzyjStanu,
 } from "react";
 import type { SesjaGry, WidokSesji } from "./sesja-gry";
+import { InformacjaOWyniku, WidokZagadki } from "./WidokZagadki";
 
 type Widok = "start" | "gra" | "kronika" | "watki" | "informacje";
 const nazwyWidokow: Record<Widok, string> = {
@@ -123,7 +124,6 @@ export default function Aplikacja({
 
   const definicje = sesja.current?.definicje;
   const zagadka = dane?.zagadka;
-  const postep = zagadka ? dane?.stan.postepyZagadek[zagadka.id] : undefined;
   const diagnostyka =
     import.meta.env.DEV &&
     new URLSearchParams(window.location.search).get("debug") === "1";
@@ -202,78 +202,15 @@ export default function Aplikacja({
                     <p key={tekst}>{tekst}</p>
                   ))}
                 </div>
+                <InformacjaOWyniku wynik={dane.wynikZagadki} />
                 {zagadka && (
-                  <section
-                    className="karta zadanie"
-                    aria-labelledby="tytul-zadania"
-                  >
-                    <p className="etykieta">Zatrzymaj się na chwilę</p>
-                    <h2 id="tytul-zadania">{zagadka.nazwa}</h2>
-                    <p>{zagadka.pytanie}</p>
-                    {zagadka.odpowiedz === null && (
-                      <p className="uwaga">
-                        To zadanie wymaga sprawdzenia na miejscu. W tej wersji
-                        możesz je pominąć i przejść dalej.
-                      </p>
-                    )}
-                    {zagadka.odpowiedz && (
-                      <div className="wybory">
-                        <button
-                          type="button"
-                          onClick={() =>
-                            wykonaj((gra) => gra.odpowiedz("baszta_obronna"))
-                          }
-                        >
-                          Zachowana baszta obronna
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            wykonaj((gra) =>
-                              gra.odpowiedz("opowiesc_o_misce_goracej_kaszy"),
-                            )
-                          }
-                        >
-                          Opowieść o misce gorącej kaszy
-                        </button>
-                      </div>
-                    )}
-                    <div className="wybory">
-                      <button
-                        type="button"
-                        disabled={
-                          (postep?.liczbaPodpowiedzi ?? 0) >=
-                          zagadka.podpowiedzi.length
-                        }
-                        onClick={() => wykonaj((gra) => gra.podpowiedz())}
-                      >
-                        Poproś o podpowiedź
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => wykonaj((gra) => gra.pomin())}
-                      >
-                        Pomiń zagadkę i idź dalej
-                      </button>
-                    </div>
-                    {import.meta.env.DEV && zagadka.odpowiedz === null && (
-                      <details className="symulacja">
-                        <summary>
-                          Próba demonstracyjna · tylko środowisko testowe
-                        </summary>
-                        <p>
-                          Symulacja wyniku nie potwierdza odpowiedzi ani
-                          obserwacji terenowej.
-                        </p>
-                        <button
-                          type="button"
-                          onClick={() => wykonaj((gra) => gra.symulujHansken())}
-                        >
-                          Symuluj rozwiązanie Hansken
-                        </button>
-                      </details>
-                    )}
-                  </section>
+                  <WidokZagadki
+                    key={zagadka.id}
+                    dostepneZaliczenia={dane.dostepneZaliczenia}
+                    zagadka={zagadka}
+                    stan={dane.stan}
+                    wykonaj={wykonaj}
+                  />
                 )}
                 {dane.opcje.length > 0 && (
                   <section aria-labelledby="wybierz-droge">

@@ -65,6 +65,9 @@
       - rodzaj: wynikZagadkiJest
         id: zagadka_hansken
         wynik: POMINIETA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_hansken
+        wynik: NIEUDANA
 - id: hansken_slucham
   nazwa: Najpierw słucham, jak obraz staje się opowieścią.
   klasyfikacja: FABULARYZOWANE
@@ -95,6 +98,9 @@
       - rodzaj: wynikZagadkiJest
         id: zagadka_hansken
         wynik: POMINIETA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_hansken
+        wynik: NIEUDANA
 - id: kosciol_do_scenki
   nazwa: Zestawiam obie notatki.
   klasyfikacja: FABULARYZOWANE
@@ -211,6 +217,9 @@
       - rodzaj: wynikZagadkiJest
         id: zagadka_baszta
         wynik: POMINIETA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: NIEUDANA
 - id: baszta_legenda
   nazwa: Najpierw zapisuję opowieść mieszkańców.
   klasyfikacja: FABULARYZOWANE
@@ -241,6 +250,9 @@
       - rodzaj: wynikZagadkiJest
         id: zagadka_baszta
         wynik: POMINIETA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: NIEUDANA
 - id: baszta_obie
   nazwa: Zachowuję obie wersje i zaznaczam ich różny charakter.
   klasyfikacja: FABULARYZOWANE
@@ -271,3 +283,6 @@
       - rodzaj: wynikZagadkiJest
         id: zagadka_baszta
         wynik: POMINIETA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: NIEUDANA

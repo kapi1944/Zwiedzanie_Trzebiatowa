@@ -54,8 +54,24 @@ export function przejdzDroge(definicje: DefinicjeGry, droga: DrogaSlice) {
     wykonaj({ rodzaj: "ROZPOCZNIJ_ZAGADKE", idZagadki });
     if (wynik === "ROZWIAZANA_Z_PODPOWIEDZIA")
       wykonaj({ rodzaj: "POPROS_O_PODPOWIEDZ", idZagadki });
-    wykonaj({ rodzaj: "ZAKONCZ_ZAGADKE", idZagadki, wynik });
-    if (wynik === "NIEUDANA") wykonaj({ rodzaj: "POMIN_ZAGADKE", idZagadki });
+    if (wynik === "ROZWIAZANA_Z_POMOCA")
+      wykonaj({ rodzaj: "POTRZEBUJE_POMOCY", idZagadki });
+    if (wynik === "NIEUDANA" || wynik === "ROZWIAZANA_Z_POMOCA")
+      wykonaj({ rodzaj: "ZAKONCZ_ZAGADKE", idZagadki, wynik });
+    else {
+      const definicja = definicje.zagadki.find(
+        (element) => element.id === idZagadki,
+      );
+      if (!definicja) throw new Error("Brak zagadki.");
+      if (definicja.typ === "OBSERWACJA")
+        wykonaj({ rodzaj: "POTWIERDZ_OBSERWACJE", idZagadki });
+      else
+        wykonaj({
+          rodzaj: "UDZIEL_ODPOWIEDZI",
+          idZagadki,
+          odpowiedz: definicja.poprawneOdpowiedzi[0] ?? "",
+        });
+    }
   };
   wykonaj({ rodzaj: "WEJDZ_DO_LOKALIZACJI", idLokalizacji: "rynek" });
   for (const idWatku of ["watek_kroniki", "watek_pamieci"])

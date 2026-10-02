@@ -10,6 +10,7 @@ import {
 } from "@zwiedzanie/schemat-tresci";
 import { sprawdzZgodnoscStanu } from "./stan.js";
 import { sprawdzWarunek } from "./warunki.js";
+import { obsluzZagadke } from "./zagadki.js";
 
 export interface WynikKroku {
   stan: StanGry;
@@ -154,70 +155,17 @@ export function wykonajKrok(
         dodaj(nowy.potwierdzoneLokalizacje, polecenie.idLokalizacji);
         break;
       }
-      case "ROZPOCZNIJ_ZAGADKE": {
-        const zagadka = znajdz(dane.zagadki, polecenie.idZagadki);
-        if (
-          nowy.aktywnaZagadka ||
-          !nowy.odwiedzoneLokalizacje.includes(zagadka.idLokalizacji)
-        )
-          throw new Error("Zagadka nie jest teraz dostepna.");
-        const wynik = nowy.wynikiZagadek[zagadka.id]?.wynik;
-        if (wynik && wynik !== "NIEUDANA")
-          throw new Error("Zagadka ma juz wynik koncowy.");
-        const postep = nowy.postepyZagadek[zagadka.id] ?? {
-          liczbaProb: 0,
-          liczbaPodpowiedzi: 0,
-        };
-        nowy.postepyZagadek[zagadka.id] = {
-          ...postep,
-          liczbaProb: postep.liczbaProb + 1,
-        };
-        nowy.aktywnaZagadka = zagadka.id;
-        break;
-      }
-      case "POPROS_O_PODPOWIEDZ": {
-        const zagadka = znajdz(dane.zagadki, polecenie.idZagadki);
-        const postep = nowy.postepyZagadek[zagadka.id];
-        if (nowy.aktywnaZagadka !== zagadka.id || !postep)
-          throw new Error("Zagadka nie jest aktywna.");
-        const tekst = zagadka.podpowiedzi[postep.liczbaPodpowiedzi];
-        if (!tekst) throw new Error("Brak kolejnej podpowiedzi.");
-        postep.liczbaPodpowiedzi++;
-        nowy.uzytePodpowiedzi[zagadka.id] = postep.liczbaPodpowiedzi;
-        efekty.push({ rodzaj: "POKAZ_KOMUNIKAT", tekst });
-        break;
-      }
+      case "ROZPOCZNIJ_ZAGADKE":
+      case "POPROS_O_PODPOWIEDZ":
+      case "POMIN_ZAGADKE":
       case "ZAKONCZ_ZAGADKE":
-      case "POMIN_ZAGADKE": {
-        const zagadka = znajdz(dane.zagadki, polecenie.idZagadki);
-        const postep = nowy.postepyZagadek[zagadka.id] ?? {
-          liczbaProb: 0,
-          liczbaPodpowiedzi: 0,
-        };
-        const poprzedni = nowy.wynikiZagadek[zagadka.id]?.wynik;
-        if (poprzedni && poprzedni !== "NIEUDANA")
-          throw new Error("Zagadka ma juz wynik koncowy.");
-        if (!nowy.odwiedzoneLokalizacje.includes(zagadka.idLokalizacji))
-          throw new Error("Nie odwiedzono lokalizacji zagadki.");
-        if (
-          polecenie.rodzaj === "ZAKONCZ_ZAGADKE" &&
-          nowy.aktywnaZagadka !== zagadka.id
-        )
-          throw new Error("Zagadka nie jest aktywna.");
-        const wynik =
-          polecenie.rodzaj === "POMIN_ZAGADKE" ? "POMINIETA" : polecenie.wynik;
-        if (wynik === "ROZWIAZANA_SAMODZIELNIE" && postep.liczbaPodpowiedzi > 0)
-          throw new Error("Uzyto podpowiedzi.");
-        if (
-          wynik === "ROZWIAZANA_Z_PODPOWIEDZIA" &&
-          postep.liczbaPodpowiedzi === 0
-        )
-          throw new Error("Nie uzyto podpowiedzi.");
-        nowy.wynikiZagadek[zagadka.id] = { wynik, ...postep };
-        if (nowy.aktywnaZagadka === zagadka.id) nowy.aktywnaZagadka = null;
-        if (wynik === "POMINIETA") dodaj(nowy.pominieteZagadki, zagadka.id);
-        zastosujZmiany(nowy, zagadka.konsekwencje[wynik].zmiany);
-        efekty.push(...zagadka.konsekwencje[wynik].efekty);
+      case "POTRZEBUJE_POMOCY":
+      case "POTWIERDZ_OBSERWACJE":
+      case "UDZIEL_ODPOWIEDZI":
+      case "ZALICZ_ALTERNATYWNIE": {
+        const wynik = obsluzZagadke(dane, nowy, polecenie);
+        zastosujZmiany(nowy, wynik.zmiany);
+        efekty.push(...wynik.efekty);
         break;
       }
       case "DOKONAJ_WYBORU": {

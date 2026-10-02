@@ -1,4 +1,8 @@
-import { schematDefinicjiGry } from "@zwiedzanie/schemat-tresci";
+import {
+  schematDefinicjiGry,
+  schematWynikuZagadki,
+} from "@zwiedzanie/schemat-tresci";
+import { wykonajKrok } from "@zwiedzanie/silnik-gry";
 import { describe, expect, test } from "vitest";
 import { sprawdzNarracje } from "../narzedzia/narracja-slice.ts";
 import {
@@ -56,6 +60,74 @@ const drogi: { nazwa: string; profil: string; droga: DrogaSlice }[] = [
 ];
 
 describe("Vertical slice Trzebiatowa", () => {
+  test.each(schematWynikuZagadki.options)(
+    "Hansken %s: stan, dziennik, efekty, coda i mini-final",
+    (wynikZagadki) => {
+      const droga = drogi[2]?.droga;
+      if (!droga) throw new Error("Brak drogi C.");
+      const wynik = przejdzDroge(pakiet.definicje, {
+        ...droga,
+        hansken: wynikZagadki,
+      });
+      const indeks = wynik.kroki.findIndex(
+        (krok) => krok.stan.wynikiZagadek.zagadka_hansken !== undefined,
+      );
+      const poprzedni = wynik.kroki[indeks - 1];
+      const zakonczony = wynik.kroki[indeks];
+      const zagadka = pakiet.definicje.zagadki.find(
+        (element) => element.id === "zagadka_hansken",
+      );
+      if (!poprzedni || !zakonczony || !zagadka)
+        throw new Error("Brak kroku zaliczenia Hansken.");
+      const powtorzonyKrok = wykonajKrok(
+        pakiet.definicje,
+        poprzedni.stan,
+        zakonczony.zdarzenie,
+      );
+      expect(powtorzonyKrok.stan).toEqual(zakonczony.stan);
+      expect(powtorzonyKrok.stan.aktywnaZagadka).toBeNull();
+      expect(powtorzonyKrok.stan.dziennikZdarzen.at(-1)).toEqual(
+        zakonczony.zdarzenie,
+      );
+      expect(powtorzonyKrok.stan.wynikiZagadek.zagadka_hansken).toMatchObject({
+        wynik: wynikZagadki,
+        liczbaProb: [
+          "ROZWIAZANA_SAMODZIELNIE",
+          "ROZWIAZANA_Z_PODPOWIEDZIA",
+        ].includes(wynikZagadki)
+          ? 1
+          : 0,
+        liczbaPodpowiedzi: wynikZagadki === "ROZWIAZANA_Z_PODPOWIEDZIA" ? 1 : 0,
+        potrzebujePomocy: wynikZagadki === "ROZWIAZANA_Z_POMOCA",
+      });
+      expect(powtorzonyKrok.efekty).toEqual(
+        expect.arrayContaining(zagadka.konsekwencje[wynikZagadki].efekty),
+      );
+      expect(
+        powtorzonyKrok.stan.sladyIPrzedmioty.includes(
+          "fragment_kroniki_hansken",
+        ),
+      ).toBe(
+        ["ROZWIAZANA_SAMODZIELNIE", "ROZWIAZANA_Z_PODPOWIEDZIA"].includes(
+          wynikZagadki,
+        ),
+      );
+      expect(wynik.stan.wynikiZagadek.zagadka_hansken?.wynik).toBe(
+        wynikZagadki,
+      );
+      expect(wynik.stan.aktualnaScena).toBe("mini_final");
+      const tekst = sprawdzNarracje(pakiet.narracja, wynik);
+      const cody = {
+        ROZWIAZANA_SAMODZIELNIE: "Własna obserwacja zostaje zapisana",
+        ROZWIAZANA_Z_PODPOWIEDZIA: "Podpowiedź towarzyszy twojej notatce",
+        ROZWIAZANA_Z_POMOCA: "Pomoc źródłowa prowadzi dalej",
+        POMINIETA: "Nie masz fragmentu Kroniki Hansken",
+        NIEUDANA: "Świadome zakończenie zadania nie zatrzymuje opowieści",
+      };
+      expect(tekst).toContain(cody[wynikZagadki]);
+    },
+  );
+
   test.each(drogi)("$nazwa", ({ droga, profil }) => {
     const wynik = przejdzDroge(pakiet.definicje, droga);
     expect(wynik.profil.zakonczenieGlowne).toBe(profil);
@@ -74,9 +146,9 @@ describe("Vertical slice Trzebiatowa", () => {
     );
   });
 
-  test("1170 kombinacji mechaniki i Ink dochodzi do zgodnego finalu", () => {
+  test("1080 kombinacji mechaniki i Ink dochodzi do zgodnego finalu", () => {
     expect(sprawdzDrogi(pakiet.definicje, pakiet.narracja)).toEqual({
-      liczbaDrog: 1170,
+      liczbaDrog: 1080,
       profile: ["kronikarz", "lacznik", "straznik_opowiesci"],
     });
   });
@@ -97,7 +169,10 @@ describe("Vertical slice Trzebiatowa", () => {
     const zagadka = pakiet.definicje.zagadki.find(
       (element) => element.id === "zagadka_hansken",
     );
-    expect(zagadka?.odpowiedz).toBeNull();
+    expect(zagadka?.typ).toBe("OBSERWACJA");
+    if (zagadka?.typ !== "OBSERWACJA")
+      throw new Error("Niepoprawny typ Hansken.");
+    expect(zagadka.odpowiedz).toBeNull();
     expect(zagadka?.wymagaWeryfikacjiTerenowej).toBe(true);
     expect(zagadka?.zweryfikowanoTerenowoDnia).toBeUndefined();
   });

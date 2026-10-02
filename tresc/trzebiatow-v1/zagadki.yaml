@@ -6,12 +6,14 @@
     - wzp_hansken
   wymagaWeryfikacjiTerenowej: true
   idLokalizacji: hansken
-  pytanie: Przyjrzyj się sgraffito. Który szczegół da się opisać jako własną obserwację, a co jest
-    tylko przypuszczeniem? Zadanie i odpowiedź wymagają rekonesansu.
+  pytanie: Przyjrzyj się sgraffito. Który szczegół da się opisać jako własną
+    obserwację, a co jest tylko przypuszczeniem? Zadanie i odpowiedź wymagają
+    rekonesansu.
   odpowiedz: null
   podpowiedzi:
-    - Oddziel opis tego, co widzisz, od tego, co dopowiada opowieść. Detal i odpowiedź nie są
-      jeszcze zatwierdzone.
+    - Oddziel to, co widzisz, od tego, co dopowiada opowieść.
+    - Porównaj własną notatkę z opisem źródłowym; nie dopisuj detalu, którego
+      nie potrafisz rozpoznać.
   konsekwencje:
     ROZWIAZANA_SAMODZIELNIE:
       zmiany:
@@ -22,7 +24,8 @@
           wartosc: 2
       efekty:
         - rodzaj: POKAZ_KOMUNIKAT
-          tekst: Wynik zapisano. Próba Hansken pozostaje demonstracją do rekonesansu.
+          tekst: Zapisujesz własną obserwację i otrzymujesz fragment Kroniki. Jej terenowy
+            szczegół nadal wymaga rekonesansu.
     ROZWIAZANA_Z_PODPOWIEDZIA:
       zmiany:
         - rodzaj: DODAJ_PRZEDMIOT
@@ -32,27 +35,35 @@
           wartosc: 1
       efekty:
         - rodzaj: POKAZ_KOMUNIKAT
-          tekst: Wynik zapisano. Próba Hansken pozostaje demonstracją do rekonesansu.
+          tekst: Podpowiedź pomogła uporządkować notatkę. Fragment Kroniki pozostaje z
+            tobą.
     ROZWIAZANA_Z_POMOCA:
-      zmiany:
-        - rodzaj: DODAJ_PRZEDMIOT
-          id: fragment_kroniki_hansken
-        - rodzaj: ZMIEN_POWINOWACTWO
-          os: dowod
-          wartosc: 1
+      zmiany: []
       efekty:
         - rodzaj: POKAZ_KOMUNIKAT
-          tekst: Wynik zapisano. Próba Hansken pozostaje demonstracją do rekonesansu.
+          tekst: Wspólna wskazówka prowadzi dalej. W zapisie zachowujesz perspektywę
+            źródłową, bez fragmentu za obserwację.
     POMINIETA:
       zmiany: []
       efekty:
         - rodzaj: POKAZ_KOMUNIKAT
-          tekst: Możesz iść dalej bez fragmentu Kroniki.
+          tekst: Zostawiasz miejsce na późniejszą obserwację. Możesz kontynuować bez
+            fragmentu.
     NIEUDANA:
       zmiany: []
       efekty:
         - rodzaj: POKAZ_KOMUNIKAT
-          tekst: Wynik zapisano. Próba Hansken pozostaje demonstracją do rekonesansu.
+          tekst: Świadomie kończysz zadanie bez rozstrzygnięcia. Pytanie zostaje w
+            Kronice; główna opowieść trwa dalej.
+  moznaPominac: true
+  moznaZakonczycBezRozwiazania: true
+  pomoc:
+    tekst: Możesz oprzeć notatkę na opisie źródłowym. Taka pomoc pozwala iść dalej
+      bez zatwierdzania detalu sgraffito.
+    pozwalaZaliczyc: true
+  typ: OBSERWACJA
+  potwierdzenie: Potwierdzam wykonanie roboczej obserwacji — bez zatwierdzania
+    detalu ani historycznej interpretacji.
 - id: zagadka_baszta
   nazwa: Co jest obiektem, a co legendą?
   klasyfikacja: FABULARYZOWANE
@@ -60,12 +71,11 @@
     - gmina_zabytki
   wymagaWeryfikacjiTerenowej: false
   idLokalizacji: baszta
-  pytanie: "Który element tego opisu należy oznaczyć jako legendę: zachowaną basztę obronną czy
-    opowieść o misce gorącej kaszy?"
-  odpowiedz: opowiesc_o_misce_goracej_kaszy
+  pytanie: "Który element tego opisu należy oznaczyć jako legendę: zachowaną
+    basztę obronną czy opowieść o misce gorącej kaszy?"
   podpowiedzi:
-    - Sprawdź, który fragment źródło gminne przedstawia jako legendę, a nie potwierdzony przebieg
-      wydarzeń.
+    - Rozdziel to, co dotyczy budowli, od opowieści o wydarzeniu.
+    - Przekaz o gorącej kaszy objaśnia nazwę baszty; jest legendą.
   konsekwencje:
     ROZWIAZANA_SAMODZIELNIE:
       zmiany:
@@ -106,3 +116,31 @@
           id: rozrozniono_warstwy
           wartosc: false
       efekty: []
+  moznaPominac: true
+  moznaZakonczycBezRozwiazania: true
+  pomoc:
+    tekst: Opis obiektu to fakt, a miska kaszy należy do legendy. Możesz skorzystać
+      z tej wskazówki i kontynuować.
+    pozwalaZaliczyc: true
+  typ: WYBOR
+  odpowiedzi:
+    - id: baszta_obronna
+      tekst: Zachowana baszta obronna
+    - id: opowiesc_o_misce_goracej_kaszy
+      tekst: Opowieść o misce gorącej kaszy
+  poprawneOdpowiedzi:
+    - opowiesc_o_misce_goracej_kaszy
+  limitProb: 3
+  alternatywneZaliczenia:
+    - id: notatka_z_fragmentem
+      nazwa: Skorzystaj z notatki i fragmentu Kroniki
+      warunek:
+        rodzaj: posiadaPrzedmiot
+        id: fragment_kroniki_hansken
+      wynik: ROZWIAZANA_Z_POMOCA
+    - id: dwie_notatki
+      nazwa: Zastosuj rozróżnienie z dwóch notatek
+      warunek:
+        rodzaj: odkrytoScenke
+        id: scenka_dwie_notatki
+      wynik: ROZWIAZANA_SAMODZIELNIE
