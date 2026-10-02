@@ -23,9 +23,9 @@ Docelowy przepływ: Silnik Gry ↔ Most Narracji ↔ Silnik Narracji / inkjs →
 - Ink opisuje tekst, wybory narracyjne, rozgałęzienia i lokalną pamięć opowieści.
 - Silnik Narracji utrzymuje pozycję w historii, wykonuje kontrolowane operacje runtime i parsuje tagi.
 - Most Narracji przekazuje wyłącznie jawne powiązania zmiennych oraz odczytuje dozwolone sygnały.
-- Przyszły Silnik Gry będzie właścicielem mechaniki i danych kanonicznych. Obecnie pozostaje pustym pakietem.
+- Silnik Gry z Etapu 3 jest właścicielem mechaniki i danych kanonicznych; aplikacje jeszcze go nie uruchamiają.
 
-Wynik zagadki, posiadany przedmiot, stan wątku, GPS i zakończenia mechaniczne nie są rozstrzygane przez Ink. Silnik Narracji transportuje bezpieczne identyfikatory sygnałów bez znajomości ich znaczenia. Przyszły Silnik Gry będzie interpretował sygnały i rozstrzygał mechanikę.
+Wynik zagadki, posiadany przedmiot, stan wątku, GPS i zakończenia mechaniczne nie są rozstrzygane przez Ink. Silnik Narracji transportuje bezpieczne identyfikatory sygnałów bez znajomości ich znaczenia. Odbiorca jawnie przekazuje zdarzenie domenowe do Silnika Gry; silnik waliduje je i rozstrzyga mechanikę.
 
 ## Publiczne API
 
@@ -45,7 +45,7 @@ Sesja jest nieprzezroczystym uchwytem; nie udostępnia obiektu Story, mutowania 
 
 ## Kontekst i Most Narracji
 
-`KontekstNarracji` zawiera flagi, wyniki zagadek, stany wątków, ślady i przedmioty, powinowactwa, odwiedzone lokalizacje i dokonane wybory. To uproszczona kopia danych wejściowych, bez implementacji mechaniki.
+`KontekstNarracji` jest współdzielonym kontraktem z `typy-wspolne`, re-eksportowanym przez Silnik Narracji. Zawiera flagi, wyniki zagadek, stany wątków, ślady i przedmioty, powinowactwa, odwiedzone lokalizacje i dokonane wybory. To uproszczona kopia danych wejściowych, bez implementacji mechaniki.
 
 Most przyjmuje kontekst i listę `PowiazanieNarracji`: `zmiennaInk`, `obszar`, `klucz`. Przykład: `{ zmiennaInk: "zna_trop", obszar: "flagi", klucz: "trop" }` wymaga w Ink `VAR zna_trop = false`. Dla słowników przekazuje wartość prostą, dla kolekcji — informację boolean o obecności identyfikatora. Bez powiązania dane nie trafiają do Ink. Brak danych, brak zmiennej Ink lub niezgodny typ powodują błąd.
 

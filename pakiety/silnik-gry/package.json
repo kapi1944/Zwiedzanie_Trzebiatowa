@@ -14,6 +14,16 @@
   ],
   "scripts": {
     "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit && tsc --project tsconfig.testy.json",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "5.0.3",
+    "@zwiedzanie/silnik-narracji": "0.1.0",
+    "inkjs": "2.4.0"
+  },
+  "dependencies": {
+    "@zwiedzanie/schemat-tresci": "0.1.0",
+    "@zwiedzanie/typy-wspolne": "0.1.0"
   }
 }

@@ -14,11 +14,11 @@
   "scripts": {
     "dev:gra": "npm run dev --workspace=@zwiedzanie/gra",
     "dev:strona": "npm run dev --workspace=@zwiedzanie/strona",
-    "build": "npm run build --workspaces",
+    "build": "npm run build --workspace=@zwiedzanie/typy-wspolne && npm run build --workspace=@zwiedzanie/schemat-tresci && npm run build --workspace=@zwiedzanie/silnik-gry && npm run build --workspace=@zwiedzanie/silnik-narracji && npm run build --workspace=@zwiedzanie/gra && npm run build --workspace=@zwiedzanie/strona",
     "typecheck": "npm run typecheck --workspaces",
     "lint": "biome check .",
     "format": "biome format --write .",
-    "test": "npm run build && node --test testy/fundament.test.mjs && npm run test --workspace=@zwiedzanie/silnik-narracji"
+    "test": "npm run build && node --test testy/fundament.test.mjs && npm run test --workspace=@zwiedzanie/silnik-narracji && npm run test --workspace=@zwiedzanie/silnik-gry"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

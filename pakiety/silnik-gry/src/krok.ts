@@ -1,0 +1,289 @@
+import {
+  type DefinicjeGry,
+  type EfektGry,
+  type StanGry,
+  schematDefinicjiGry,
+  schematStanuGry,
+  schematZdarzeniaGry,
+  type ZdarzenieGry,
+  type ZmianaGry,
+} from "@zwiedzanie/schemat-tresci";
+import { sprawdzZgodnoscStanu } from "./stan.js";
+import { sprawdzWarunek } from "./warunki.js";
+
+export interface WynikKroku {
+  stan: StanGry;
+  efekty: EfektGry[];
+}
+
+function znajdz<T extends { id: string }>(lista: readonly T[], id: string): T {
+  const element = lista.find((element) => element.id === id);
+  if (!element) throw new Error(`Nieznany identyfikator: ${id}.`);
+  return element;
+}
+
+function dodaj(lista: string[], id: string): void {
+  if (!lista.includes(id)) lista.push(id);
+}
+
+function zastosujZmiany(stan: StanGry, zmiany: readonly ZmianaGry[]): void {
+  for (const zmiana of zmiany) {
+    switch (zmiana.rodzaj) {
+      case "USTAW_FLAGE":
+        stan.flagi[zmiana.id] = zmiana.wartosc;
+        break;
+      case "ZMIEN_POWINOWACTWO":
+        stan.powinowactwa[zmiana.os] = Math.max(
+          -5,
+          Math.min(5, stan.powinowactwa[zmiana.os] + zmiana.wartosc),
+        );
+        break;
+      case "DODAJ_PRZEDMIOT":
+        dodaj(stan.sladyIPrzedmioty, zmiana.id);
+        break;
+      case "USUN_PRZEDMIOT":
+        stan.sladyIPrzedmioty = stan.sladyIPrzedmioty.filter(
+          (id) => id !== zmiana.id,
+        );
+        break;
+    }
+  }
+}
+
+function zastosujEfekty(stan: StanGry, efekty: readonly EfektGry[]): void {
+  for (const efekt of efekty) {
+    if (efekt.rodzaj === "POKAZ_SCENE") stan.aktualnaScena = efekt.id;
+    if (efekt.rodzaj === "ODBLOKUJ_LOKALIZACJE")
+      dodaj(stan.odblokowaneLokalizacje, efekt.id);
+    if (
+      efekt.rodzaj === "ODBLOKUJ_WATEK" &&
+      stan.watki[efekt.id] === "ZABLOKOWANY"
+    )
+      stan.watki[efekt.id] = "DOSTEPNY";
+  }
+}
+
+function odblokujDostepne(
+  definicje: DefinicjeGry,
+  stan: StanGry,
+  efekty: EfektGry[],
+): void {
+  for (const lokalizacja of definicje.lokalizacje) {
+    if (
+      !stan.odblokowaneLokalizacje.includes(lokalizacja.id) &&
+      (!lokalizacja.warunek || sprawdzWarunek(lokalizacja.warunek, stan))
+    ) {
+      dodaj(stan.odblokowaneLokalizacje, lokalizacja.id);
+      efekty.push({ rodzaj: "ODBLOKUJ_LOKALIZACJE", id: lokalizacja.id });
+    }
+  }
+  for (const watek of definicje.watki) {
+    if (
+      stan.watki[watek.id] === "ZABLOKOWANY" &&
+      (!watek.warunek || sprawdzWarunek(watek.warunek, stan))
+    ) {
+      stan.watki[watek.id] = "DOSTEPNY";
+      efekty.push({ rodzaj: "ODBLOKUJ_WATEK", id: watek.id });
+    }
+  }
+}
+
+export function wykonajKrok(
+  definicje: DefinicjeGry,
+  stan: StanGry | null,
+  zdarzenie: ZdarzenieGry,
+): WynikKroku {
+  const dane = schematDefinicjiGry.parse(definicje);
+  const polecenie = schematZdarzeniaGry.parse(zdarzenie);
+  const efekty: EfektGry[] = [];
+  let nowy: StanGry;
+  if (polecenie.rodzaj === "ROZPOCZNIJ_GRE") {
+    if (stan !== null) throw new Error("Gra jest juz rozpoczeta.");
+    nowy = {
+      idGry: dane.manifest.idGry,
+      wersjaGry: dane.manifest.wersjaGry,
+      wersjaTresci: dane.manifest.wersjaTresci,
+      wersjaSchematZapisu: dane.manifest.wersjaSchematZapisu,
+      idSesji: polecenie.idSesji,
+      aktualnaScena: dane.manifest.scenaStartowa,
+      odwiedzoneLokalizacje: [],
+      potwierdzoneLokalizacje: [],
+      wynikiZagadek: {},
+      postepyZagadek: {},
+      aktywnaZagadka: null,
+      dokonaneWybory: [],
+      flagi: {},
+      sladyIPrzedmioty: [],
+      watki: Object.fromEntries(
+        dane.watki.map((watek) => [watek.id, "ZABLOKOWANY"]),
+      ),
+      powinowactwa: { dowod: 0, legenda: 0, pamiec: 0, zmiana: 0 },
+      odkryteScenki: [],
+      uzytePodpowiedzi: {},
+      pominieteZagadki: [],
+      odblokowaneLokalizacje: [],
+      dziennikZdarzen: [],
+    };
+    efekty.push({ rodzaj: "POKAZ_SCENE", id: nowy.aktualnaScena });
+  } else {
+    if (stan === null) throw new Error("Gra nie zostala rozpoczeta.");
+    nowy = schematStanuGry.parse(stan);
+    sprawdzZgodnoscStanu(dane, nowy);
+    if (
+      nowy.dziennikZdarzen.some(
+        (wpis) => wpis.idZdarzenia === polecenie.idZdarzenia,
+      )
+    )
+      throw new Error("Zdarzenie zostalo juz wykonane.");
+    if (polecenie.czas < (nowy.dziennikZdarzen.at(-1)?.czas ?? 0))
+      throw new Error("Czas zdarzenia jest wczesniejszy od ostatniego wpisu.");
+    switch (polecenie.rodzaj) {
+      case "WEJDZ_DO_LOKALIZACJI": {
+        const lokalizacja = znajdz(dane.lokalizacje, polecenie.idLokalizacji);
+        if (!nowy.odblokowaneLokalizacje.includes(lokalizacja.id))
+          throw new Error("Lokalizacja jest zablokowana.");
+        dodaj(nowy.odwiedzoneLokalizacje, lokalizacja.id);
+        nowy.aktualnaScena = lokalizacja.idSceny;
+        efekty.push({ rodzaj: "POKAZ_SCENE", id: lokalizacja.idSceny });
+        break;
+      }
+      case "POTWIERDZ_OBECNOSC": {
+        znajdz(dane.lokalizacje, polecenie.idLokalizacji);
+        if (!nowy.odwiedzoneLokalizacje.includes(polecenie.idLokalizacji))
+          throw new Error("Najpierw wejdz do lokalizacji.");
+        dodaj(nowy.potwierdzoneLokalizacje, polecenie.idLokalizacji);
+        break;
+      }
+      case "ROZPOCZNIJ_ZAGADKE": {
+        const zagadka = znajdz(dane.zagadki, polecenie.idZagadki);
+        if (
+          nowy.aktywnaZagadka ||
+          !nowy.odwiedzoneLokalizacje.includes(zagadka.idLokalizacji)
+        )
+          throw new Error("Zagadka nie jest teraz dostepna.");
+        const wynik = nowy.wynikiZagadek[zagadka.id]?.wynik;
+        if (wynik && wynik !== "NIEUDANA")
+          throw new Error("Zagadka ma juz wynik koncowy.");
+        const postep = nowy.postepyZagadek[zagadka.id] ?? {
+          liczbaProb: 0,
+          liczbaPodpowiedzi: 0,
+        };
+        nowy.postepyZagadek[zagadka.id] = {
+          ...postep,
+          liczbaProb: postep.liczbaProb + 1,
+        };
+        nowy.aktywnaZagadka = zagadka.id;
+        break;
+      }
+      case "POPROS_O_PODPOWIEDZ": {
+        const zagadka = znajdz(dane.zagadki, polecenie.idZagadki);
+        const postep = nowy.postepyZagadek[zagadka.id];
+        if (nowy.aktywnaZagadka !== zagadka.id || !postep)
+          throw new Error("Zagadka nie jest aktywna.");
+        const tekst = zagadka.podpowiedzi[postep.liczbaPodpowiedzi];
+        if (!tekst) throw new Error("Brak kolejnej podpowiedzi.");
+        postep.liczbaPodpowiedzi++;
+        nowy.uzytePodpowiedzi[zagadka.id] = postep.liczbaPodpowiedzi;
+        efekty.push({ rodzaj: "POKAZ_KOMUNIKAT", tekst });
+        break;
+      }
+      case "ZAKONCZ_ZAGADKE":
+      case "POMIN_ZAGADKE": {
+        const zagadka = znajdz(dane.zagadki, polecenie.idZagadki);
+        const postep = nowy.postepyZagadek[zagadka.id] ?? {
+          liczbaProb: 0,
+          liczbaPodpowiedzi: 0,
+        };
+        const poprzedni = nowy.wynikiZagadek[zagadka.id]?.wynik;
+        if (poprzedni && poprzedni !== "NIEUDANA")
+          throw new Error("Zagadka ma juz wynik koncowy.");
+        if (!nowy.odwiedzoneLokalizacje.includes(zagadka.idLokalizacji))
+          throw new Error("Nie odwiedzono lokalizacji zagadki.");
+        if (
+          polecenie.rodzaj === "ZAKONCZ_ZAGADKE" &&
+          nowy.aktywnaZagadka !== zagadka.id
+        )
+          throw new Error("Zagadka nie jest aktywna.");
+        const wynik =
+          polecenie.rodzaj === "POMIN_ZAGADKE" ? "POMINIETA" : polecenie.wynik;
+        if (wynik === "ROZWIAZANA_SAMODZIELNIE" && postep.liczbaPodpowiedzi > 0)
+          throw new Error("Uzyto podpowiedzi.");
+        if (
+          wynik === "ROZWIAZANA_Z_PODPOWIEDZIA" &&
+          postep.liczbaPodpowiedzi === 0
+        )
+          throw new Error("Nie uzyto podpowiedzi.");
+        nowy.wynikiZagadek[zagadka.id] = { wynik, ...postep };
+        if (nowy.aktywnaZagadka === zagadka.id) nowy.aktywnaZagadka = null;
+        if (wynik === "POMINIETA") dodaj(nowy.pominieteZagadki, zagadka.id);
+        zastosujZmiany(nowy, zagadka.konsekwencje[wynik].zmiany);
+        efekty.push(...zagadka.konsekwencje[wynik].efekty);
+        break;
+      }
+      case "DOKONAJ_WYBORU": {
+        const wybor = znajdz(dane.wybory, polecenie.idWyboru);
+        if (
+          nowy.aktualnaScena !== wybor.idSceny ||
+          nowy.dokonaneWybory.includes(wybor.id) ||
+          (wybor.warunek && !sprawdzWarunek(wybor.warunek, nowy))
+        )
+          throw new Error("Wybor nie jest teraz dostepny.");
+        dodaj(nowy.dokonaneWybory, wybor.id);
+        zastosujZmiany(nowy, wybor.zmiany);
+        nowy.aktualnaScena = wybor.nastepnaScena;
+        efekty.push(
+          { rodzaj: "POKAZ_SCENE", id: wybor.nastepnaScena },
+          ...wybor.efekty,
+        );
+        break;
+      }
+      case "AKTYWUJ_WATEK":
+      case "ZAKONCZ_WATEK": {
+        const watek = znajdz(dane.watki, polecenie.idWatku);
+        const wymagany =
+          polecenie.rodzaj === "AKTYWUJ_WATEK" ? "DOSTEPNY" : "AKTYWNY";
+        if (nowy.watki[watek.id] !== wymagany)
+          throw new Error("Niepoprawne przejscie watku.");
+        nowy.watki[watek.id] =
+          polecenie.rodzaj === "AKTYWUJ_WATEK" ? "AKTYWNY" : "UKONCZONY";
+        break;
+      }
+      case "POMIN_WATEK": {
+        const watek = znajdz(dane.watki, polecenie.idWatku);
+        if (
+          !watek.opcjonalny ||
+          watek.wymaganyDoFinalu ||
+          ["UKONCZONY", "POMINIETY"].includes(nowy.watki[watek.id] ?? "")
+        )
+          throw new Error("Watku nie mozna pominac.");
+        nowy.watki[watek.id] = "POMINIETY";
+        break;
+      }
+      case "DODAJ_PRZEDMIOT":
+      case "USUN_PRZEDMIOT": {
+        znajdz(dane.przedmioty, polecenie.idPrzedmiotu);
+        zastosujZmiany(nowy, [
+          { rodzaj: polecenie.rodzaj, id: polecenie.idPrzedmiotu },
+        ]);
+        break;
+      }
+      case "OTWORZ_SCENKE": {
+        const scenka = znajdz(dane.scenki, polecenie.idScenki);
+        if (!sprawdzWarunek(scenka.warunek, nowy))
+          throw new Error("Scenka jest niedostepna.");
+        dodaj(nowy.odkryteScenki, scenka.id);
+        nowy.aktualnaScena = scenka.idSceny;
+        efekty.push({ rodzaj: "POKAZ_SCENE", id: scenka.idSceny });
+        break;
+      }
+      case "WZNOW_GRE":
+        efekty.push({ rodzaj: "POKAZ_SCENE", id: nowy.aktualnaScena });
+        break;
+    }
+  }
+  zastosujEfekty(nowy, efekty);
+  odblokujDostepne(dane, nowy, efekty);
+  nowy.dziennikZdarzen.push(polecenie);
+  efekty.push({ rodzaj: "USTAW_KONTEKST_NARRACJI" }, { rodzaj: "ZAPISZ_STAN" });
+  return { stan: nowy, efekty };
+}

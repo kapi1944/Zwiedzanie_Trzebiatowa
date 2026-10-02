@@ -29,13 +29,13 @@ Demonstracja używa węzłów `start`, `konwergencja` i `pozniejsza_scena` oraz 
 
 Ink może pamiętać wybór tekstowy, wizytę w scenie i lokalną wiedzę opowieści. Nie przyznaje kanonicznych przedmiotów, nie rozwiązuje zagadek, nie potwierdza GPS i nie ustala mechanicznego zakończenia.
 
-Dane mechaniki zostaną przekazane przez [Most Narracji](silnik-narracji.md). Zmienną przeznaczoną do odczytu z mostu deklaruj z właściwym typem i nie nadpisuj jej w Ink. Potrzebę zmiany mechaniki zgłaszaj tylko dozwolonym sygnałem; przyszły Silnik Gry zdecyduje, czy go przyjąć. Nie używaj EXTERNAL ani treści mającej uruchamiać JavaScript.
+Dane mechaniki zostaną przekazane przez [Most Narracji](silnik-narracji.md). Zmienną przeznaczoną do odczytu z mostu deklaruj z właściwym typem i nie nadpisuj jej w Ink. Potrzebę zmiany mechaniki zgłaszaj tylko dozwolonym sygnałem; odbiorca musi jawnie przesłać zdarzenie domenowe do Silnika Gry, który sprawdzi jego legalność. Nie używaj EXTERNAL ani treści mającej uruchamiać JavaScript.
 
 ## Tagi i tekst
 
 Przykład: `Czytasz kartkę. #dzwiek:przewrocenie_kartki #nastroj:tajemnica`.
 
-Dozwolone są wyłącznie wartości wymienione w [specyfikacji silnika](silnik-narracji.md). Audio nie jest jeszcze zaimplementowane. Nie wpisuj ścieżek plików, URL, kodu ani dowolnych poleceń w tagach. Parser odrzuca nierozpoznane wartości prezentacyjne oraz sygnały niespełniające formatu `sygnal:[a-z][a-z0-9_]*`. Runtime i Most Narracji transportują sygnały, a przyszły Silnik Gry będzie interpretował ich znaczenie.
+Dozwolone są wyłącznie wartości wymienione w [specyfikacji silnika](silnik-narracji.md). Audio nie jest jeszcze zaimplementowane. Nie wpisuj ścieżek plików, URL, kodu ani dowolnych poleceń w tagach. Parser odrzuca nierozpoznane wartości prezentacyjne oraz sygnały niespełniające formatu `sygnal:[a-z][a-z0-9_]*`. Runtime i Most Narracji transportują sygnały, a Silnik Gry stosuje konsekwencje dopiero po jawnym zdarzeniu domenowym.
 
 Tekst i etykiety wyborów są zwykłymi tekstami; przyszły interfejs powinien wyświetlać je jako tekst, bez interpretowania HTML. Własne symbole Ink zapisuj po polsku bez polskich znaków, treść dla czytelnika — poprawną polszczyzną.
 

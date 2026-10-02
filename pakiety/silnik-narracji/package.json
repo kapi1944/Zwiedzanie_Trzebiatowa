@@ -18,7 +18,8 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "inkjs": "2.4.0"
+    "inkjs": "2.4.0",
+    "@zwiedzanie/typy-wspolne": "0.1.0"
   },
   "devDependencies": {
     "vitest": "5.0.3"
