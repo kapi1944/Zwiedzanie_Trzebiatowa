@@ -108,3 +108,9 @@ Nie przeprowadzono wizyty terenowej. Brak dat `zweryfikowanoTerenowoDnia`.
 | Cała trasa | Czas spaceru, bariery dostępności, jezdnie i czas czytania na telefonie. |
 
 Etapy 5 i 6 rozszerzają interfejs i mechanikę, bez zatwierdzania zagadki terenowej ani finalnej fabuły. Aktualny kontrakt opisują [zagadki i zadania](zagadki-i-zadania.md).
+
+## Etap 7 — mapa i GPS
+
+Sceny narracyjne mają osobny `schematDefinicjiSceny`. Wyłącznie cztery definicje miejsc terenowych zawierają geo ze źródłami publicznymi; scenki i epilogi nie stają się markerami. Mapa jest lazy, pokazuje odblokowane miejsca, wizyty w opowieści i aktualny cel. Podkład online OSM jest dobrowolny.
+
+W Opowieści i Mapie można sprawdzić pozycję jednorazowo, a następnie świadomie potwierdzić obecność albo wybrać „Potwierdź ręcznie”. Każda droga kampanii nadal działa bez GPS i bez otwierania mapy; potwierdzenie nie zmienia warunków fabuły. Nie zapisujemy pozycji. Publiczne współrzędne oraz robocze promienie nie oznaczają rekonesansu. Szczegóły, źródła, prywatność i ograniczenia: [mapa i lokalizacja](mapa-i-lokalizacja.md). Etap 8 nie jest rozpoczęty.

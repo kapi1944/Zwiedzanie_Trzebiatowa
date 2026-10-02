@@ -1,7 +1,7 @@
 import { readFileSync as odczytajPlik } from "node:fs";
 import {
   schematDefinicjiGry,
-  schematDefinicjiLokalizacji,
+  schematDefinicjiSceny,
 } from "@zwiedzanie/schemat-tresci";
 import { Story as HistoriaInk, Compiler as KompilatorInk } from "inkjs/full";
 import { parseDocument as parsujDokument } from "yaml";
@@ -36,7 +36,7 @@ export function odczytajPakiet(
   const rejestr = czytaj("sceny.yaml");
   if (!Array.isArray(rejestr)) throw new Error("Rejestr scen musi byc lista.");
   const sceny = rejestr.map((scena: unknown) =>
-    schematDefinicjiLokalizacji.parse(scena),
+    schematDefinicjiSceny.parse(scena),
   );
   if (new Set(sceny.map((scena) => scena.id)).size !== sceny.length)
     throw new Error("Duplikat ID sceny.");
@@ -46,8 +46,6 @@ export function odczytajPakiet(
         throw new Error("Brak zrodla sceny.");
     if (scena.klasyfikacja !== "FABULARYZOWANE" && !scena.idZrodla.length)
       throw new Error("Scena historyczna wymaga zrodla.");
-    if (scena.id !== scena.idSceny)
-      throw new Error("ID sceny musi wskazywac ten sam wezel Ink.");
   }
   const zrodloInk = odczytajPlik(
     new URL("narracja/glowna.ink", katalog),

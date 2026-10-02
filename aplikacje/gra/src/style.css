@@ -159,7 +159,7 @@ main {
   width: 100%;
   max-width: 760px;
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   background: #fffdf7;
   border-top: 1px solid #c2cbbb;
   padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
@@ -271,4 +271,17 @@ input[type="text"] {
 }
 .zadanie h3 {
   margin-top: 28px;
+}
+
+.mapa {
+  height: 420px;
+  width: 100%;
+  margin-top: 16px;
+  background: #e4e9dc;
+  z-index: 0;
+}
+
+.mapa .leaflet-tooltip {
+  max-width: 150px;
+  white-space: normal;
 }

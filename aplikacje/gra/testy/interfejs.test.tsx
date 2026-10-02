@@ -60,6 +60,60 @@ async function kliknij(tekst: string) {
   await wykonajReact(async () => przycisk(tekst).click());
 }
 
+test("reczny fallback w Opowiesci bez otwierania mapy i bez GPS", async () => {
+  await pokaz();
+  await kliknij("Rozpocznij opowieść");
+  await kliknij("Potwierdź ręcznie");
+  expect(sesja.odczytaj().stan.potwierdzoneLokalizacje).toEqual(["rynek"]);
+  expect(kontener.textContent).toContain("Obecność potwierdzona.");
+  expect(kontener.querySelector(".mapa")).toBeNull();
+});
+
+test("odmowa GPS pozostawia reczny fallback bez zapisu pozycji", async () => {
+  const pomiar = vi.fn((_sukces, blad) => blad({ code: 1 }));
+  vi.stubGlobal("navigator", { geolocation: { getCurrentPosition: pomiar } });
+  try {
+    await pokaz();
+    await kliknij("Rozpocznij opowieść");
+    expect(pomiar).not.toHaveBeenCalled();
+    await kliknij("Sprawdź moją lokalizację");
+    expect(kontener.textContent).toContain("Odmówiono dostępu");
+    expect(sesja.odczytaj().stan.potwierdzoneLokalizacje).toEqual([]);
+    await kliknij("Potwierdź ręcznie");
+    expect(sesja.odczytaj().stan.potwierdzoneLokalizacje).toEqual(["rynek"]);
+  } finally {
+    vi.unstubAllGlobals();
+  }
+});
+
+test("GPS w promieniu wymaga swiadomego potwierdzenia bez przekazania wspolrzednych", async () => {
+  await pokaz();
+  await kliknij("Rozpocznij opowieść");
+  const geo = sesja.definicje.lokalizacje[0]?.geo;
+  if (!geo) throw new Error("Brak geo rynku.");
+  vi.stubGlobal("navigator", {
+    geolocation: {
+      getCurrentPosition: (sukces: PositionCallback) =>
+        sukces({
+          coords: {
+            latitude: geo.szerokosc,
+            longitude: geo.dlugosc,
+            accuracy: 5,
+          },
+        } as GeolocationPosition),
+    },
+  });
+  try {
+    await kliknij("Sprawdź moją lokalizację");
+    expect(sesja.odczytaj().stan.potwierdzoneLokalizacje).toEqual([]);
+    await kliknij("Potwierdź obecność po pomiarze");
+    expect(sesja.odczytaj().stan.potwierdzoneLokalizacje).toEqual(["rynek"]);
+    expect(JSON.stringify(sesja.odczytaj().stan)).not.toContain("szerokosc");
+  } finally {
+    vi.unstubAllGlobals();
+  }
+});
+
 test("start jest semantyczny, bez spoilerow i bez ladowania silnika", async () => {
   const uruchom = vi.fn(async () => new SesjaGry());
   await pokaz(uruchom);

@@ -107,11 +107,35 @@ export const schematManifestuGry = z.strictObject({
   scenaStartowa: schematId,
 });
 export type ManifestGry = z.infer<typeof schematManifestuGry>;
-export const schematDefinicjiLokalizacji = z.strictObject({
-  ...polaElementu,
-  idSceny: schematId,
-  warunek: schematWarunku.optional(),
-});
+export const schematDefinicjiSceny = z.strictObject({ ...polaElementu });
+export type DefinicjaSceny = z.infer<typeof schematDefinicjiSceny>;
+export const schematDefinicjiLokalizacji = z
+  .strictObject({
+    trybPotwierdzenia: z
+      .enum(["GPS_LUB_RECZNIE", "TYLKO_RECZNIE"])
+      .default("TYLKO_RECZNIE"),
+    geo: z
+      .strictObject({
+        szerokosc: z.number().min(-90).max(90),
+        dlugosc: z.number().min(-180).max(180),
+        promienPotwierdzeniaMetry: z.number().positive(),
+        dokladnoscWymaganaMetry: z.number().positive().optional(),
+        zrodloWspolrzednych: z.url(),
+        charakterDanych: z.string().min(1),
+      })
+      .optional(),
+    ...polaElementu,
+    idSceny: schematId,
+    warunek: schematWarunku.optional(),
+  })
+  .refine(
+    (miejsce) =>
+      miejsce.trybPotwierdzenia !== "GPS_LUB_RECZNIE" ||
+      miejsce.geo !== undefined,
+    {
+      message: "Potwierdzenie GPS wymaga danych geo.",
+    },
+  );
 export type DefinicjaLokalizacji = z.infer<typeof schematDefinicjiLokalizacji>;
 export const schematDefinicjiWatku = z.strictObject({
   ...polaElementu,

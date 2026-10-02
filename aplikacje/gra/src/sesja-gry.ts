@@ -219,6 +219,12 @@ export class SesjaGry {
       this.#wykonaj({ rodzaj: "ROZPOCZNIJ_ZAGADKE", idZagadki: zagadka.id });
   }
 
+  potwierdzObecnosc(idLokalizacji: string) {
+    if (!this.#stan.potwierdzoneLokalizacje.includes(idLokalizacji))
+      this.#wykonaj({ rodzaj: "POTWIERDZ_OBECNOSC", idLokalizacji });
+    return this.odczytaj();
+  }
+
   podpowiedz() {
     const zagadka = this.odczytaj().zagadka;
     if (!zagadka) throw new Error("Brak zagadki.");

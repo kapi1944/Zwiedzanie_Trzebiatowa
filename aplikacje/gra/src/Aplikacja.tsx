@@ -1,17 +1,24 @@
 import {
   Component as Komponent,
+  lazy as leniwie,
+  Suspense as Oczekiwanie,
   type ReactNode,
   useEffect as uzyjEfektu,
   useRef as uzyjReferencji,
   useState as uzyjStanu,
 } from "react";
+import { aktualneMiejsce } from "./lokalizacja";
+import { PotwierdzenieObecnosci } from "./PotwierdzenieObecnosci";
 import type { SesjaGry, WidokSesji } from "./sesja-gry";
 import { InformacjaOWyniku, WidokZagadki } from "./WidokZagadki";
 
-type Widok = "start" | "gra" | "kronika" | "watki" | "informacje";
+const Mapa = leniwie(() => import("./Mapa"));
+
+type Widok = "start" | "gra" | "mapa" | "kronika" | "watki" | "informacje";
 const nazwyWidokow: Record<Widok, string> = {
   start: "Start",
   gra: "Opowieść",
+  mapa: "Mapa",
   kronika: "Kronika",
   watki: "Wątki",
   informacje: "O grze",
@@ -39,6 +46,23 @@ export class GranicaBledu extends Komponent<
       <main>
         <BladGry szczegoly="Błąd wyświetlania opowieści." />
       </main>
+    ) : (
+      this.props.children
+    );
+  }
+}
+
+class GranicaMapy extends Komponent<
+  { children: ReactNode },
+  { blad: boolean }
+> {
+  state = { blad: false };
+  static getDerivedStateFromError() {
+    return { blad: true };
+  }
+  render() {
+    return this.state.blad ? (
+      <p role="status">Mapa jest niedostępna. Kontynuuj w widoku Opowieść.</p>
     ) : (
       this.props.children
     );
@@ -124,6 +148,10 @@ export default function Aplikacja({
 
   const definicje = sesja.current?.definicje;
   const zagadka = dane?.zagadka;
+  const miejsce =
+    definicje && dane && !dane.profil
+      ? aktualneMiejsce(definicje.lokalizacje, dane.stan)
+      : undefined;
   const diagnostyka =
     import.meta.env.DEV &&
     new URLSearchParams(window.location.search).get("debug") === "1";
@@ -185,6 +213,31 @@ export default function Aplikacja({
               </h1>
             )}
             {ladowanie && <p role="status">Przygotowuję opowieść…</p>}
+            {(widok === "gra" || widok === "mapa") && miejsce && dane && (
+              <PotwierdzenieObecnosci
+                key={miejsce.id + widok}
+                miejsce={miejsce}
+                potwierdzone={dane.stan.potwierdzoneLokalizacje.includes(
+                  miejsce.id,
+                )}
+                potwierdz={() =>
+                  wykonaj((gra) => gra.potwierdzObecnosc(miejsce.id))
+                }
+              />
+            )}
+            {widok === "mapa" &&
+              (dane && definicje ? (
+                <Oczekiwanie fallback={<p role="status">Ładuję mapę…</p>}>
+                  <GranicaMapy>
+                    <Mapa
+                      lokalizacje={definicje.lokalizacje}
+                      stan={dane.stan}
+                    />
+                  </GranicaMapy>
+                </Oczekiwanie>
+              ) : (
+                <p>Rozpocznij opowieść, aby odkryć miejsca.</p>
+              ))}
             {widok === "gra" && dane && (
               <>
                 <p className="etykieta">

@@ -6,6 +6,14 @@
     - gmina_zabytki
   wymagaWeryfikacjiTerenowej: true
   idSceny: prolog
+  trybPotwierdzenia: GPS_LUB_RECZNIE
+  geo:
+    szerokosc: 54.062392199421
+    dlugosc: 15.265858022611
+    promienPotwierdzeniaMetry: 60
+    dokladnoscWymaganaMetry: 40
+    zrodloWspolrzednych: https://rowery.wzp.pl/en/1636-pomorze-zachodnie-the-town-hall
+    charakterDanych: Punkt obiektu z mapy instytucji publicznej, odczyt 2026-10-02. Dokladnosc terenowa nieznana; wymaga rekonesansu.
 - id: hansken
   nazwa: Hansken — Rynek 26
   klasyfikacja: FAKT
@@ -13,6 +21,14 @@
     - wzp_hansken
   wymagaWeryfikacjiTerenowej: true
   idSceny: hansken
+  trybPotwierdzenia: GPS_LUB_RECZNIE
+  geo:
+    szerokosc: 54.061859999421
+    dlugosc: 15.266039973629
+    promienPotwierdzeniaMetry: 60
+    dokladnoscWymaganaMetry: 40
+    zrodloWspolrzednych: https://rowery.wzp.pl/en/3726-pomorze-zachodnie-sgraffito-of-hansken-the-elephant-on-the-facade
+    charakterDanych: Punkt obiektu z mapy instytucji publicznej, odczyt 2026-10-02. Dokladnosc terenowa nieznana; wymaga rekonesansu.
   warunek:
     rodzaj: dowolny
     warunki:
@@ -29,6 +45,14 @@
     - nid_kosciol
   wymagaWeryfikacjiTerenowej: true
   idSceny: kosciol
+  trybPotwierdzenia: GPS_LUB_RECZNIE
+  geo:
+    szerokosc: 54.063962100817
+    dlugosc: 15.266927061477
+    promienPotwierdzeniaMetry: 60
+    dokladnoscWymaganaMetry: 40
+    zrodloWspolrzednych: https://zabytek.pl/pl/obiekty/trzebiatow-kosciol-par-pw-macierzynstwa-nmp
+    charakterDanych: Punkt obiektu z mapy instytucji publicznej, odczyt 2026-10-02. Dokladnosc terenowa nieznana; wymaga rekonesansu.
   warunek:
     rodzaj: flagaJest
     id: hansken_domkniety
@@ -40,6 +64,14 @@
     - gmina_zabytki
   wymagaWeryfikacjiTerenowej: true
   idSceny: baszta
+  trybPotwierdzenia: GPS_LUB_RECZNIE
+  geo:
+    szerokosc: 54.060467053052
+    dlugosc: 15.266369228073
+    promienPotwierdzeniaMetry: 60
+    dokladnoscWymaganaMetry: 40
+    zrodloWspolrzednych: https://rowery.wzp.pl/2447-pomorze-zachodnie-baszta-prochowa-baszta-kaszana-w-trzebiatowie
+    charakterDanych: Punkt obiektu z mapy instytucji publicznej, odczyt 2026-10-02. Dokladnosc terenowa nieznana; wymaga rekonesansu.
   warunek:
     rodzaj: flagaJest
     id: czytano_kosciol
