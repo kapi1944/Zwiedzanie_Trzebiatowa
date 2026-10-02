@@ -12,6 +12,7 @@ import {
   vi,
 } from "vitest";
 import Aplikacja, { GranicaBledu } from "../src/Aplikacja";
+import { zapiszUstawienia } from "../src/MenedzerWydajnosci";
 import { SesjaGry } from "../src/sesja-gry";
 
 let korzen: Korzen;
@@ -30,6 +31,7 @@ poTescie(async () => {
   await wykonajReact(() => korzen.unmount());
   kontener.remove();
   vi.restoreAllMocks();
+  localStorage.clear();
 });
 
 async function pokaz(
@@ -132,30 +134,41 @@ test("start jest semantyczny, bez spoilerow i bez ladowania silnika", async () =
   expect(kontener.textContent).not.toContain("Dwie notatki");
 });
 
-test.each([
-  {
-    nazwa: "A",
-    prolog: "Szukam tego, co można udowodnić.",
-    final: "Najpierw zapisuję to, co potwierdzają ślady.",
-    profil: "kronikarz",
-  },
-  {
-    nazwa: "B",
-    prolog: "Szukam tego, co ludzie zapamiętali.",
-    final: "Najpierw zapisuję opowieść mieszkańców.",
-    profil: "straznik_opowiesci",
-  },
-  {
-    nazwa: "C",
-    prolog: "Najpierw chcę wysłuchać obu stron.",
-    final: "Zachowuję obie wersje i zaznaczam ich różny charakter.",
-    profil: "lacznik",
-  },
-])(
-  "droga $nazwa: React, oba silniki i mini-final",
-  async ({ nazwa, prolog, final, profil }) => {
+test.each(
+  [
+    {
+      nazwa: "A",
+      prolog: "Szukam tego, co można udowodnić.",
+      final: "Najpierw zapisuję to, co potwierdzają ślady.",
+      profil: "kronikarz",
+    },
+    {
+      nazwa: "B",
+      prolog: "Szukam tego, co ludzie zapamiętali.",
+      final: "Najpierw zapisuję opowieść mieszkańców.",
+      profil: "straznik_opowiesci",
+    },
+    {
+      nazwa: "C",
+      prolog: "Najpierw chcę wysłuchać obu stron.",
+      final: "Zachowuję obie wersje i zaznaczam ich różny charakter.",
+      profil: "lacznik",
+    },
+  ].flatMap((droga) =>
+    (["PELNY", "EKO"] as const).map((profilWydajnosci) => ({
+      ...droga,
+      profilWydajnosci,
+    })),
+  ),
+)(
+  "droga $nazwa w $profilWydajnosci: React, oba silniki i mini-final",
+  async ({ nazwa, prolog, final, profil, profilWydajnosci }) => {
+    zapiszUstawienia({ profil: profilWydajnosci, ruch: "SYSTEMOWY" });
     const wykonanie = vi.spyOn(silnik, "wykonajKrok");
     await pokaz();
+    expect(
+      kontener.querySelector(".aplikacja")?.getAttribute("data-profil"),
+    ).toBe(profilWydajnosci);
     await kliknij("Rozpocznij opowieść");
     expect(kontener.querySelector("h1")?.textContent).toBe("Rynek i Ratusz");
     expect(document.activeElement).toBe(kontener.querySelector("h1"));

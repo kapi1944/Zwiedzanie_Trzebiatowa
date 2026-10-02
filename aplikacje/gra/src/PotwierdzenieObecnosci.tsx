@@ -5,6 +5,7 @@ import {
   useState as uzyjStanu,
 } from "react";
 import { AdapterLokalizacji, type WynikLokalizacji } from "./lokalizacja";
+import type { MenedzerWydajnosci } from "./MenedzerWydajnosci";
 
 const komunikaty: Record<WynikLokalizacji, string> = {
   BRAK_WSPARCIA: "Urządzenie nie obsługuje lokalizacji. Potwierdź ręcznie.",
@@ -20,10 +21,12 @@ const komunikaty: Record<WynikLokalizacji, string> = {
     "Pomiar jest wystarczająco dokładny i mieści się w promieniu celu.",
 };
 export function PotwierdzenieObecnosci({
+  wydajnosc,
   miejsce,
   potwierdzone,
   potwierdz,
 }: {
+  wydajnosc?: ReturnType<typeof MenedzerWydajnosci>;
   miejsce: DefinicjaLokalizacji;
   potwierdzone: boolean;
   potwierdz: () => void;
@@ -42,7 +45,11 @@ export function PotwierdzenieObecnosci({
     if (zajete.current) return;
     zajete.current = true;
     ustawPomiar(true);
-    const odpowiedz = await new AdapterLokalizacji().sprawdz(miejsce, true);
+    const odpowiedz = await new AdapterLokalizacji().sprawdz(
+      miejsce,
+      true,
+      wydajnosc?.wiekPozycji ?? 0,
+    );
     if (!aktywne.current) return;
     ustawWynik(odpowiedz);
     ustawPomiar(false);

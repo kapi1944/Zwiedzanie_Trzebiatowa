@@ -225,7 +225,7 @@ test("efekt ZAPISZ_STAN wymaga utrwalenia calej zakonczonej akcji", () => {
   expect(gra.wymagaZapisu).toBe(true);
   expect(przywroc(gra).odczytaj().stan.aktywnaZagadka).toBe("zagadka_hansken");
 });
-test("artefakt SW zawiera caly lokalny shell i lazy tresc, bez kafelkow OSM", () => {
+test("artefakt SW zawiera shell i tresc offline, mapa dopiero na zadanie", () => {
   const sw = odczytajPlik(new URL("../dist/sw.js", import.meta.url), "utf8");
   const manifest = JSON.parse(
     odczytajPlik(
@@ -239,6 +239,11 @@ test("artefakt SW zawiera caly lokalny shell i lazy tresc, bez kafelkow OSM", ()
     file: string;
     css?: string[];
   }[]) {
+    if (element.file.startsWith("assets/Mapa-")) {
+      expect(pliki).not.toContain(element.file);
+      for (const css of element.css ?? []) expect(pliki).not.toContain(css);
+      continue;
+    }
     expect(pliki).toContain(element.file);
     for (const css of element.css ?? []) expect(pliki).toContain(css);
   }
@@ -249,6 +254,7 @@ test("artefakt SW zawiera caly lokalny shell i lazy tresc, bez kafelkow OSM", ()
   expect(pliki.every((plik) => !plik?.includes("://"))).toBe(true);
   expect(sw).not.toMatch(/tile\.openstreetmap|https:\/\//);
   expect(sw).toContain("SKIP_WAITING");
+  expect(sw).toContain("mapa-na-zadanie");
   expect(sw).not.toMatch(/clientsClaim\(/);
 });
 test("manifest PWA ma polski jezyk, standalone i lokalne ikony PNG", () => {

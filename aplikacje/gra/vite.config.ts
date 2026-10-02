@@ -25,9 +25,18 @@ export default zdefiniujKonfiguracje({
       },
       workbox: {
         globPatterns: ["**/*.{html,js,css,png,svg,json}"],
-        globIgnores: ["**/.vite/**"],
+        globIgnores: ["**/.vite/**", "**/Mapa-*"],
         navigateFallback: "index.html",
-        runtimeCaching: [],
+        runtimeCaching: [
+          {
+            urlPattern: /\/assets\/Mapa-[^/]+\.(js|css)$/,
+            handler: "CacheFirst",
+            options: {
+              cacheName: "mapa-na-zadanie",
+              expiration: { maxEntries: 8 },
+            },
+          },
+        ],
         cleanupOutdatedCaches: true,
         skipWaiting: false,
         clientsClaim: false,

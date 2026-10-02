@@ -103,7 +103,7 @@ p {
   color: #51624e;
 }
 main {
-  padding: 8px 20px calc(110px + env(safe-area-inset-bottom));
+  padding: 8px 20px calc(170px + env(safe-area-inset-bottom));
 }
 .powitanie {
   padding-top: 36px;
@@ -159,7 +159,7 @@ main {
   width: 100%;
   max-width: 760px;
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   background: #fffdf7;
   border-top: 1px solid #c2cbbb;
   padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
@@ -219,14 +219,26 @@ pre {
     font-size: 0.9rem;
   }
 }
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto;
-    animation: none;
-    transition: none;
-  }
+[data-ograniczony-ruch="true"] *,
+[data-profil="EKO"] * {
+  scroll-behavior: auto;
+  animation: none;
+  transition: none;
+}
+
+[data-profil="EKO"] .linia-regi {
+  display: none;
+}
+[data-profil="EKO"] * {
+  filter: none;
+  backdrop-filter: none;
+}
+select {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  font: inherit;
+  margin: 8px 0 18px;
 }
 
 fieldset {

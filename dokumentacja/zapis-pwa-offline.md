@@ -61,7 +61,7 @@ Podczas IO interfejs gry jest nieaktywny i ogłasza „Zapisuję postęp…”. 
 
 `vite-plugin-pwa` używa `generateSW` Workbox. Nie napisano własnego SW. Manifest ma polską nazwę i język, start `/`, zakres `/`, standalone oraz kolory projektu. Własne techniczne ikony PNG 192/512 przedstawiają kartę Kroniki, bez cudzych logotypów.
 
-Precache obejmuje lokalne HTML, JS, CSS i ikony, także dynamiczne chunki mapy i sesji z treścią. Mapa nadal jest lazy dla wykonania JS, choć plik jest pobierany do cache podczas instalacji SW. Navigacje używają lokalnego `index.html`. Brak runtime caching zewnętrznych adresów, kafelków OSM, masowego pobierania i offline tile packa.
+Precache obejmuje lokalne HTML, JS, CSS i ikony oraz dynamiczny chunk sesji z treścią. Od Etapu 9 JS/CSS mapy są pobierane dopiero po otwarciu mapy i zachowywane przez Workbox CacheFirst. Pierwsze otwarcie mapy offline wymaga wcześniejszego otwarcia online; w razie braku cache można kontynuować w Opowieści. Navigacje używają lokalnego `index.html`. Brak runtime caching zewnętrznych adresów, kafelków OSM, masowego pobierania i offline tile packa.
 
 Po poprawnym ukończeniu pierwszej instalacji SW aplikacja może wystartować bez serwera. Sama jednorazowa wizyta przed ukończeniem pobrania nie gwarantuje offline. SW wymaga HTTPS lub localhost; `vite dev` nie jest dowodem działania produkcyjnego SW. Sprawdzać build przez `npx vite preview` z katalogu gry.
 
@@ -84,7 +84,7 @@ Wykonać na produkcyjnym buildzie w tym samym profilu i originie (protokół, ho
 | 3 | Refresh. | Ekran startowy z „Wznów opowieść”. |
 | 4 | Wznów sesję. | Ten sam tekst, wynik Hansken, podpowiedź, przedmiot i dalsze opcje. |
 | 5 | DevTools → Network → Offline. | Subtelny status Offline, opowieść pozostaje dostępna. |
-| 6 | Kontynuuj do Kościoła, otwórz scenkę, opcjonalnie mapę. | Treść i lazy mapa działają; podkład niedostępny, markery/lista dostępne; zapis lokalny udany. |
+| 6 | Kontynuuj do Kościoła, otwórz scenkę, opcjonalnie mapę. | Treść działa; mapa działa po wcześniejszym otwarciu online. Bez jej cache wróć do Opowieści; zapis lokalny udany. |
 | 7 | Zamknij kartę po potwierdzeniu zapisu. | Dane pozostają w IndexedDB. |
 | 8 | Otwórz ponownie ten sam adres offline. Jeśli DevTools Offline był przypięty do karty, włącz tryb offline również w nowej karcie. | App-shell uruchamia się z SW. |
 | 9 | Wznów. | Kontynuacja tej samej sceny i postępu. |

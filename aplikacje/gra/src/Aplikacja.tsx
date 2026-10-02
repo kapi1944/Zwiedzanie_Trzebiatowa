@@ -9,6 +9,15 @@ import {
 } from "react";
 import { aktualneMiejsce } from "./lokalizacja";
 import type { MagazynZapisu } from "./MagazynZapisu";
+import {
+  MenedzerWydajnosci,
+  odczytajUstawienia,
+  odczytajWskazowki,
+  type ProfilWydajnosci,
+  type TrybRuchu,
+  type UstawieniaWydajnosci,
+  zapiszUstawienia,
+} from "./MenedzerWydajnosci";
 import { PotwierdzenieObecnosci } from "./PotwierdzenieObecnosci";
 import { type ObslugaPwa, StatusPwa } from "./StatusPwa";
 import type { SesjaGry, WidokSesji } from "./sesja-gry";
@@ -16,7 +25,14 @@ import { InformacjaOWyniku, WidokZagadki } from "./WidokZagadki";
 
 const Mapa = leniwie(() => import("./Mapa"));
 
-type Widok = "start" | "gra" | "mapa" | "kronika" | "watki" | "informacje";
+type Widok =
+  | "start"
+  | "gra"
+  | "mapa"
+  | "kronika"
+  | "watki"
+  | "informacje"
+  | "ustawienia";
 const nazwyWidokow: Record<Widok, string> = {
   start: "Start",
   gra: "Opowieść",
@@ -24,6 +40,7 @@ const nazwyWidokow: Record<Widok, string> = {
   kronika: "Kronika",
   watki: "Wątki",
   informacje: "O grze",
+  ustawienia: "Ustawienia",
 };
 const nazwyScen: Record<string, string> = {
   prolog: "Rynek i Ratusz",
@@ -97,6 +114,29 @@ export default function Aplikacja({
   pwa?: ObslugaPwa;
 }) {
   const [widok, ustawWidok] = uzyjStanu<Widok>("start");
+  const [ustawienia, ustawUstawienia] = uzyjStanu(odczytajUstawienia);
+  const [wskazowki, ustawWskazowki] = uzyjStanu(odczytajWskazowki);
+  const [utrwalonoUstawienia, ustawUtrwalonoUstawienia] = uzyjStanu(true);
+  const wydajnosc = MenedzerWydajnosci(ustawienia, wskazowki);
+  function zmienUstawienia(nowe: UstawieniaWydajnosci) {
+    ustawUstawienia(nowe);
+    ustawUtrwalonoUstawienia(zapiszUstawienia(nowe));
+  }
+  uzyjEfektu(() => {
+    const ruch =
+      typeof matchMedia === "function"
+        ? matchMedia("(prefers-reduced-motion: reduce)")
+        : undefined;
+    const siec = (navigator as Navigator & { connection?: EventTarget })
+      .connection;
+    const odswiez = () => ustawWskazowki(odczytajWskazowki());
+    ruch?.addEventListener?.("change", odswiez);
+    siec?.addEventListener?.("change", odswiez);
+    return () => {
+      ruch?.removeEventListener?.("change", odswiez);
+      siec?.removeEventListener?.("change", odswiez);
+    };
+  }, []);
   const [dane, ustawDane] = uzyjStanu<WidokSesji>();
   const [ladowanie, ustawLadowanie] = uzyjStanu(!!magazyn);
   const [blad, ustawBlad] = uzyjStanu<string>();
@@ -232,7 +272,11 @@ export default function Aplikacja({
       : nazwyWidokow[widok];
 
   return (
-    <div className="aplikacja">
+    <div
+      className="aplikacja"
+      data-profil={wydajnosc.profil}
+      data-ograniczony-ruch={wydajnosc.ograniczonyRuch}
+    >
       <a className="pomin-nawigacje" href="#tresc">
         Przejdź do treści
       </a>
@@ -333,6 +377,7 @@ export default function Aplikacja({
             {ladowanie && <p role="status">Przygotowuję opowieść…</p>}
             {(widok === "gra" || widok === "mapa") && miejsce && dane && (
               <PotwierdzenieObecnosci
+                wydajnosc={wydajnosc}
                 key={miejsce.id + widok}
                 miejsce={miejsce}
                 potwierdzone={dane.stan.potwierdzoneLokalizacje.includes(
@@ -348,6 +393,9 @@ export default function Aplikacja({
                 <Oczekiwanie fallback={<p role="status">Ładuję mapę…</p>}>
                   <GranicaMapy>
                     <Mapa
+                      uproszczona={
+                        wydajnosc.profil === "EKO" || wydajnosc.ograniczonyRuch
+                      }
                       lokalizacje={definicje.lokalizacje}
                       stan={dane.stan}
                     />
@@ -508,6 +556,54 @@ export default function Aplikacja({
                     ))}
                 </ul>
               </>
+            )}
+            {widok === "ustawienia" && (
+              <section className="karta">
+                <label htmlFor="profil-wydajnosci">Tryb wydajności</label>
+                <select
+                  id="profil-wydajnosci"
+                  value={ustawienia.profil}
+                  onChange={(zdarzenie) =>
+                    zmienUstawienia({
+                      ...ustawienia,
+                      profil: zdarzenie.target.value as ProfilWydajnosci,
+                    })
+                  }
+                >
+                  <option value="AUTOMATYCZNY">Automatyczny</option>
+                  <option value="PELNY">Pełny</option>
+                  <option value="EKO">EKO</option>
+                </select>
+                <p role="status">
+                  Aktywny tryb: {wydajnosc.profil === "EKO" ? "EKO" : "Pełny"}.
+                  Możesz zmienić go w każdej chwili.
+                </p>
+                <label htmlFor="tryb-ruchu">Ogranicz ruch</label>
+                <select
+                  id="tryb-ruchu"
+                  value={ustawienia.ruch}
+                  onChange={(zdarzenie) =>
+                    zmienUstawienia({
+                      ...ustawienia,
+                      ruch: zdarzenie.target.value as TrybRuchu,
+                    })
+                  }
+                >
+                  <option value="SYSTEMOWY">Zgodnie z systemem</option>
+                  <option value="OGRANICZONY">Ręcznie: ogranicz ruch</option>
+                  <option value="PELNY">Ręcznie: pełny ruch</option>
+                </select>
+                <p>
+                  Ustawienia dotyczą tego urządzenia. Wybory, zagadki i
+                  zakończenia są takie same we wszystkich trybach.
+                </p>
+                {!utrwalonoUstawienia && (
+                  <p role="status">
+                    Nie udało się zapamiętać ustawień. Obowiązują do zamknięcia
+                    aplikacji.
+                  </p>
+                )}
+              </section>
             )}
             {widok === "informacje" && (
               <section className="karta">

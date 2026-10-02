@@ -14,9 +14,11 @@ import {
 import { aktualneMiejsce, miejscaNaMapie } from "./lokalizacja";
 
 export default function Mapa({
+  uproszczona = false,
   lokalizacje,
   stan,
 }: {
+  uproszczona?: boolean;
   lokalizacje: readonly DefinicjaLokalizacji[];
   stan: StanGry;
 }) {
@@ -37,7 +39,12 @@ export default function Mapa({
   }, []);
   uzyjEfektu(() => {
     if (!kontener.current) return;
-    const mapa = utworzMape(kontener.current, { scrollWheelZoom: false });
+    const mapa = utworzMape(kontener.current, {
+      scrollWheelZoom: false,
+      zoomAnimation: !uproszczona,
+      fadeAnimation: !uproszczona,
+      markerZoomAnimation: !uproszczona,
+    });
     const punkty: [number, number][] = [];
     for (const miejsce of miejscaNaMapie(lokalizacje, stan)) {
       if (!miejsce.geo) continue;
@@ -69,7 +76,7 @@ export default function Mapa({
     return () => {
       mapa.remove();
     };
-  }, [lokalizacje, stan, cel?.id, online, siec]);
+  }, [lokalizacje, stan, cel?.id, online, siec, uproszczona]);
   return (
     <section>
       {!siec && (

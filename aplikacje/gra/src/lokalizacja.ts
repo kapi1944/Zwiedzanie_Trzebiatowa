@@ -66,6 +66,7 @@ export class AdapterLokalizacji {
   sprawdz(
     miejsce: DefinicjaLokalizacji,
     zgoda: boolean,
+    wiekPozycji = 0,
   ): Promise<WynikLokalizacji> {
     if (!zgoda) return Promise.resolve("BRAK_ZGODY");
     if (!this.#geolokalizacja) return Promise.resolve("BRAK_WSPARCIA");
@@ -90,7 +91,7 @@ export class AdapterLokalizacji {
                   ? "TIMEOUT"
                   : "NIEDOSTEPNA",
             ),
-          { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 },
+          { enableHighAccuracy: true, timeout: 12000, maximumAge: wiekPozycji },
         );
       } catch {
         zakoncz("NIEDOSTEPNA");
