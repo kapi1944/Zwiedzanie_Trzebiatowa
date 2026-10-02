@@ -1,6 +1,6 @@
 # Architektura docelowa
 
-Dokument opisuje założenia o statusie TYMCZASOWA. W Etapie 0 nie tworzymy aplikacji, pakietów ani mechanizmów wykonawczych.
+Dokument opisuje założenia docelowe o statusie TYMCZASOWA. Etap 1 tworzy strukturę npm workspaces, ekrany startowe aplikacji i minimalne pakiety TypeScript. Poniższe odpowiedzialności domenowe pozostają docelowe; mechanika, Ink, walidacja, PWA, GPS, mapa, audio i zapis nie są jeszcze zaimplementowane.
 
 ```text
 aplikacje/
@@ -33,7 +33,7 @@ Silnik Gry rozstrzyga mechanikę. Ink przedstawia narrację zależną od udostę
 
 Model warkocza łączy rozgałęzienia i indywidualne konsekwencje przez scenki opcjonalne oraz częściową konwergencję. Mechanizm Zakończeń wyznacza kompozytowy ProfilZakonczenia: glowneZakonczenie, epilogiWatkow[], wazneOdkrycia[] i konsekwencjeZagadek[]. Nie implementujemy pełnego drzewa osobnych kampanii.
 
-Moduły mają niezależne odpowiedzialności. Szczegóły kontraktów, zapisu, przygotowania offline i narzędzi monorepo zostaną ustalone w kolejnych zatwierdzonych etapach. Nie dodajemy teraz backendu, baz danych ani integracji.
+Moduły mają niezależne odpowiedzialności. Szczegóły kontraktów, zapisu i przygotowania offline zostaną ustalone w kolejnych zatwierdzonych etapach. Etap 1 używa wyłącznie npm workspaces (`aplikacje/*`, `pakiety/*`), wspólnego `tsconfig.base.json` oraz Biome. Pakiety budują niezależne moduły ESM i deklaracje typów, bez zależności runtime. Strona używa App Routera Next.js i eksportu statycznego. Nie dodajemy teraz backendu, baz danych ani integracji.
 
 ## Nazewnictwo domenowe
 
@@ -65,4 +65,4 @@ Własne nazwy są polskie. W plikach, katalogach, identyfikatorach i symbolach k
 
 Nazwy prezentowane graczowi to PEŁNY, AUTOMATYCZNY i EKO; ich planowane identyfikatory to PELNY, AUTOMATYCZNY i EKO.
 
-Docelowe katalogi aplikacje/ i pakiety/ zostaną jawnie wskazane w konfiguracji obszarów roboczych npm. W Etapie 0 nie ma konfiguracji ani potwierdzonego problemu wymagającego wyjątku infrastrukturalnego. Jeśli późniejsze sprawdzenie npm, Next.js lub Vite wykaże rzeczywisty problem, należy go udokumentować i przed zmianą zaproponować wyjątek dla nazw tych dwóch katalogów.
+Katalogi aplikacje/ i pakiety/ są jawnie wskazane w konfiguracji obszarów roboczych npm. Jeśli sprawdzenie npm, Next.js lub Vite wykaże rzeczywisty problem, należy go udokumentować i przed zmianą zaproponować wyjątek dla nazw tych dwóch katalogów.

@@ -17,3 +17,7 @@
 - TYMCZASOWA nie przechodzi w ZAAKCEPTOWANA bez bezpośredniego zatwierdzenia przez użytkownika. Zmiany decyzji odnotowuj w Rejestrze Decyzji, zachowując ich historię.
 
 Etap 0 obejmuje wyłącznie dokumentację. Nie instaluj zależności npm ani nie twórz Reacta, Next.js, Ink, Silnika Gry, mapy, GPS, PWA, audio, backendu, baz danych czy płatności.
+
+Etap 1 obejmuje npm workspaces, React + TypeScript + Vite dla gry, Next.js + TypeScript dla strony, minimalne pakiety TypeScript i opis przyszłego układu treści. Nie obejmuje mechaniki, Ink, Zod, mapy, GPS, PWA, audio, zapisu, backendu, baz danych ani płatności. Nazwy `app`, `layout.tsx`, `page.tsx`, `children` i `metadata` pozostają wymaganymi nazwami Next.js; własne komponenty i lokalne symbole są polskie.
+
+Z katalogu głównego uruchamiaj `npm run build`, `npm run typecheck`, `npm run lint` i `npm run test`. Testy smoke korzystają z wbudowanego runnera Node.js i najpierw budują artefakty, więc działają również na świeżej instalacji. Formatowanie: `npm run format`. Nie dodawaj równoległego ESLint ani Prettier. Zależności i lockfile instaluj z katalogu głównego; nie twórz osobnych lockfile'ów w workspace'ach.
