@@ -18,7 +18,7 @@
     "typecheck": "npm run typecheck --workspaces",
     "lint": "biome check .",
     "format": "biome format --write .",
-    "test": "npm run build && node --test testy/fundament.test.mjs"
+    "test": "npm run build && node --test testy/fundament.test.mjs && npm run test --workspace=@zwiedzanie/silnik-narracji"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

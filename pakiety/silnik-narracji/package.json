@@ -13,7 +13,14 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
-    "typecheck": "tsc --noEmit"
+    "build": "tsc && inkjs-compiler -o dist/testowa.json ../../tresc/trzebiatow-v1/narracja/testowa.ink",
+    "typecheck": "tsc --noEmit && tsc --project tsconfig.testy.json",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "inkjs": "2.4.0"
+  },
+  "devDependencies": {
+    "vitest": "5.0.3"
   }
 }
