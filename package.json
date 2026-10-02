@@ -8,17 +8,17 @@
     "pakiety/*"
   ],
   "engines": {
-    "node": ">=24.0.0",
+    "node": ">=24.15.0",
     "npm": ">=11.0.0"
   },
   "scripts": {
-    "dev:gra": "npm run dev --workspace=@zwiedzanie/gra",
+    "dev:gra": "npm run build --workspace=@zwiedzanie/typy-wspolne && npm run build --workspace=@zwiedzanie/schemat-tresci && npm run build --workspace=@zwiedzanie/silnik-gry && npm run build --workspace=@zwiedzanie/silnik-narracji && npm run build:tresc && npm run dev --workspace=@zwiedzanie/gra",
     "dev:strona": "npm run dev --workspace=@zwiedzanie/strona",
-    "build": "npm run build --workspace=@zwiedzanie/typy-wspolne && npm run build --workspace=@zwiedzanie/schemat-tresci && npm run build --workspace=@zwiedzanie/silnik-gry && npm run build --workspace=@zwiedzanie/silnik-narracji && npm run build --workspace=@zwiedzanie/gra && npm run build --workspace=@zwiedzanie/strona && npm run build:tresc",
+    "build": "npm run build --workspace=@zwiedzanie/typy-wspolne && npm run build --workspace=@zwiedzanie/schemat-tresci && npm run build --workspace=@zwiedzanie/silnik-gry && npm run build --workspace=@zwiedzanie/silnik-narracji && npm run build:tresc && npm run build --workspace=@zwiedzanie/gra && npm run build --workspace=@zwiedzanie/strona",
     "typecheck": "npm run typecheck --workspaces && tsc --project tsconfig.tresc.json",
     "lint": "biome check .",
     "format": "biome format --write .",
-    "test": "npm run build && node --test testy/fundament.test.mjs && npm run test --workspace=@zwiedzanie/silnik-narracji && npm run test --workspace=@zwiedzanie/silnik-gry && vitest run --config vitest.tresc.config.ts",
+    "test": "npm run build && node --test testy/fundament.test.mjs && npm run test --workspace=@zwiedzanie/silnik-narracji && npm run test --workspace=@zwiedzanie/silnik-gry && vitest run --config vitest.tresc.config.ts && npm run test --workspace=@zwiedzanie/gra",
     "build:tresc": "node narzedzia/zbuduj-tresc.ts"
   },
   "devDependencies": {
@@ -27,6 +27,7 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "inkjs": "2.4.0",
+    "jsdom": "30.1.1",
     "typescript": "7.0.2",
     "vitest": "5.0.3",
     "yaml": "2.9.1"
