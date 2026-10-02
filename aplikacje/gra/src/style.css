@@ -285,3 +285,12 @@ input[type="text"] {
   max-width: 150px;
   white-space: normal;
 }
+
+.status-pwa,
+.status-zapisu {
+  padding: 8px 20px;
+  font-size: 0.85rem;
+}
+.status-pwa p {
+  margin-bottom: 6px;
+}

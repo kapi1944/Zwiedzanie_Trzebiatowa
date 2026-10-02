@@ -8,7 +8,9 @@ import {
   useState as uzyjStanu,
 } from "react";
 import { aktualneMiejsce } from "./lokalizacja";
+import type { MagazynZapisu } from "./MagazynZapisu";
 import { PotwierdzenieObecnosci } from "./PotwierdzenieObecnosci";
+import { type ObslugaPwa, StatusPwa } from "./StatusPwa";
 import type { SesjaGry, WidokSesji } from "./sesja-gry";
 import { InformacjaOWyniku, WidokZagadki } from "./WidokZagadki";
 
@@ -73,10 +75,7 @@ function BladGry({ szczegoly }: { szczegoly: string }) {
   return (
     <section role="alert" className="karta">
       <h1>Wystąpił problem z uruchomieniem opowieści.</h1>
-      <p>
-        Odśwież stronę, aby zacząć ponownie. Bieżąca podróż nie zostanie
-        zachowana.
-      </p>
+      <p>Odśwież stronę, aby wznowić ostatni poprawny zapis.</p>
       {import.meta.env.DEV && <pre>{szczegoly}</pre>}
       <button type="button" onClick={() => window.location.reload()}>
         Uruchom ponownie
@@ -86,17 +85,26 @@ function BladGry({ szczegoly }: { szczegoly: string }) {
 }
 
 export default function Aplikacja({
+  magazyn,
+  pwa,
   uruchom = async () => {
     const { SesjaGry } = await import("./sesja-gry");
     return new SesjaGry();
   },
 }: {
   uruchom?: () => Promise<SesjaGry>;
+  magazyn?: MagazynZapisu;
+  pwa?: ObslugaPwa;
 }) {
   const [widok, ustawWidok] = uzyjStanu<Widok>("start");
   const [dane, ustawDane] = uzyjStanu<WidokSesji>();
-  const [ladowanie, ustawLadowanie] = uzyjStanu(false);
+  const [ladowanie, ustawLadowanie] = uzyjStanu(!!magazyn);
   const [blad, ustawBlad] = uzyjStanu<string>();
+  const [problemZapisu, ustawProblemZapisu] = uzyjStanu<string>();
+  const [zablokowanyZapis, ustawZablokowanyZapis] = uzyjStanu(false);
+  const [zapisywanie, ustawZapisywanie] = uzyjStanu(false);
+  const [zapisano, ustawZapisano] = uzyjStanu(false);
+  const [aktualizacjaWTrakcie, ustawAktualizacjaWTrakcie] = uzyjStanu(false);
   const sesja = uzyjReferencji<SesjaGry | null>(null);
   const naglowek = uzyjReferencji<HTMLHeadingElement>(null);
   const naglowekWyborow = uzyjReferencji<HTMLHeadingElement>(null);
@@ -104,14 +112,72 @@ export default function Aplikacja({
   const zajete = uzyjReferencji(false);
   const kluczFokusu = `${widok}:${dane?.stan.aktualnaScena ?? ""}`;
   uzyjEfektu(() => {
-    if (kluczFokusu !== "start:") naglowek.current?.focus();
-  }, [kluczFokusu]);
+    if (!zapisywanie && kluczFokusu !== "start:") naglowek.current?.focus();
+  }, [kluczFokusu, zapisywanie]);
   const idZagadki = dane?.zagadka?.id;
   uzyjEfektu(() => {
     if (poprzedniaZagadka.current && !idZagadki)
       naglowekWyborow.current?.focus();
     poprzedniaZagadka.current = idZagadki;
   }, [idZagadki]);
+
+  uzyjEfektu(() => {
+    if (!magazyn) return;
+    let aktywne = true;
+    ustawLadowanie(true);
+    void magazyn
+      .odczytaj()
+      .then(async (zachowane) => {
+        if (!zachowane) return;
+        const { SesjaGry } = await import("./sesja-gry");
+        const przywrocona = SesjaGry.przywroc(
+          zachowane.zapis,
+          zachowane.pakiet,
+        );
+        if (aktywne) {
+          sesja.current = przywrocona;
+          ustawDane(przywrocona.odczytaj());
+          ustawZapisano(true);
+        }
+      })
+      .catch((problem) => {
+        if (aktywne) {
+          ustawProblemZapisu(
+            problem instanceof Error
+              ? problem.message
+              : "Nie udało się odczytać zapisu.",
+          );
+          ustawZablokowanyZapis(true);
+        }
+      })
+      .finally(() => {
+        if (aktywne) ustawLadowanie(false);
+      });
+    return () => {
+      aktywne = false;
+    };
+  }, [magazyn]);
+
+  async function utrwal() {
+    const gra = sesja.current;
+    if (!gra || !magazyn || !gra.wymagaZapisu) return;
+    ustawZapisywanie(true);
+    ustawZapisano(false);
+    try {
+      const zapis = gra.eksportujZapis();
+      await magazyn.zapisz(zapis, gra.eksportujPakiet());
+      gra.potwierdzZapisanie(zapis.stanGry.dziennikZdarzen.length);
+      ustawProblemZapisu(undefined);
+      ustawZapisano(true);
+    } catch (problem) {
+      ustawProblemZapisu(
+        problem instanceof Error ? problem.message : "Zapis nie powiódł się.",
+      );
+      throw problem;
+    } finally {
+      ustawZapisywanie(false);
+    }
+  }
 
   async function rozpocznij() {
     if (zajete.current) return;
@@ -126,19 +192,24 @@ export default function Aplikacja({
       sesja.current = await uruchom();
       ustawDane(sesja.current.odczytaj());
       ustawWidok("gra");
+      await utrwal();
     } catch (problem) {
-      ustawBlad(problem instanceof Error ? problem.message : "Nieznany błąd.");
+      if (!sesja.current)
+        ustawBlad(
+          problem instanceof Error ? problem.message : "Nieznany błąd.",
+        );
     } finally {
       zajete.current = false;
       ustawLadowanie(false);
     }
   }
 
-  function wykonaj(akcja: (gra: SesjaGry) => WidokSesji) {
+  async function wykonaj(akcja: (gra: SesjaGry) => WidokSesji) {
     if (!sesja.current || zajete.current) return;
     zajete.current = true;
     try {
       ustawDane(akcja(sesja.current));
+      await utrwal().catch(() => undefined);
     } catch (problem) {
       ustawBlad(problem instanceof Error ? problem.message : "Nieznany błąd.");
     } finally {
@@ -175,7 +246,54 @@ export default function Aplikacja({
         </button>
         <span className="etykieta">Trzebiatów</span>
       </header>
-      <main id="tresc" aria-busy={ladowanie}>
+      <StatusPwa
+        pwa={pwa}
+        zajete={ladowanie || zapisywanie || zablokowanyZapis}
+        przygotujAktualizacje={async () => {
+          if (zajete.current || zablokowanyZapis)
+            throw new Error("Poczekaj na zakończenie zapisu.");
+          zajete.current = true;
+          ustawAktualizacjaWTrakcie(true);
+          await utrwal();
+        }}
+        bladAktualizacji={() => {
+          zajete.current = false;
+          ustawAktualizacjaWTrakcie(false);
+        }}
+      />
+      {problemZapisu && (
+        <section className="karta" role="status">
+          <p>
+            Postęp nie jest bezpiecznie zapisany: {problemZapisu}. Poprzedni
+            zapis pozostaje zachowany.
+          </p>
+          {!zablokowanyZapis && (
+            <button
+              type="button"
+              disabled={zapisywanie}
+              onClick={() => {
+                void utrwal().catch(() => undefined);
+              }}
+            >
+              Ponów zapis
+            </button>
+          )}
+        </section>
+      )}
+      {magazyn && dane && (
+        <p className="status-zapisu" role="status">
+          {zapisywanie
+            ? "Zapisuję postęp…"
+            : zapisano
+              ? "Postęp zapisany na tym urządzeniu."
+              : "Postęp jeszcze nie jest zapisany."}
+        </p>
+      )}
+      <main
+        id="tresc"
+        aria-busy={ladowanie || zapisywanie || aktualizacjaWTrakcie}
+        inert={zapisywanie || aktualizacjaWTrakcie}
+      >
         {blad ? (
           <BladGry szczegoly={blad} />
         ) : (
@@ -197,14 +315,14 @@ export default function Aplikacja({
                 <button
                   className="glowny"
                   type="button"
-                  disabled={ladowanie}
+                  disabled={ladowanie || zablokowanyZapis}
                   onClick={rozpocznij}
                 >
-                  {dane ? "Wróć do opowieści" : "Rozpocznij opowieść"}
+                  {dane ? "Wznów opowieść" : "Rozpocznij opowieść"}
                 </button>
                 <p className="uwaga">
-                  To wczesna wersja demonstracyjna. Odświeżenie strony
-                  rozpocznie podróż od nowa.
+                  To wczesna wersja demonstracyjna. Postęp zapisujemy na tym
+                  urządzeniu po każdej zakończonej akcji.
                 </p>
               </section>
             ) : (
@@ -403,8 +521,9 @@ export default function Aplikacja({
                   jest robocza; zagadka Hansken wymaga rekonesansu.
                 </p>
                 <p>
-                  Gra pamięta twoją drogę do zamknięcia lub odświeżenia strony.
-                  Możesz przełączać widoki bez utraty miejsca w opowieści.
+                  Gra zapisuje twoją drogę na tym urządzeniu. Po odświeżeniu lub
+                  ponownym uruchomieniu wybierz „Wznów opowieść”. Możesz
+                  przełączać widoki bez utraty miejsca w opowieści.
                 </p>
                 <p>To wczesna wersja demonstracyjna.</p>
               </section>

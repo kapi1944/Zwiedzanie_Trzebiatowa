@@ -13,8 +13,10 @@ import {
   wyznaczProfilZakonczenia,
 } from "@zwiedzanie/silnik-gry";
 import {
+  eksportujStanNarracji,
   kontynuujNarracje,
   MostNarracji,
+  przywrocStanNarracji,
   type RamkaNarracji,
   type SesjaNarracji,
   utworzSesjeNarracji,
@@ -22,6 +24,14 @@ import {
 } from "@zwiedzanie/silnik-narracji";
 import daneNarracji from "../../../tresc/trzebiatow-v1/dist/glowna.json";
 import danePakietu from "../../../tresc/trzebiatow-v1/dist/pakiet.json";
+
+import tozsamosc from "../../../tresc/trzebiatow-v1/dist/tozsamosc.json";
+import {
+  ocenZgodnoscZapisu,
+  type PakietOffline,
+  schematZapisuGry,
+  type ZapisGry,
+} from "./zapis-gry";
 
 type DaneZdarzenia = ZdarzenieGry extends infer Zdarzenie
   ? Zdarzenie extends ZdarzenieGry
@@ -48,15 +58,24 @@ export class SesjaGry {
   #ramka: RamkaNarracji;
   #komunikaty: string[] = [];
   #profil: ProfilZakonczenia | undefined;
+  #pakiet: PakietOffline;
+  #wymagaZapisu = false;
 
   constructor(
     definicje: unknown = danePakietu,
     narracja = JSON.stringify(daneNarracji),
+    identyfikatory = tozsamosc,
   ) {
     this.definicje = schematDefinicjiGry.parse(definicje);
+    this.#pakiet = {
+      definicje: this.definicje,
+      narracja,
+      idPakietu: identyfikatory.hashPakietu,
+      hashNarracji: identyfikatory.hashNarracji,
+    };
     this.#stan = wykonajKrok(this.definicje, null, {
       rodzaj: "ROZPOCZNIJ_GRE",
-      idSesji: "przegladarka",
+      idSesji: `sesja_${crypto.randomUUID()}`,
       idZdarzenia: "start",
       czas: 0,
     }).stan;
@@ -85,6 +104,84 @@ export class SesjaGry {
     ]);
     this.#narracja = utworzSesjeNarracji(narracja, this.#most);
     this.#ramka = this.#czytaj();
+  }
+
+  get wymagaZapisu() {
+    return this.#wymagaZapisu;
+  }
+  eksportujPakiet(): PakietOffline {
+    return structuredClone(this.#pakiet);
+  }
+  eksportujZapis(zapisanoDnia = new Date().toISOString()): ZapisGry {
+    const { idGry, wersjaGry, wersjaTresci, wersjaSchematZapisu, idSesji } =
+      this.#stan;
+    return schematZapisuGry.parse({
+      wersjaFormatuZapisu: 1,
+      idGry,
+      wersjaGry,
+      wersjaTresci,
+      wersjaSchematZapisu,
+      idSesji,
+      idPakietu: this.#pakiet.idPakietu,
+      hashNarracji: this.#pakiet.hashNarracji,
+      stanGry: this.#stan,
+      stanNarracji: {
+        zapisInk: eksportujStanNarracji(
+          this.#narracja,
+          this.#pakiet.hashNarracji,
+        ),
+        ramka: this.#ramka,
+        komunikaty: this.#komunikaty,
+      },
+      zapisanoDnia,
+    });
+  }
+  potwierdzZapisanie(liczbaZdarzen: number) {
+    if (liczbaZdarzen === this.#stan.dziennikZdarzen.length)
+      this.#wymagaZapisu = false;
+  }
+  static przywroc(dane: unknown, pakiet: PakietOffline): SesjaGry {
+    const zgodnosc = ocenZgodnoscZapisu(dane, pakiet);
+    if (zgodnosc !== "ZGODNY")
+      throw new Error(
+        zgodnosc === "WYMAGA_MIGRACJI"
+          ? "Zapis wymaga migracji, ktora nie jest obslugiwana w tej wersji."
+          : "Zapis jest niezgodny lub uszkodzony.",
+      );
+    const zapis = schematZapisuGry.parse(dane);
+    let odtworzony: StanGry | null = null;
+    for (const zdarzenie of zapis.stanGry.dziennikZdarzen)
+      odtworzony = wykonajKrok(pakiet.definicje, odtworzony, zdarzenie).stan;
+    if (JSON.stringify(odtworzony) !== JSON.stringify(zapis.stanGry))
+      throw new Error("Niespojny stan i dziennik gry.");
+    const sesja = new SesjaGry(pakiet.definicje, pakiet.narracja, {
+      hashPakietu: pakiet.idPakietu,
+      hashNarracji: pakiet.hashNarracji,
+    });
+    sesja.#stan = zapis.stanGry;
+    sesja.#profil =
+      zapis.stanGry.aktualnaScena === "mini_final"
+        ? wyznaczProfilZakonczenia(sesja.definicje, sesja.#stan)
+        : undefined;
+    sesja.#most.aktualizujKontekst(sesja.#kontekst());
+    przywrocStanNarracji(
+      sesja.#narracja,
+      zapis.stanNarracji.zapisInk,
+      pakiet.hashNarracji,
+    );
+    const ramka = kontynuujNarracje(sesja.#narracja);
+    if (
+      ramka.moznaKontynuowac ||
+      ramka.akapity.length ||
+      JSON.stringify(ramka.opcje) !==
+        JSON.stringify(zapis.stanNarracji.ramka.opcje)
+    )
+      throw new Error("Niespojna ramka i stan Ink.");
+    sesja.#ramka = zapis.stanNarracji.ramka;
+    sesja.#komunikaty = zapis.stanNarracji.komunikaty;
+    sesja.#wymagaZapisu = false;
+    sesja.odczytaj();
+    return sesja;
   }
 
   #kontekst() {
@@ -117,6 +214,8 @@ export class SesjaGry {
       czas: numer,
     } as ZdarzenieGry);
     this.#stan = krok.stan;
+    if (krok.efekty.some((efekt) => efekt.rodzaj === "ZAPISZ_STAN"))
+      this.#wymagaZapisu = true;
     this.#komunikaty.push(
       ...krok.efekty.flatMap((efekt) =>
         efekt.rodzaj === "POKAZ_KOMUNIKAT" ? [efekt.tekst] : [],

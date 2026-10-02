@@ -264,7 +264,7 @@ test("ladowanie jest oglaszane i blokuje drugi start", async () => {
   await pokaz(uruchom);
   await kliknij("Rozpocznij opowieść");
   expect(przycisk("Rozpocznij opowieść").disabled).toBe(true);
-  expect(kontener.querySelector('[role="status"]')?.textContent).toContain(
+  expect(kontener.querySelector('main [role="status"]')?.textContent).toContain(
     "Przygotowuję",
   );
   await wykonajReact(() => zakoncz?.(new SesjaGry()));

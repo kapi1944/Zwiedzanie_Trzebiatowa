@@ -22,9 +22,19 @@ export default function Mapa({
 }) {
   const kontener = uzyjReferencji<HTMLElement>(null);
   const [online, ustawOnline] = uzyjStanu(false);
+  const [siec, ustawSiec] = uzyjStanu(navigator.onLine !== false);
   const [bladKafelkow, ustawBladKafelkow] = uzyjStanu(false);
   const miejsca = miejscaNaMapie(lokalizacje, stan);
   const cel = aktualneMiejsce(lokalizacje, stan);
+  uzyjEfektu(() => {
+    const sprawdz = () => ustawSiec(navigator.onLine !== false);
+    window.addEventListener("online", sprawdz);
+    window.addEventListener("offline", sprawdz);
+    return () => {
+      window.removeEventListener("online", sprawdz);
+      window.removeEventListener("offline", sprawdz);
+    };
+  }, []);
   uzyjEfektu(() => {
     if (!kontener.current) return;
     const mapa = utworzMape(kontener.current, { scrollWheelZoom: false });
@@ -48,7 +58,7 @@ export default function Mapa({
     }
     if (punkty.length)
       mapa.fitBounds(granice(punkty), { maxZoom: 17, padding: [65, 65] });
-    if (online)
+    if (online && siec)
       warstwaKafelkow("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution:
@@ -59,9 +69,15 @@ export default function Mapa({
     return () => {
       mapa.remove();
     };
-  }, [lokalizacje, stan, cel?.id, online]);
+  }, [lokalizacje, stan, cel?.id, online, siec]);
   return (
     <section>
+      {!siec && (
+        <p role="status">
+          Offline — podkład mapy jest niedostępny. Markery i lista miejsc
+          pozostają dostępne.
+        </p>
+      )}
       <p>
         Pomarańczowy znacznik: aktualny cel opowieści. Mapa nie wyznacza
         bezpiecznej trasy pieszej.

@@ -1,3 +1,4 @@
+import { createHash as utworzHash } from "node:crypto";
 import {
   mkdirSync as utworzKatalog,
   writeFileSync as zapiszPlik,
@@ -14,6 +15,18 @@ zapiszPlik(
   JSON.stringify(pakiet.definicje, null, 2),
 );
 zapiszPlik(new URL("glowna.json", katalog), pakiet.narracja);
+const narracja = JSON.stringify(JSON.parse(pakiet.narracja));
+const hash = (tekst: string) =>
+  utworzHash("sha256").update(tekst).digest("hex");
+zapiszPlik(
+  new URL("tozsamosc.json", katalog),
+  JSON.stringify({
+    hashNarracji: hash(narracja),
+    hashPakietu: hash(
+      JSON.stringify({ definicje: pakiet.definicje, narracja }),
+    ),
+  }),
+);
 console.log(
   `Pakiet Gry: ${raport.liczbaDrog} drog PASS; profile: ${raport.profile.join(", ")}.`,
 );

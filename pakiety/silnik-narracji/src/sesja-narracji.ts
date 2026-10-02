@@ -88,11 +88,16 @@ export function wybierzOpcjeNarracji(
   dane.historia.ChooseChoiceIndex(indeks);
 }
 
-export function eksportujStanNarracji(sesja: SesjaNarracji): string {
+export function eksportujStanNarracji(
+  sesja: SesjaNarracji,
+  hashNarracji?: string,
+): string {
   const dane = odczytajSesje(sesja);
+  przekazKontekst(dane);
   return JSON.stringify({
-    wersja: 1,
-    tresc: dane.tresc,
+    ...(hashNarracji
+      ? { wersja: 2, hashNarracji }
+      : { wersja: 1, tresc: dane.tresc }),
     stanInk: dane.historia.state.ToJson(),
   });
 }
@@ -100,6 +105,7 @@ export function eksportujStanNarracji(sesja: SesjaNarracji): string {
 export function przywrocStanNarracji(
   sesja: SesjaNarracji,
   zapis: string,
+  hashNarracji?: string,
 ): void {
   const dane = odczytajSesje(sesja);
   const stan: unknown = JSON.parse(zapis);
@@ -107,9 +113,16 @@ export function przywrocStanNarracji(
     typeof stan !== "object" ||
     stan === null ||
     !("wersja" in stan) ||
-    stan.wersja !== 1 ||
-    !("tresc" in stan) ||
-    stan.tresc !== dane.tresc ||
+    !(
+      (stan.wersja === 1 &&
+        "tresc" in stan &&
+        stan.tresc === dane.tresc &&
+        !hashNarracji) ||
+      (stan.wersja === 2 &&
+        !!hashNarracji &&
+        "hashNarracji" in stan &&
+        stan.hashNarracji === hashNarracji)
+    ) ||
     !("stanInk" in stan) ||
     typeof stan.stanInk !== "string"
   )
