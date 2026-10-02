@@ -9,6 +9,7 @@ import {
 } from "react";
 import { aktualneMiejsce } from "./lokalizacja";
 import type { MagazynZapisu } from "./MagazynZapisu";
+import type { MenedzerAudio } from "./MenedzerAudio";
 import {
   MenedzerWydajnosci,
   odczytajUstawienia,
@@ -21,6 +22,11 @@ import {
 import { PotwierdzenieObecnosci } from "./PotwierdzenieObecnosci";
 import { type ObslugaPwa, StatusPwa } from "./StatusPwa";
 import type { SesjaGry, WidokSesji } from "./sesja-gry";
+import {
+  odczytajUstawieniaAudio,
+  type UstawieniaAudio,
+  zapiszUstawieniaAudio,
+} from "./ustawienia-audio";
 import { InformacjaOWyniku, WidokZagadki } from "./WidokZagadki";
 
 const Mapa = leniwie(() => import("./Mapa"));
@@ -104,6 +110,7 @@ function BladGry({ szczegoly }: { szczegoly: string }) {
 export default function Aplikacja({
   magazyn,
   pwa,
+  zaladujAudio = () => import("./audio"),
   uruchom = async () => {
     const { SesjaGry } = await import("./sesja-gry");
     return new SesjaGry();
@@ -112,12 +119,86 @@ export default function Aplikacja({
   uruchom?: () => Promise<SesjaGry>;
   magazyn?: MagazynZapisu;
   pwa?: ObslugaPwa;
+  zaladujAudio?: () => Promise<typeof import("./audio")>;
 }) {
   const [widok, ustawWidok] = uzyjStanu<Widok>("start");
   const [ustawienia, ustawUstawienia] = uzyjStanu(odczytajUstawienia);
   const [wskazowki, ustawWskazowki] = uzyjStanu(odczytajWskazowki);
   const [utrwalonoUstawienia, ustawUtrwalonoUstawienia] = uzyjStanu(true);
   const wydajnosc = MenedzerWydajnosci(ustawienia, wskazowki);
+  const [ustawieniaAudio, ustawAudio] = uzyjStanu(odczytajUstawieniaAudio);
+  const [problemAudio, ustawProblemAudio] = uzyjStanu<string>();
+  const [zapisanoAudio, ustawZapisanoAudio] = uzyjStanu(true);
+  const audio = uzyjReferencji<MenedzerAudio | undefined>(undefined);
+  const ladowanieAudio = uzyjReferencji<Promise<void> | undefined>(undefined);
+  const aktywneAudio = uzyjReferencji(true);
+  const parametryAudio = uzyjReferencji({
+    ustawienia: ustawieniaAudio,
+    profil: wydajnosc.profil,
+  });
+  parametryAudio.current = {
+    ustawienia: ustawieniaAudio,
+    profil: wydajnosc.profil,
+  };
+  function zglosProblemAudio() {
+    if (aktywneAudio.current)
+      ustawProblemAudio(
+        "Audio jest niedostępne lub zablokowane. Możesz grać dalej albo ponowić przyciskiem „Uruchom audio”.",
+      );
+  }
+  function przygotujAudio() {
+    if (
+      !parametryAudio.current.ustawienia.dzwiek &&
+      !parametryAudio.current.ustawienia.muzyka
+    )
+      return;
+    ustawProblemAudio(undefined);
+    if (audio.current) {
+      audio.current.aktywuj();
+      return;
+    }
+    if (ladowanieAudio.current) return;
+    ladowanieAudio.current = zaladujAudio()
+      .then((modul) => {
+        if (!aktywneAudio.current) return;
+        const aktualne = parametryAudio.current;
+        if (!aktualne.ustawienia.dzwiek && !aktualne.ustawienia.muzyka) return;
+        const menedzer = modul.utworzMenedzerAudio(
+          aktualne.ustawienia,
+          aktualne.profil,
+          zglosProblemAudio,
+        );
+        audio.current = menedzer;
+        menedzer.ustawWidocznosc(!document.hidden);
+        menedzer.aktywuj();
+        menedzer.przywrocNastroj(sesja.current?.odczytaj().ramka.tagi ?? []);
+      })
+      .catch(zglosProblemAudio)
+      .finally(() => {
+        ladowanieAudio.current = undefined;
+      });
+  }
+  function zmienAudio(nowe: UstawieniaAudio) {
+    parametryAudio.current.ustawienia = nowe;
+    ustawAudio(nowe);
+    ustawZapisanoAudio(zapiszUstawieniaAudio(nowe));
+    audio.current?.ustaw(nowe, wydajnosc.profil);
+    przygotujAudio();
+  }
+  uzyjEfektu(() => {
+    audio.current?.ustaw(ustawieniaAudio, wydajnosc.profil);
+  }, [ustawieniaAudio, wydajnosc.profil]);
+  uzyjEfektu(() => {
+    aktywneAudio.current = true;
+    const widocznosc = () => audio.current?.ustawWidocznosc(!document.hidden);
+    document.addEventListener("visibilitychange", widocznosc);
+    return () => {
+      aktywneAudio.current = false;
+      document.removeEventListener("visibilitychange", widocznosc);
+      audio.current?.zamknij();
+      audio.current = undefined;
+    };
+  }, []);
   function zmienUstawienia(nowe: UstawieniaWydajnosci) {
     ustawUstawienia(nowe);
     ustawUtrwalonoUstawienia(zapiszUstawienia(nowe));
@@ -221,7 +302,9 @@ export default function Aplikacja({
 
   async function rozpocznij() {
     if (zajete.current) return;
+    przygotujAudio();
     if (sesja.current) {
+      audio.current?.przywrocNastroj(sesja.current.odczytaj().ramka.tagi);
       ustawWidok("gra");
       return;
     }
@@ -231,6 +314,8 @@ export default function Aplikacja({
     try {
       sesja.current = await uruchom();
       ustawDane(sesja.current.odczytaj());
+      const efekty = sesja.current.odbierzEfektyAudio();
+      audio.current?.wykonaj(efekty);
       ustawWidok("gra");
       await utrwal();
     } catch (problem) {
@@ -246,9 +331,12 @@ export default function Aplikacja({
 
   async function wykonaj(akcja: (gra: SesjaGry) => WidokSesji) {
     if (!sesja.current || zajete.current) return;
+    if (audio.current) przygotujAudio();
     zajete.current = true;
     try {
       ustawDane(akcja(sesja.current));
+      const efekty = sesja.current.odbierzEfektyAudio();
+      audio.current?.wykonaj(efekty);
       await utrwal().catch(() => undefined);
     } catch (problem) {
       ustawBlad(problem instanceof Error ? problem.message : "Nieznany błąd.");
@@ -603,6 +691,99 @@ export default function Aplikacja({
                     aplikacji.
                   </p>
                 )}
+                <h2>Audio</h2>
+                <p>
+                  PLACEHOLDER — DO WYMIANY. Dźwięki techniczne, bez finalnej
+                  muzyki.
+                </p>
+                <label className="odpowiedz">
+                  <input
+                    type="checkbox"
+                    checked={ustawieniaAudio.dzwiek}
+                    onChange={(zdarzenie) =>
+                      zmienAudio({
+                        ...ustawieniaAudio,
+                        dzwiek: zdarzenie.target.checked,
+                      })
+                    }
+                  />
+                  Dźwięk (efekty): {ustawieniaAudio.dzwiek ? "ON" : "OFF"}
+                </label>
+                <label className="odpowiedz">
+                  <input
+                    type="checkbox"
+                    checked={ustawieniaAudio.muzyka}
+                    onChange={(zdarzenie) =>
+                      zmienAudio({
+                        ...ustawieniaAudio,
+                        muzyka: zdarzenie.target.checked,
+                      })
+                    }
+                  />
+                  Muzyka: {ustawieniaAudio.muzyka ? "ON" : "OFF"}
+                </label>
+                <label htmlFor="glosnosc-efektow">
+                  Głośność efektów:{" "}
+                  {Math.round(ustawieniaAudio.glosnoscEfektow * 100)}%
+                </label>
+                <input
+                  id="glosnosc-efektow"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={ustawieniaAudio.glosnoscEfektow}
+                  onChange={(zdarzenie) =>
+                    zmienAudio({
+                      ...ustawieniaAudio,
+                      glosnoscEfektow: Number(zdarzenie.target.value),
+                    })
+                  }
+                />
+                <label htmlFor="glosnosc-muzyki">
+                  Głośność muzyki:{" "}
+                  {Math.round(ustawieniaAudio.glosnoscMuzyki * 100)}%
+                </label>
+                <input
+                  id="glosnosc-muzyki"
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={ustawieniaAudio.glosnoscMuzyki}
+                  onChange={(zdarzenie) =>
+                    zmienAudio({
+                      ...ustawieniaAudio,
+                      glosnoscMuzyki: Number(zdarzenie.target.value),
+                    })
+                  }
+                />
+                <button
+                  type="button"
+                  disabled={!ustawieniaAudio.dzwiek && !ustawieniaAudio.muzyka}
+                  onClick={przygotujAudio}
+                >
+                  Uruchom audio
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    zmienAudio({
+                      ...ustawieniaAudio,
+                      dzwiek: false,
+                      muzyka: false,
+                    })
+                  }
+                >
+                  Wycisz wszystko
+                </button>
+                {!zapisanoAudio && (
+                  <p role="status">
+                    Nie udało się zapamiętać ustawień audio. Obowiązują do
+                    zamknięcia aplikacji.
+                  </p>
+                )}
+                {problemAudio && <p role="status">{problemAudio}</p>}
               </section>
             )}
             {widok === "informacje" && (

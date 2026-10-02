@@ -239,7 +239,11 @@ test("artefakt SW zawiera shell i tresc offline, mapa dopiero na zadanie", () =>
     file: string;
     css?: string[];
   }[]) {
-    if (element.file.startsWith("assets/Mapa-")) {
+    if (
+      element.file.startsWith("assets/Mapa-") ||
+      element.file.startsWith("assets/audio-") ||
+      element.file.endsWith(".wav")
+    ) {
       expect(pliki).not.toContain(element.file);
       for (const css of element.css ?? []) expect(pliki).not.toContain(css);
       continue;

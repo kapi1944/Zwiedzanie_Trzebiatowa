@@ -21,6 +21,7 @@ testuj("budzety gzip i lazy oparte na pomiarze Etapu 8", () => {
   }
   sprawdz.ok(!pomiary.poczatkowe.includes("src/Mapa.tsx"));
   sprawdz.ok(!pomiary.poczatkowe.includes("src/sesja-gry.ts"));
+  sprawdz.ok(!pomiary.poczatkowe.includes("src/audio.ts"));
 });
 
 for (const nazwa of [

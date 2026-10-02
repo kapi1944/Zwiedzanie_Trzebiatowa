@@ -1,8 +1,8 @@
 import type { RodzajTagu, TagNarracji } from "./modele.js";
 
 const dozwoloneTagi: Readonly<Record<RodzajTagu, readonly string[]>> = {
-  dzwiek: ["przewrocenie_kartki"],
-  nastroj: ["tajemnica"],
+  dzwiek: ["przejscie", "przewrocenie_kartki", "subtelny_metal", "atmosfera"],
+  nastroj: ["cisza", "tajemnica", "rynek", "sacrum", "napiecie", "final"],
   kronika: ["hansken"],
   sygnal: [],
 };

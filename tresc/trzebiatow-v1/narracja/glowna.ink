@@ -11,7 +11,7 @@ VAR odkryto_dwie_warstwy = false
 -> prolog
 
 === prolog ===
-FAKT [gmina_zabytki]: Ratusz stoi w centrum rynku. To tutaj zaczynasz przejście przez trzy miejsca i dwie perspektywy: zapis oraz pamięć.
+FAKT [gmina_zabytki]: Ratusz stoi w centrum rynku. To tutaj zaczynasz przejście przez trzy miejsca i dwie perspektywy: zapis oraz pamięć. #nastroj:rynek #dzwiek:atmosfera
 FABULARYZOWANE: Wyobraź sobie pustą kartę Kroniki. Nikt nie każe ci wybierać między prawdą a piękną opowieścią. Możesz pytać, co da się potwierdzić, a co ludzie zachowują, opowiadając sobie miasto. Na razie zdecyduj tylko, od którego pytania rozpoczniesz.
 * [Szukam tego, co można udowodnić. #sygnal:prolog_dowod]
     Otwierasz kolumnę na ślady i źródła. Druga kolumna pozostaje wolna.
@@ -24,7 +24,7 @@ FABULARYZOWANE: Wyobraź sobie pustą kartę Kroniki. Nikt nie każe ci wybiera�
     -> hansken
 
 === hansken ===
-FAKT [wzp_hansken]: Przy Rynku 26 znajduje się sgraffito wiązane ze słonicą Hansken. Samorządowy opis podaje jej wizytę w Trzebiatowie w 1639 roku. To informacja źródłowa; nie twierdzenie, że wizerunek jest kopią Rembrandta.
+FAKT [wzp_hansken]: Przy Rynku 26 znajduje się sgraffito wiązane ze słonicą Hansken. Samorządowy opis podaje jej wizytę w Trzebiatowie w 1639 roku. To informacja źródłowa; nie twierdzenie, że wizerunek jest kopią Rembrandta. #nastroj:tajemnica #dzwiek:przejscie
 FABULARYZOWANE: Obraz można oglądać, ale nie wszystkie jego znaczenia zobaczysz od razu. Zatrzymaj się przy granicy między własną obserwacją a cudzym objaśnieniem. Fragment Kroniki, który możesz otrzymać, jest przedmiotem gry, nie odnalezionym dokumentem historycznym.
 ZADANIE ROBOCZE: detal i odpowiedź obserwacyjna wymagają rekonesansu. Deklaracja zapisuje udział w zadaniu, bez zatwierdzania szczegółu terenowego. Pomoc i pominięcie pozwalają kontynuować.
 * [Otwieram miejsce na własną notatkę. #sygnal:hansken_zapis]
@@ -33,7 +33,7 @@ ZADANIE ROBOCZE: detal i odpowiedź obserwacyjna wymagają rekonesansu. Deklarac
     -> kosciol
 
 === kosciol ===
-FAKT [nid_kosciol]: Kościół Macierzyństwa NMP jest gotycką świątynią z masywem wieżowym. NID opisuje na wieży dzwon Maria z 1515 roku, dzieło ludwisarza Lütke Rose. Nie zakładamy, że w tej chwili możesz zobaczyć dzwon albo wejść na wieżę.
+FAKT [nid_kosciol]: Kościół Macierzyństwa NMP jest gotycką świątynią z masywem wieżowym. NID opisuje na wieży dzwon Maria z 1515 roku, dzieło ludwisarza Lütke Rose. Nie zakładamy, że w tej chwili możesz zobaczyć dzwon albo wejść na wieżę. #nastroj:sacrum #dzwiek:subtelny_metal
 TRADYCJA / INFORMACJA DO DALSZEGO SPRAWDZENIA [gmina_zabytki]: Materiał gminny przypisuje wieży dawną rolę latarni morskiej. W tym szkicu traktujemy to jako przypisany źródłu przekaz wymagający dalszej weryfikacji, bez potwierdzania sposobu jej działania.
 {
 - wybrano_dowod:
@@ -65,19 +65,19 @@ TRADYCJA / INFORMACJA DO DALSZEGO SPRAWDZENIA [gmina_zabytki]: Materiał gminny 
     -> baszta
 
 === dwie_notatki ===
-FABULARYZOWANE — scenka opcjonalna: Kładziesz fragment Kroniki obok własnej notatki. Jeden jest nagrodą w grze, druga zapisem twojej interpretacji. Żaden nie zastępuje źródła historycznego. Zauważasz za to, jak łatwo opis obrazu zamienić w dopowiedzenie. Możesz zachować oba, jeżeli jasno podpiszesz ich pochodzenie.
+FABULARYZOWANE — scenka opcjonalna: Kładziesz fragment Kroniki obok własnej notatki. Jeden jest nagrodą w grze, druga zapisem twojej interpretacji. Żaden nie zastępuje źródła historycznego. Zauważasz za to, jak łatwo opis obrazu zamienić w dopowiedzenie. Możesz zachować oba, jeżeli jasno podpiszesz ich pochodzenie. #nastroj:tajemnica #dzwiek:przewrocenie_kartki
 * [Wracam do wspólnej drogi. #sygnal:scenka_powrot]
     -> kosciol_decyzja
 
 === kosciol_decyzja ===
-FABULARYZOWANE: Wracasz do wspólnego punktu. Scenka zmieniła twoją notatkę, lecz nie przeniosła cię na osobną trasę. Dalej czeka Baszta i pytanie, czy legenda potrzebuje tego samego rodzaju potwierdzenia co mur.
+FABULARYZOWANE: Wracasz do wspólnego punktu. Scenka zmieniła twoją notatkę, lecz nie przeniosła cię na osobną trasę. Dalej czeka Baszta i pytanie, czy legenda potrzebuje tego samego rodzaju potwierdzenia co mur. #nastroj:sacrum #dzwiek:przejscie
 * [Zapisuję informację i jej źródło. #sygnal:kosciol_zapis_po_scence]
     -> baszta
 * [Zachowuję pytanie o pamięć tego miejsca. #sygnal:kosciol_opowiesc_po_scence]
     -> baszta
 
 === baszta ===
-FAKT [gmina_zabytki]: Baszta Kaszana, nazywana też Prochową, należy do historycznych fortyfikacji miasta.
+FAKT [gmina_zabytki]: Baszta Kaszana, nazywana też Prochową, należy do historycznych fortyfikacji miasta. #nastroj:napiecie #dzwiek:przejscie
 LEGENDA [gmina_zabytki]: Opowieść o gorącej kaszy mówi o strażniku, misce strąconej na napastnika i alarmie, który miał pomóc obrońcom. To legenda objaśniająca nazwę; nie potwierdzony raport z bitwy.
 FABULARYZOWANE: W twojej Kronice obie warstwy mogą istnieć obok siebie. Zanim zdecydujesz o kolejności zapisu, rozdziel w zadaniu to, co dotyczy obiektu, od fabuły legendy. Nie potrzebujesz wejścia na basztę ani odnalezienia ukrytego detalu.
 * [Najpierw zapisuję to, co potwierdzają ślady. #sygnal:baszta_fakt]
@@ -88,7 +88,7 @@ FABULARYZOWANE: W twojej Kronice obie warstwy mogą istnieć obok siebie. Zanim 
     -> mini_final
 
 === mini_final ===
-FABULARYZOWANE — mini-finał:
+FABULARYZOWANE — mini-finał: #nastroj:final #dzwiek:przewrocenie_kartki
 {
 - final_kronikarz:
     KRONIKARZ. Na pierwszym planie umieszczasz ślad i jego źródło. Opowieść pozostaje obok, opisana własnym językiem. Twoja droga nie unieważnia pamięci; nadaje zapisowi wyraźny porządek.

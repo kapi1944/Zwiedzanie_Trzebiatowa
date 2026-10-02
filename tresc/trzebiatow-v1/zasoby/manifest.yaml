@@ -2,3 +2,39 @@
 - id: narracja_glowna
   rodzaj: NARRACJA
   sciezka: narracja/glowna.ink
+
+- id: przejscie
+  rodzaj: DZWIEK
+  sciezka: zasoby/audio/placeholder-przejscie.wav
+
+- id: przewrocenie_kartki
+  rodzaj: DZWIEK
+  sciezka: zasoby/audio/placeholder-przewrocenie_kartki.wav
+
+- id: subtelny_metal
+  rodzaj: DZWIEK
+  sciezka: zasoby/audio/placeholder-subtelny_metal.wav
+
+- id: atmosfera
+  rodzaj: DZWIEK
+  sciezka: zasoby/audio/placeholder-atmosfera.wav
+
+- id: tajemnica
+  rodzaj: MUZYKA
+  sciezka: zasoby/audio/placeholder-tajemnica.wav
+
+- id: rynek
+  rodzaj: MUZYKA
+  sciezka: zasoby/audio/placeholder-rynek.wav
+
+- id: sacrum
+  rodzaj: MUZYKA
+  sciezka: zasoby/audio/placeholder-sacrum.wav
+
+- id: napiecie
+  rodzaj: MUZYKA
+  sciezka: zasoby/audio/placeholder-napiecie.wav
+
+- id: final
+  rodzaj: MUZYKA
+  sciezka: zasoby/audio/placeholder-final.wav

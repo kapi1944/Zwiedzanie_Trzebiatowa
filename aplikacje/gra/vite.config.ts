@@ -25,7 +25,7 @@ export default zdefiniujKonfiguracje({
       },
       workbox: {
         globPatterns: ["**/*.{html,js,css,png,svg,json}"],
-        globIgnores: ["**/.vite/**", "**/Mapa-*"],
+        globIgnores: ["**/.vite/**", "**/Mapa-*", "**/audio-*"],
         navigateFallback: "index.html",
         runtimeCaching: [
           {
@@ -43,5 +43,9 @@ export default zdefiniujKonfiguracje({
       },
     }),
   ],
-  build: { manifest: true },
+  build: {
+    manifest: true,
+    assetsInlineLimit: (sciezka) =>
+      sciezka.endsWith(".wav") ? false : undefined,
+  },
 });

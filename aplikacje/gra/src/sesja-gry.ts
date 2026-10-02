@@ -1,5 +1,6 @@
 import {
   type DefinicjeGry,
+  type EfektGry,
   type StanGry,
   schematDefinicjiGry,
   type WynikZagadki,
@@ -19,6 +20,7 @@ import {
   przywrocStanNarracji,
   type RamkaNarracji,
   type SesjaNarracji,
+  type TagNarracji,
   utworzSesjeNarracji,
   wybierzOpcjeNarracji,
 } from "@zwiedzanie/silnik-narracji";
@@ -38,6 +40,10 @@ type DaneZdarzenia = ZdarzenieGry extends infer Zdarzenie
     ? Omit<Zdarzenie, "idZdarzenia" | "czas">
     : never
   : never;
+type EfektAudio = Extract<
+  EfektGry,
+  { rodzaj: "ODTWORZ_DZWIEK" | "USTAW_NASTROJ_MUZYKI" }
+>;
 
 export interface WidokSesji {
   stan: StanGry;
@@ -60,6 +66,13 @@ export class SesjaGry {
   #profil: ProfilZakonczenia | undefined;
   #pakiet: PakietOffline;
   #wymagaZapisu = false;
+  #efektyAudio: EfektAudio[] = [];
+
+  odbierzEfektyAudio() {
+    const efekty = this.#efektyAudio;
+    this.#efektyAudio = [];
+    return efekty;
+  }
 
   constructor(
     definicje: unknown = danePakietu,
@@ -178,6 +191,7 @@ export class SesjaGry {
     )
       throw new Error("Niespojna ramka i stan Ink.");
     sesja.#ramka = zapis.stanNarracji.ramka;
+    sesja.#efektyAudio = [];
     sesja.#komunikaty = zapis.stanNarracji.komunikaty;
     sesja.#wymagaZapisu = false;
     sesja.odczytaj();
@@ -214,6 +228,14 @@ export class SesjaGry {
       czas: numer,
     } as ZdarzenieGry);
     this.#stan = krok.stan;
+    this.#efektyAudio.push(
+      ...krok.efekty.flatMap((efekt) =>
+        efekt.rodzaj === "ODTWORZ_DZWIEK" ||
+        efekt.rodzaj === "USTAW_NASTROJ_MUZYKI"
+          ? [efekt]
+          : [],
+      ),
+    );
     if (krok.efekty.some((efekt) => efekt.rodzaj === "ZAPISZ_STAN"))
       this.#wymagaZapisu = true;
     this.#komunikaty.push(
@@ -226,10 +248,23 @@ export class SesjaGry {
   #czytaj(): RamkaNarracji {
     this.#most.aktualizujKontekst(this.#kontekst());
     const akapity: string[] = [];
+    const tagi: TagNarracji[] = [];
     for (let licznik = 0; licznik < 200; licznik++) {
       const ramka = kontynuujNarracje(this.#narracja);
       akapity.push(...ramka.akapity);
-      if (!ramka.moznaKontynuowac) return { ...ramka, akapity };
+      tagi.push(...ramka.tagi);
+      if (!ramka.moznaKontynuowac) {
+        this.#efektyAudio.push(
+          ...tagi.flatMap((tag): EfektAudio[] =>
+            tag.rodzaj === "dzwiek"
+              ? [{ rodzaj: "ODTWORZ_DZWIEK", id: tag.wartosc }]
+              : tag.rodzaj === "nastroj"
+                ? [{ rodzaj: "USTAW_NASTROJ_MUZYKI", id: tag.wartosc }]
+                : [],
+          ),
+        );
+        return { ...ramka, akapity, tagi };
+      }
     }
     throw new Error("Narracja przekroczyla limit akapitow.");
   }

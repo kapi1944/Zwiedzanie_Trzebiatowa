@@ -24,6 +24,9 @@ export function zmierzWydajnosc() {
     ),
     sesjaGzip: rozmiar(manifest["src/sesja-gry.ts"].file),
     mapaGzip: rozmiar(manifest["src/Mapa.tsx"].file),
+    audioGzip: manifest["src/audio.ts"]
+      ? rozmiar(manifest["src/audio.ts"].file)
+      : 0,
     cssInitialGzip: [...style].reduce((suma, plik) => suma + rozmiar(plik), 0),
     cssMapaGzip: (manifest["src/Mapa.tsx"].css ?? []).reduce(
       (suma, plik) => suma + rozmiar(plik),
