@@ -12,7 +12,7 @@ W repo kompilujemy przez inkjs 2.4.0. Po zmianie historii uruchom:
 npm run test --workspace=@zwiedzanie/silnik-narracji
 ```
 
-Testy kompilują fixture w pamięci przez `inkjs/full`. Build Silnika Narracji buduje tylko runtime. Docelowa granica to Pakiet Gry → kompilacja treści → Silnik Narracji; kompilacja treści należy do procesu przygotowania Pakietu Gry. Nie dodajemy teraz produkcyjnego procesu budowania kampanii. Nie edytuj wygenerowanego JSON. Runtime przyjmuje JSON, nie źródło `.ink`. Przed użyciem eksportu Inky sprawdź go z naszą wersją runtime i testami; sam zgodny numer formatu nie zastępuje testu.
+Testy kompilują fixture w pamięci przez `inkjs/full`. Build Silnika Narracji buduje tylko runtime. Docelowa granica to Pakiet Gry → kompilacja treści → Silnik Narracji; kompilacja treści należy do procesu przygotowania Pakietu Gry. W Etapie 4 npm run build:tresc przygotowuje roboczy Pakiet Gry, waliduje YAML/Zod i testuje drogi Ink. Szczegóły: [vertical slice](vertical-slice.md). Nie edytuj wygenerowanego JSON. Runtime przyjmuje JSON, nie źródło `.ink`. Przed użyciem eksportu Inky sprawdź go z naszą wersją runtime i testami; sam zgodny numer formatu nie zastępuje testu.
 
 ## Pisanie Warkocza
 
@@ -29,7 +29,7 @@ Demonstracja używa węzłów `start`, `konwergencja` i `pozniejsza_scena` oraz 
 
 Ink może pamiętać wybór tekstowy, wizytę w scenie i lokalną wiedzę opowieści. Nie przyznaje kanonicznych przedmiotów, nie rozwiązuje zagadek, nie potwierdza GPS i nie ustala mechanicznego zakończenia.
 
-Dane mechaniki zostaną przekazane przez [Most Narracji](silnik-narracji.md). Zmienną przeznaczoną do odczytu z mostu deklaruj z właściwym typem i nie nadpisuj jej w Ink. Potrzebę zmiany mechaniki zgłaszaj tylko dozwolonym sygnałem; odbiorca musi jawnie przesłać zdarzenie domenowe do Silnika Gry, który sprawdzi jego legalność. Nie używaj EXTERNAL ani treści mającej uruchamiać JavaScript.
+Dane mechaniki są przekazywane przez [Most Narracji](silnik-narracji.md). Zmienną przeznaczoną do odczytu z mostu deklaruj z właściwym typem i nie nadpisuj jej w Ink. Potrzebę zmiany mechaniki zgłaszaj tylko dozwolonym sygnałem; odbiorca musi jawnie przesłać zdarzenie domenowe do Silnika Gry, który sprawdzi jego legalność. Nie używaj EXTERNAL ani treści mającej uruchamiać JavaScript.
 
 ## Tagi i tekst
 

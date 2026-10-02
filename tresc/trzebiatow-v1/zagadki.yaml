@@ -1,0 +1,108 @@
+# TEKST ROBOCZY - NIE JEST TO FINALNA WERSJA FABULY.
+- id: zagadka_hansken
+  nazwa: Robocza zagadka obserwacyjna Hansken
+  klasyfikacja: FABULARYZOWANE
+  idZrodla:
+    - wzp_hansken
+  wymagaWeryfikacjiTerenowej: true
+  idLokalizacji: hansken
+  pytanie: Przyjrzyj się sgraffito. Który szczegół da się opisać jako własną obserwację, a co jest
+    tylko przypuszczeniem? Zadanie i odpowiedź wymagają rekonesansu.
+  odpowiedz: null
+  podpowiedzi:
+    - Oddziel opis tego, co widzisz, od tego, co dopowiada opowieść. Detal i odpowiedź nie są
+      jeszcze zatwierdzone.
+  konsekwencje:
+    ROZWIAZANA_SAMODZIELNIE:
+      zmiany:
+        - rodzaj: DODAJ_PRZEDMIOT
+          id: fragment_kroniki_hansken
+        - rodzaj: ZMIEN_POWINOWACTWO
+          os: dowod
+          wartosc: 2
+      efekty:
+        - rodzaj: POKAZ_KOMUNIKAT
+          tekst: Wynik zapisano. Próba Hansken pozostaje demonstracją do rekonesansu.
+    ROZWIAZANA_Z_PODPOWIEDZIA:
+      zmiany:
+        - rodzaj: DODAJ_PRZEDMIOT
+          id: fragment_kroniki_hansken
+        - rodzaj: ZMIEN_POWINOWACTWO
+          os: dowod
+          wartosc: 1
+      efekty:
+        - rodzaj: POKAZ_KOMUNIKAT
+          tekst: Wynik zapisano. Próba Hansken pozostaje demonstracją do rekonesansu.
+    ROZWIAZANA_Z_POMOCA:
+      zmiany:
+        - rodzaj: DODAJ_PRZEDMIOT
+          id: fragment_kroniki_hansken
+        - rodzaj: ZMIEN_POWINOWACTWO
+          os: dowod
+          wartosc: 1
+      efekty:
+        - rodzaj: POKAZ_KOMUNIKAT
+          tekst: Wynik zapisano. Próba Hansken pozostaje demonstracją do rekonesansu.
+    POMINIETA:
+      zmiany: []
+      efekty:
+        - rodzaj: POKAZ_KOMUNIKAT
+          tekst: Możesz iść dalej bez fragmentu Kroniki.
+    NIEUDANA:
+      zmiany: []
+      efekty:
+        - rodzaj: POKAZ_KOMUNIKAT
+          tekst: Wynik zapisano. Próba Hansken pozostaje demonstracją do rekonesansu.
+- id: zagadka_baszta
+  nazwa: Co jest obiektem, a co legendą?
+  klasyfikacja: FABULARYZOWANE
+  idZrodla:
+    - gmina_zabytki
+  wymagaWeryfikacjiTerenowej: false
+  idLokalizacji: baszta
+  pytanie: "Który element tego opisu należy oznaczyć jako legendę: zachowaną basztę obronną czy
+    opowieść o misce gorącej kaszy?"
+  odpowiedz: opowiesc_o_misce_goracej_kaszy
+  podpowiedzi:
+    - Sprawdź, który fragment źródło gminne przedstawia jako legendę, a nie potwierdzony przebieg
+      wydarzeń.
+  konsekwencje:
+    ROZWIAZANA_SAMODZIELNIE:
+      zmiany:
+        - rodzaj: USTAW_FLAGE
+          id: rozrozniono_warstwy
+          wartosc: true
+        - rodzaj: ZMIEN_POWINOWACTWO
+          os: pamiec
+          wartosc: 1
+      efekty: []
+    ROZWIAZANA_Z_PODPOWIEDZIA:
+      zmiany:
+        - rodzaj: USTAW_FLAGE
+          id: rozrozniono_warstwy
+          wartosc: true
+        - rodzaj: ZMIEN_POWINOWACTWO
+          os: pamiec
+          wartosc: 1
+      efekty: []
+    ROZWIAZANA_Z_POMOCA:
+      zmiany:
+        - rodzaj: USTAW_FLAGE
+          id: rozrozniono_warstwy
+          wartosc: true
+        - rodzaj: ZMIEN_POWINOWACTWO
+          os: pamiec
+          wartosc: 1
+      efekty: []
+    POMINIETA:
+      zmiany:
+        - rodzaj: USTAW_FLAGE
+          id: rozrozniono_warstwy
+          wartosc: false
+      efekty: []
+    NIEUDANA:
+      zmiany:
+        - rodzaj: USTAW_FLAGE
+          id: rozrozniono_warstwy
+          wartosc: false
+      efekty: []

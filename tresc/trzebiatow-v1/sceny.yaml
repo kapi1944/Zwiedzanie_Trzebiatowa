@@ -1,0 +1,66 @@
+# TEKST ROBOCZY - NIE JEST TO FINALNA WERSJA FABULY.
+- id: prolog
+  nazwa: prolog
+  klasyfikacja: FABULARYZOWANE
+  idZrodla:
+    - gmina_zabytki
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: prolog
+- id: hansken
+  nazwa: hansken
+  klasyfikacja: FABULARYZOWANE
+  idZrodla:
+    - wzp_hansken
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: hansken
+- id: kosciol
+  nazwa: kosciol
+  klasyfikacja: FABULARYZOWANE
+  idZrodla:
+    - nid_kosciol
+    - gmina_zabytki
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: kosciol
+- id: kosciol_decyzja
+  nazwa: kosciol_decyzja
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: kosciol_decyzja
+- id: dwie_notatki
+  nazwa: dwie_notatki
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: dwie_notatki
+- id: baszta
+  nazwa: baszta
+  klasyfikacja: FABULARYZOWANE
+  idZrodla:
+    - gmina_zabytki
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: baszta
+- id: mini_final
+  nazwa: mini_final
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: mini_final
+- id: epilog_kroniki
+  nazwa: epilog_kroniki
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: epilog_kroniki
+- id: epilog_pamieci
+  nazwa: epilog_pamieci
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: epilog_pamieci
+- id: odkrycie_dwie_warstwy
+  nazwa: odkrycie_dwie_warstwy
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: odkrycie_dwie_warstwy

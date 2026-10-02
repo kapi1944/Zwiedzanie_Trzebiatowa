@@ -1,0 +1,195 @@
+# TEKST ROBOCZY - NIE JEST TO FINALNA WERSJA FABULY.
+- id: kronikarz
+  nazwa: KRONIKARZ
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: GLOWNE
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: flagaJest
+    id: final_kronikarz
+    wartosc: true
+- id: straznik_opowiesci
+  nazwa: STRAŻNIK OPOWIEŚCI
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: GLOWNE
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: flagaJest
+    id: final_straznik
+    wartosc: true
+- id: lacznik
+  nazwa: ŁĄCZNIK
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: GLOWNE
+  priorytet: 0
+  domyslne: true
+- id: epilog_kroniki
+  nazwa: Epilog wątku kroniki
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: EPILOG_WATKU
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: stanWatkuJest
+    id: watek_kroniki
+    stan: UKONCZONY
+- id: epilog_pamieci
+  nazwa: Epilog wątku pamieci
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: EPILOG_WATKU
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: stanWatkuJest
+    id: watek_pamieci
+    stan: UKONCZONY
+- id: odkrycie_dwie_warstwy
+  nazwa: Bonusowy fragment Kroniki — dwie warstwy
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: SPECJALNE_ODKRYCIE
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: wszystkie
+    warunki:
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_hansken
+        wynik: ROZWIAZANA_SAMODZIELNIE
+      - rodzaj: odkrytoScenke
+        id: scenka_dwie_notatki
+      - rodzaj: posiadaPrzedmiot
+        id: fragment_kroniki_hansken
+- id: konsekwencja_zagadka_hansken_rozwiazana_samodzielnie
+  nazwa: Konsekwencja zagadka_hansken — ROZWIAZANA_SAMODZIELNIE
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: KONSEKWENCJA_ZAGADKI
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: wynikZagadkiJest
+    id: zagadka_hansken
+    wynik: ROZWIAZANA_SAMODZIELNIE
+- id: konsekwencja_zagadka_hansken_rozwiazana_z_podpowiedzia
+  nazwa: Konsekwencja zagadka_hansken — ROZWIAZANA_Z_PODPOWIEDZIA
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: KONSEKWENCJA_ZAGADKI
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: wynikZagadkiJest
+    id: zagadka_hansken
+    wynik: ROZWIAZANA_Z_PODPOWIEDZIA
+- id: konsekwencja_zagadka_hansken_rozwiazana_z_pomoca
+  nazwa: Konsekwencja zagadka_hansken — ROZWIAZANA_Z_POMOCA
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: KONSEKWENCJA_ZAGADKI
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: wynikZagadkiJest
+    id: zagadka_hansken
+    wynik: ROZWIAZANA_Z_POMOCA
+- id: konsekwencja_zagadka_hansken_pominieta
+  nazwa: Konsekwencja zagadka_hansken — POMINIETA
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: KONSEKWENCJA_ZAGADKI
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: wynikZagadkiJest
+    id: zagadka_hansken
+    wynik: POMINIETA
+- id: konsekwencja_zagadka_hansken_nieudana
+  nazwa: Konsekwencja zagadka_hansken — NIEUDANA
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: KONSEKWENCJA_ZAGADKI
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: wynikZagadkiJest
+    id: zagadka_hansken
+    wynik: NIEUDANA
+- id: konsekwencja_zagadka_baszta_rozwiazana_samodzielnie
+  nazwa: Konsekwencja zagadka_baszta — ROZWIAZANA_SAMODZIELNIE
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: KONSEKWENCJA_ZAGADKI
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: wynikZagadkiJest
+    id: zagadka_baszta
+    wynik: ROZWIAZANA_SAMODZIELNIE
+- id: konsekwencja_zagadka_baszta_rozwiazana_z_podpowiedzia
+  nazwa: Konsekwencja zagadka_baszta — ROZWIAZANA_Z_PODPOWIEDZIA
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: KONSEKWENCJA_ZAGADKI
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: wynikZagadkiJest
+    id: zagadka_baszta
+    wynik: ROZWIAZANA_Z_PODPOWIEDZIA
+- id: konsekwencja_zagadka_baszta_rozwiazana_z_pomoca
+  nazwa: Konsekwencja zagadka_baszta — ROZWIAZANA_Z_POMOCA
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: KONSEKWENCJA_ZAGADKI
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: wynikZagadkiJest
+    id: zagadka_baszta
+    wynik: ROZWIAZANA_Z_POMOCA
+- id: konsekwencja_zagadka_baszta_pominieta
+  nazwa: Konsekwencja zagadka_baszta — POMINIETA
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: KONSEKWENCJA_ZAGADKI
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: wynikZagadkiJest
+    id: zagadka_baszta
+    wynik: POMINIETA
+- id: konsekwencja_zagadka_baszta_nieudana
+  nazwa: Konsekwencja zagadka_baszta — NIEUDANA
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  rodzaj: KONSEKWENCJA_ZAGADKI
+  priorytet: 10
+  domyslne: false
+  warunek:
+    rodzaj: wynikZagadkiJest
+    id: zagadka_baszta
+    wynik: NIEUDANA

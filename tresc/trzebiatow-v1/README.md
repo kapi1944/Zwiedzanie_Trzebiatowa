@@ -1,31 +1,11 @@
 # Pakiet treści Trzebiatów v1
 
-Etap 1 tworzy wyłącznie miejsce na przyszłe treści. Nie zawiera scenariusza ani gotowych kontraktów YAML.
+TEKST ROBOCZY — NIE JEST TO FINALNA WERSJA FABULY.
 
-```text
-manifest.yaml
-lokalizacje.yaml
-watki.yaml
-zadania.yaml
-zagadki.yaml
-scenki-opcjonalne.yaml
-zakonczenia.yaml
-zrodla.yaml
-narracja/
-  glowna.ink
-zasoby/
-  manifest.yaml
-```
+Etap 4: Rynek/Ratusz → Hansken → Kościół Macierzyństwa NMP → Baszta Kaszana → mini-finał. Dwa wątki, cztery grupy decyzji, dwie zagadki, scenka opcjonalna i trzy profile zakończenia.
 
-- `manifest.yaml`: metadane i wersja pakietu gry.
-- `lokalizacje.yaml`: miejsca i powiązania z zadaniami.
-- `watki.yaml`: wątki narracyjne.
-- `zadania.yaml`: zadania i ich możliwe wyniki.
-- `zagadki.yaml`: zagadki oraz drogi kontynuacji.
-- `scenki-opcjonalne.yaml`: warunkowo dostępne sceny.
-- `zakonczenia.yaml`: główne zakończenia i epilogi.
-- `zrodla.yaml`: źródła treści historycznych.
-- `narracja/glowna.ink`: narracja Ink, oddzielona od mechaniki.
-- `zasoby/manifest.yaml`: wykaz zasobów pakietu.
+Definicje YAML są walidowane przez Schemat Treści. Sceny rejestruje sceny.yaml, decyzje wybory.yaml, przedmioty slady.yaml. Narracja: narracja/glowna.ink; zasoby/manifest.yaml wskazuje plik narracji.
 
-Formaty zostaną ustalone w kolejnych zatwierdzonych etapach. Obowiązują [zasady treści](../../dokumentacja/zasady-tresci.md), w tym klasyfikacja historyczna i weryfikacja terenowa.
+Z katalogu repozytorium: npm run build:tresc (po zbudowaniu pakietów), albo pełne npm run build. Narzędzie kompiluje Ink i sprawdza 1170 dróg; generuje ignorowany katalog dist z JSON definicji i narracji.
+
+Hansken ma odpowiedz: null i wymaga rekonesansu. Brak zatwierdzonej odpowiedzi obserwacyjnej i dat weryfikacji terenowej. Źródła i granice testów: [vertical slice](../../dokumentacja/vertical-slice.md). Obowiązują [zasady treści](../../dokumentacja/zasady-tresci.md).

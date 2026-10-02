@@ -170,6 +170,8 @@ const schematKonsekwencji = z.strictObject({
 export const schematDefinicjiZagadki = z.strictObject({
   ...polaElementu,
   idLokalizacji: schematId,
+  pytanie: z.string().min(1).optional(),
+  odpowiedz: z.string().min(1).nullable().optional(),
   podpowiedzi: z.array(z.string().min(1)),
   konsekwencje: z.record(schematWynikuZagadki, schematKonsekwencji),
 });

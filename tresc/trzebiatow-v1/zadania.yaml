@@ -1,0 +1,19 @@
+# TEKST ROBOCZY - NIE JEST TO FINALNA WERSJA FABULY.
+- id: zadanie_hansken
+  nazwa: Obserwacja i granice pewności
+  klasyfikacja: FABULARYZOWANE
+  idZrodla:
+    - wzp_hansken
+  wymagaWeryfikacjiTerenowej: true
+  idLokalizacji: hansken
+  idZagadek:
+    - zagadka_hansken
+- id: zadanie_baszta
+  nazwa: Rozdzielenie warstw opowieści
+  klasyfikacja: FABULARYZOWANE
+  idZrodla:
+    - gmina_zabytki
+  wymagaWeryfikacjiTerenowej: false
+  idLokalizacji: baszta
+  idZagadek:
+    - zagadka_baszta

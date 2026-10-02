@@ -2,7 +2,7 @@
 
 Projekt wielowątkowej i wielozakończeniowej gry terenowej w Trzebiatowie oraz strony marketingowej prezentującej grę i umożliwiającej zakup, a później aktywację i obsługę konta.
 
-Aktualny status: Etap 3 — deterministyczny Silnik Gry i walidowany Schemat Treści, po domknięciu Silnika Narracji w Etapie 2B. Aplikacje nadal mają tylko ekrany startowe; flow gry i PWA nie są zaimplementowane.
+Aktualny status: Etap 4 — pierwszy wielowątkowy Pakiet Gry, walidowany przez Silnik Gry i runtime Ink. Treść jest robocza i wymaga rekonesansu. Aplikacje nadal mają tylko ekrany startowe; flow gry i PWA nie są zaimplementowane.
 
 Gra będzie projektowana przede wszystkim na smartfony i do działania bez internetu, z decyzjami oraz wynikami zagadek wpływającymi na późniejszą narrację i kompozytowe zakończenia.
 
@@ -25,7 +25,7 @@ Wymagane: Node.js 24 lub nowszy oraz npm 11 lub nowszy. Instalacja z katalogu g�
 | --- | --- |
 | `npm run dev:gra` | Gra na lokalnym serwerze Vite (domyślnie port 5173) |
 | `npm run dev:strona` | Strona na lokalnym serwerze Next.js (domyślnie port 3000) |
-| `npm run build` | Budowa obu aplikacji i wszystkich czterech pakietów |
+| `npm run build` | Budowa obu aplikacji, czterech pakietów i walidacja kampanii |
 | `npm run typecheck` | Sprawdzenie typów wszystkich workspace'ów |
 | `npm run lint` | Kontrola kodu i formatowania przez Biome |
 | `npm run format` | Formatowanie przez Biome |
@@ -38,3 +38,4 @@ Pakiety `silnik-gry`, `silnik-narracji` i `schemat-tresci` zawierają czysty rdz
 - [Silnik Gry](dokumentacja/silnik-gry.md)
 - [Model stanu](dokumentacja/model-stanu.md)
 - [Zakończenia](dokumentacja/zakonczenia.md)
+- [Vertical slice](dokumentacja/vertical-slice.md)

@@ -1,0 +1,273 @@
+# TEKST ROBOCZY - NIE JEST TO FINALNA WERSJA FABULY.
+- id: prolog_dowod
+  nazwa: Szukam tego, co można udowodnić.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: prolog
+  nastepnaScena: hansken
+  zmiany:
+    - rodzaj: ZMIEN_POWINOWACTWO
+      os: dowod
+      wartosc: 1
+  efekty: []
+- id: prolog_pamiec
+  nazwa: Szukam tego, co ludzie zapamiętali.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: prolog
+  nastepnaScena: hansken
+  zmiany:
+    - rodzaj: ZMIEN_POWINOWACTWO
+      os: pamiec
+      wartosc: 1
+  efekty: []
+- id: prolog_obie
+  nazwa: Najpierw chcę wysłuchać obu stron.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: prolog
+  nastepnaScena: hansken
+  zmiany:
+    - rodzaj: ZMIEN_POWINOWACTWO
+      os: zmiana
+      wartosc: 1
+  efekty: []
+- id: hansken_zapis
+  nazwa: Otwieram miejsce na własną notatkę.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: hansken
+  nastepnaScena: kosciol
+  zmiany:
+    - rodzaj: USTAW_FLAGE
+      id: otwarto_notatke
+      wartosc: true
+    - rodzaj: USTAW_FLAGE
+      id: hansken_domkniety
+      wartosc: true
+  efekty: []
+  warunek:
+    rodzaj: dowolny
+    warunki:
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_hansken
+        wynik: ROZWIAZANA_SAMODZIELNIE
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_hansken
+        wynik: ROZWIAZANA_Z_PODPOWIEDZIA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_hansken
+        wynik: ROZWIAZANA_Z_POMOCA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_hansken
+        wynik: POMINIETA
+- id: hansken_slucham
+  nazwa: Najpierw słucham, jak obraz staje się opowieścią.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: hansken
+  nastepnaScena: kosciol
+  zmiany:
+    - rodzaj: USTAW_FLAGE
+      id: hansken_domkniety
+      wartosc: true
+    - rodzaj: ZMIEN_POWINOWACTWO
+      os: legenda
+      wartosc: 1
+  efekty: []
+  warunek:
+    rodzaj: dowolny
+    warunki:
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_hansken
+        wynik: ROZWIAZANA_SAMODZIELNIE
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_hansken
+        wynik: ROZWIAZANA_Z_PODPOWIEDZIA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_hansken
+        wynik: ROZWIAZANA_Z_POMOCA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_hansken
+        wynik: POMINIETA
+- id: kosciol_do_scenki
+  nazwa: Zestawiam obie notatki.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: kosciol
+  nastepnaScena: dwie_notatki
+  zmiany: []
+  efekty: []
+  warunek:
+    rodzaj: wszystkie
+    warunki:
+      - rodzaj: posiadaPrzedmiot
+        id: fragment_kroniki_hansken
+      - rodzaj: flagaJest
+        id: otwarto_notatke
+        wartosc: true
+- id: scenka_powrot
+  nazwa: Wracam do wspólnej drogi.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: dwie_notatki
+  nastepnaScena: kosciol_decyzja
+  zmiany: []
+  efekty: []
+- id: kosciol_zapis
+  nazwa: Zapisuję informację i jej źródło.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: kosciol
+  nastepnaScena: baszta
+  zmiany:
+    - rodzaj: ZMIEN_POWINOWACTWO
+      os: dowod
+      wartosc: 1
+    - rodzaj: USTAW_FLAGE
+      id: czytano_kosciol
+      wartosc: true
+  efekty: []
+- id: kosciol_opowiesc
+  nazwa: Zachowuję pytanie o pamięć tego miejsca.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: kosciol
+  nastepnaScena: baszta
+  zmiany:
+    - rodzaj: ZMIEN_POWINOWACTWO
+      os: pamiec
+      wartosc: 1
+    - rodzaj: USTAW_FLAGE
+      id: czytano_kosciol
+      wartosc: true
+  efekty: []
+- id: kosciol_zapis_po_scence
+  nazwa: Zapisuję informację i jej źródło.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: kosciol_decyzja
+  nastepnaScena: baszta
+  zmiany:
+    - rodzaj: ZMIEN_POWINOWACTWO
+      os: dowod
+      wartosc: 1
+    - rodzaj: USTAW_FLAGE
+      id: czytano_kosciol
+      wartosc: true
+  efekty: []
+- id: kosciol_opowiesc_po_scence
+  nazwa: Zachowuję pytanie o pamięć tego miejsca.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: kosciol_decyzja
+  nastepnaScena: baszta
+  zmiany:
+    - rodzaj: ZMIEN_POWINOWACTWO
+      os: pamiec
+      wartosc: 1
+    - rodzaj: USTAW_FLAGE
+      id: czytano_kosciol
+      wartosc: true
+  efekty: []
+- id: baszta_fakt
+  nazwa: Najpierw zapisuję to, co potwierdzają ślady.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: baszta
+  nastepnaScena: mini_final
+  zmiany:
+    - rodzaj: USTAW_FLAGE
+      id: final_kronikarz
+      wartosc: true
+    - rodzaj: ZMIEN_POWINOWACTWO
+      os: dowod
+      wartosc: 1
+  efekty: []
+  warunek:
+    rodzaj: dowolny
+    warunki:
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: ROZWIAZANA_SAMODZIELNIE
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: ROZWIAZANA_Z_PODPOWIEDZIA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: ROZWIAZANA_Z_POMOCA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: POMINIETA
+- id: baszta_legenda
+  nazwa: Najpierw zapisuję opowieść mieszkańców.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: baszta
+  nastepnaScena: mini_final
+  zmiany:
+    - rodzaj: USTAW_FLAGE
+      id: final_straznik
+      wartosc: true
+    - rodzaj: ZMIEN_POWINOWACTWO
+      os: legenda
+      wartosc: 1
+  efekty: []
+  warunek:
+    rodzaj: dowolny
+    warunki:
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: ROZWIAZANA_SAMODZIELNIE
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: ROZWIAZANA_Z_PODPOWIEDZIA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: ROZWIAZANA_Z_POMOCA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: POMINIETA
+- id: baszta_obie
+  nazwa: Zachowuję obie wersje i zaznaczam ich różny charakter.
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: baszta
+  nastepnaScena: mini_final
+  zmiany:
+    - rodzaj: USTAW_FLAGE
+      id: final_lacznik
+      wartosc: true
+    - rodzaj: ZMIEN_POWINOWACTWO
+      os: zmiana
+      wartosc: 1
+  efekty: []
+  warunek:
+    rodzaj: dowolny
+    warunki:
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: ROZWIAZANA_SAMODZIELNIE
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: ROZWIAZANA_Z_PODPOWIEDZIA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: ROZWIAZANA_Z_POMOCA
+      - rodzaj: wynikZagadkiJest
+        id: zagadka_baszta
+        wynik: POMINIETA

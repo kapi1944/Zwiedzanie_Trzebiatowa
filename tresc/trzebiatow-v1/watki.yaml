@@ -1,0 +1,15 @@
+# TEKST ROBOCZY - NIE JEST TO FINALNA WERSJA FABULY.
+- id: watek_kroniki
+  nazwa: WĄTEK KRONIKI — dowód, zapis i materialny ślad
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  opcjonalny: false
+  wymaganyDoFinalu: true
+- id: watek_pamieci
+  nazwa: WĄTEK PAMIĘCI — legenda, pamięć i opowieść
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  opcjonalny: false
+  wymaganyDoFinalu: true

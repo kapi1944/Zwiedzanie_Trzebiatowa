@@ -1,0 +1,46 @@
+# TEKST ROBOCZY - NIE JEST TO FINALNA WERSJA FABULY.
+- id: rynek
+  nazwa: Rynek / Ratusz
+  klasyfikacja: FAKT
+  idZrodla:
+    - gmina_zabytki
+  wymagaWeryfikacjiTerenowej: true
+  idSceny: prolog
+- id: hansken
+  nazwa: Hansken — Rynek 26
+  klasyfikacja: FAKT
+  idZrodla:
+    - wzp_hansken
+  wymagaWeryfikacjiTerenowej: true
+  idSceny: hansken
+  warunek:
+    rodzaj: dowolny
+    warunki:
+      - rodzaj: wybrano
+        id: prolog_dowod
+      - rodzaj: wybrano
+        id: prolog_pamiec
+      - rodzaj: wybrano
+        id: prolog_obie
+- id: kosciol
+  nazwa: Kościół Macierzyństwa NMP
+  klasyfikacja: FAKT
+  idZrodla:
+    - nid_kosciol
+  wymagaWeryfikacjiTerenowej: true
+  idSceny: kosciol
+  warunek:
+    rodzaj: flagaJest
+    id: hansken_domkniety
+    wartosc: true
+- id: baszta
+  nazwa: Baszta Kaszana — obiekt fortyfikacyjny
+  klasyfikacja: FAKT
+  idZrodla:
+    - gmina_zabytki
+  wymagaWeryfikacjiTerenowej: true
+  idSceny: baszta
+  warunek:
+    rodzaj: flagaJest
+    id: czytano_kosciol
+    wartosc: true

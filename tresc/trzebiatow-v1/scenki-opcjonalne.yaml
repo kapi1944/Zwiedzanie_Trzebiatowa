@@ -1,0 +1,15 @@
+# TEKST ROBOCZY - NIE JEST TO FINALNA WERSJA FABULY.
+- id: scenka_dwie_notatki
+  nazwa: Dwie notatki o jednej podróży
+  klasyfikacja: FABULARYZOWANE
+  idZrodla: []
+  wymagaWeryfikacjiTerenowej: false
+  idSceny: dwie_notatki
+  warunek:
+    rodzaj: wszystkie
+    warunki:
+      - rodzaj: posiadaPrzedmiot
+        id: fragment_kroniki_hansken
+      - rodzaj: flagaJest
+        id: otwarto_notatke
+        wartosc: true
