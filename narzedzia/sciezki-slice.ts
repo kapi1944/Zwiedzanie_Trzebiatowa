@@ -105,7 +105,11 @@ export function przejdzDroge(definicje: DefinicjeGry, droga: DrogaSlice) {
   return { stan, profil, kroki, dostepnaScenka };
 }
 
-export function sprawdzDrogi(definicje: DefinicjeGry, narracja?: string) {
+export function sprawdzDrogi(
+  definicje: DefinicjeGry,
+  narracja?: string,
+  odwiedz?: (wynik: ReturnType<typeof przejdzDroge>) => void,
+) {
   const profile = new Set<string>();
   let liczbaDrog = 0;
   for (const prolog of [
@@ -132,6 +136,7 @@ export function sprawdzDrogi(definicje: DefinicjeGry, narracja?: string) {
                 scenka: false,
               };
               const wynik = przejdzDroge(definicje, droga);
+              odwiedz?.(wynik);
               if (narracja) sprawdzNarracje(narracja, wynik);
               profile.add(wynik.profil.zakonczenieGlowne);
               liczbaDrog++;
@@ -140,6 +145,7 @@ export function sprawdzDrogi(definicje: DefinicjeGry, narracja?: string) {
                   ...droga,
                   scenka: true,
                 });
+                odwiedz?.(dodatkowy);
                 if (narracja) sprawdzNarracje(narracja, dodatkowy);
                 profile.add(dodatkowy.profil.zakonczenieGlowne);
                 liczbaDrog++;

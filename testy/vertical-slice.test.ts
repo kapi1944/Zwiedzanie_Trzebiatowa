@@ -15,6 +15,10 @@ import {
   przejdzDroge,
   sprawdzDrogi,
 } from "../narzedzia/sciezki-slice.ts";
+import {
+  analizujFlagi,
+  utworzKontroleGrafu,
+} from "../narzedzia/walidacja-contentu.ts";
 
 const pakiet = odczytajPakiet();
 const drogi: { nazwa: string; profil: string; droga: DrogaSlice }[] = [
@@ -147,10 +151,62 @@ describe("Vertical slice Trzebiatowa", () => {
   });
 
   test("1080 kombinacji mechaniki i Ink dochodzi do zgodnego finalu", () => {
-    expect(sprawdzDrogi(pakiet.definicje, pakiet.narracja)).toEqual({
+    const kontrola = utworzKontroleGrafu(
+      pakiet.definicje,
+      pakiet.sceny.map((scena) => scena.id),
+    );
+    expect(
+      sprawdzDrogi(pakiet.definicje, pakiet.narracja, kontrola.odwiedz),
+    ).toEqual({
       liczbaDrog: 1080,
       profile: ["kronikarz", "lacznik", "straznik_opowiesci"],
     });
+    expect(() => kontrola.zakoncz()).not.toThrow();
+  });
+
+  test("analiza flag rozroznia literowki, flagi testowe i nieczytane", () => {
+    const definicje = structuredClone(pakiet.definicje);
+    const wybor = definicje.wybory[0];
+    if (!wybor) throw new Error("Brak wyboru.");
+    wybor.warunek = {
+      rodzaj: "nie",
+      warunek: {
+        rodzaj: "dowolny",
+        warunki: [
+          { rodzaj: "flagaJest", id: "literowka", wartosc: true },
+          { rodzaj: "flagaJest", id: "testowa", wartosc: false },
+        ],
+      },
+    };
+    wybor.zmiany.push({ rodzaj: "USTAW_FLAGE", id: "testowa", wartosc: true });
+    expect(analizujFlagi(definicje).nigdyNieustawiane).toEqual(["literowka"]);
+    expect(analizujFlagi(definicje).nigdyNieczytane).toContain("final_lacznik");
+    expect(analizujFlagi(pakiet.definicje).nigdyNieustawiane).toEqual([]);
+    expect(() => schematDefinicjiGry.parse(definicje)).not.toThrow();
+  });
+
+  test("graf odrzuca martwe elementy zamiast sprawdzac same referencje", () => {
+    const definicje = structuredClone(pakiet.definicje);
+    for (const lista of [
+      definicje.lokalizacje,
+      definicje.wybory,
+      definicje.scenki,
+      definicje.zakonczenia,
+      definicje.watki,
+      definicje.zagadki,
+    ]) {
+      const element = lista[0];
+      if (!element) throw new Error("Brak elementu.");
+      // Dodane elementy maja poprawna strukture, ale nie maja drogi w slice.
+      lista.push({ ...element, id: "martwy" } as never);
+    }
+    const kontrola = utworzKontroleGrafu(definicje, ["martwa_scena"]);
+    const droga = drogi[2]?.droga;
+    if (!droga) throw new Error("Brak drogi C.");
+    kontrola.odwiedz(przejdzDroge(pakiet.definicje, droga));
+    expect(() => kontrola.zakoncz()).toThrow(
+      /Nieosiagalna scena.*Nieosiagalna lokalizacja.*Nieosiagalny wybor.*Martwa scenka.*Zakonczenie bez drogi.*Wymagany watek bez ukonczenia.*Zagadka bez wyjscia/,
+    );
   });
 
   test("scenka i bonus nie sa wymagane nawet po zdobyciu sladu", () => {

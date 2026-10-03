@@ -5,9 +5,26 @@ import {
 } from "node:fs";
 import { odczytajPakiet } from "./pakiet-gry.ts";
 import { sprawdzDrogi } from "./sciezki-slice.ts";
+import { analizujFlagi, utworzKontroleGrafu } from "./walidacja-contentu.ts";
 
 const pakiet = odczytajPakiet();
-const raport = sprawdzDrogi(pakiet.definicje, pakiet.narracja);
+const flagi = analizujFlagi(pakiet.definicje);
+if (flagi.nigdyNieustawiane.length)
+  throw new Error(
+    `Flagi nigdy nieustawiane: ${flagi.nigdyNieustawiane.join(", ")}`,
+  );
+if (flagi.nigdyNieczytane.length)
+  console.warn(`Flagi nigdy nieczytane: ${flagi.nigdyNieczytane.join(", ")}`);
+const kontrola = utworzKontroleGrafu(
+  pakiet.definicje,
+  pakiet.sceny.map((scena) => scena.id),
+);
+const raport = sprawdzDrogi(
+  pakiet.definicje,
+  pakiet.narracja,
+  kontrola.odwiedz,
+);
+kontrola.zakoncz();
 const katalog = new URL("../tresc/trzebiatow-v1/dist/", import.meta.url);
 utworzKatalog(katalog, { recursive: true });
 zapiszPlik(
