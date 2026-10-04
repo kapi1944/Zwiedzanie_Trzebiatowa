@@ -22,6 +22,18 @@ export function obsluzZagadke(
     throw new Error("Zagadka nie jest dostepna w tej lokalizacji.");
   if (stan.wynikiZagadek[zagadka.id])
     throw new Error("Zagadka ma juz wynik koncowy.");
+  if (zagadka.idSceny && stan.aktualnaScena !== zagadka.idSceny)
+    throw new Error("Zagadka nalezy do innej sceny.");
+  if (
+    zagadka.idSceny &&
+    [
+      "UDZIEL_ODPOWIEDZI",
+      "POTWIERDZ_OBSERWACJE",
+      "ZALICZ_ALTERNATYWNIE",
+    ].includes(zdarzenie.rodzaj) &&
+    !stan.potwierdzoneLokalizacje.includes(zagadka.idLokalizacji)
+  )
+    throw new Error("Najpierw potwierdz obecnosc w miejscu obserwacji.");
   const postep = stan.postepyZagadek[zagadka.id] ?? {
     liczbaProb: 0,
     liczbaPodpowiedzi: 0,

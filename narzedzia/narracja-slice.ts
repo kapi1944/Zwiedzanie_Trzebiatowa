@@ -1,4 +1,4 @@
-import type { StanGry } from "@zwiedzanie/schemat-tresci";
+import type { DefinicjeGry, StanGry } from "@zwiedzanie/schemat-tresci";
 import { przygotujKontekstNarracji } from "@zwiedzanie/silnik-gry";
 import {
   kontynuujNarracje,
@@ -9,12 +9,20 @@ import {
 } from "@zwiedzanie/silnik-narracji";
 import type { przejdzDroge } from "./sciezki-slice.ts";
 
-function kontekstMostu(stan: StanGry) {
+function kontekstMostu(stan: StanGry, definicje?: DefinicjeGry) {
   const kontekst = przygotujKontekstNarracji(stan);
   return {
     ...kontekst,
     flagi: {
       ...kontekst.flagi,
+      ...Object.fromEntries(
+        (definicje?.kampania?.powiazaniaNarracji ?? [])
+          .filter((powiazanie) => powiazanie.obszar === "flagi")
+          .map((powiazanie) => [
+            powiazanie.klucz,
+            stan.flagi[powiazanie.klucz] ?? false,
+          ]),
+      ),
       wybrano_dowod: stan.dokonaneWybory.includes("prolog_dowod"),
       wybrano_pamiec: stan.dokonaneWybory.includes("prolog_pamiec"),
       otwarto_notatke: stan.flagi.otwarto_notatke ?? false,
@@ -28,6 +36,14 @@ function kontekstMostu(stan: StanGry) {
     },
     wynikiZagadek: {
       ...kontekst.wynikiZagadek,
+      ...Object.fromEntries(
+        (definicje?.kampania?.powiazaniaNarracji ?? [])
+          .filter((powiazanie) => powiazanie.obszar === "wynikiZagadek")
+          .map((powiazanie) => [
+            powiazanie.klucz,
+            stan.wynikiZagadek[powiazanie.klucz]?.wynik ?? "",
+          ]),
+      ),
       zagadka_hansken: stan.wynikiZagadek.zagadka_hansken?.wynik ?? "",
     },
   };
@@ -46,10 +62,12 @@ function czytaj(sesja: SesjaNarracji) {
 export function sprawdzNarracje(
   narracja: string,
   droga: ReturnType<typeof przejdzDroge>,
+  definicje?: DefinicjeGry,
 ) {
   const poczatek = droga.kroki[0];
   if (!poczatek) throw new Error("Brak startu drogi.");
-  const most = new MostNarracji(kontekstMostu(poczatek.stan), [
+  const most = new MostNarracji(kontekstMostu(poczatek.stan, definicje), [
+    ...(definicje?.kampania?.powiazaniaNarracji ?? []),
     ...[
       "wybrano_dowod",
       "wybrano_pamiec",
@@ -75,7 +93,7 @@ export function sprawdzNarracje(
     const krok = droga.kroki[indeks];
     const poprzedni = droga.kroki[indeks - 1];
     if (!krok || !poprzedni) throw new Error("Niepelna droga.");
-    most.aktualizujKontekst(kontekstMostu(poprzedni.stan));
+    most.aktualizujKontekst(kontekstMostu(poprzedni.stan, definicje));
     if (krok.zdarzenie.rodzaj !== "DOKONAJ_WYBORU") continue;
     const ramka = czytaj(sesja);
     teksty.push(...ramka.akapity);
@@ -89,10 +107,15 @@ export function sprawdzNarracje(
       );
     wybierzOpcjeNarracji(sesja, opcja.indeks);
   }
-  most.aktualizujKontekst(kontekstMostu(droga.stan));
+  most.aktualizujKontekst(kontekstMostu(droga.stan, definicje));
   const koniec = czytaj(sesja);
   teksty.push(...koniec.akapity);
   if (koniec.opcje.length) throw new Error("Narracja nie dotarla do konca.");
+  if (
+    definicje?.kampania &&
+    droga.stan.aktualnaScena === definicje.kampania.scenaFinalu
+  )
+    return teksty.join("\n");
   const nazwa = {
     kronikarz: "KRONIKARZ.",
     straznik_opowiesci: "STRAŻNIK OPOWIEŚCI.",

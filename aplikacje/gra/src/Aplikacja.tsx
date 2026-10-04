@@ -27,6 +27,7 @@ import {
   type UstawieniaAudio,
   zapiszUstawieniaAudio,
 } from "./ustawienia-audio";
+import { uzyjSladuGps } from "./uzyjSladuGps";
 import { InformacjaOWyniku, WidokZagadki } from "./WidokZagadki";
 
 const Mapa = leniwie(() => import("./Mapa"));
@@ -56,6 +57,13 @@ const nazwyScen: Record<string, string> = {
   dwie_notatki: "Dwie notatki",
   baszta: "Baszta Kaszana",
   mini_final: "Twoja Kronika",
+  rozdroze: "Wybierz kolejny ślad",
+  hansken_powrot: "Postacie na sgraffito Hansken",
+  ratusz_obserwacja: "Czas nad Rynkiem",
+  mury_obserwacja: "Granice miasta",
+  palac_obserwacja: "Skrzydła rezydencji",
+  splot_notatek: "Splot notatek",
+  final_kampanii: "Kronika wyprawy",
 };
 
 export class GranicaBledu extends Komponent<
@@ -219,6 +227,11 @@ export default function Aplikacja({
     };
   }, []);
   const [dane, ustawDane] = uzyjStanu<WidokSesji>();
+  const sladGps = uzyjSladuGps(
+    dane?.stan.idSesji,
+    magazyn,
+    wydajnosc.profil === "EKO",
+  );
   const [ladowanie, ustawLadowanie] = uzyjStanu(!!magazyn);
   const [blad, ustawBlad] = uzyjStanu<string>();
   const [problemZapisu, ustawProblemZapisu] = uzyjStanu<string>();
@@ -344,16 +357,69 @@ export default function Aplikacja({
       zajete.current = false;
     }
   }
+  async function rozpocznijNowa() {
+    if (!sesja.current || zajete.current || zablokowanyZapis) return;
+    zajete.current = true;
+    ustawZapisywanie(true);
+    try {
+      await utrwal();
+      ustawZapisywanie(true);
+      const nowa = await uruchom();
+      if (magazyn)
+        await magazyn.rozpocznijNowa(
+          sesja.current.odczytaj().stan.idSesji,
+          nowa.eksportujZapis(),
+          nowa.eksportujPakiet(),
+        );
+      sesja.current = nowa;
+      nowa.potwierdzZapisanie(nowa.odczytaj().stan.dziennikZdarzen.length);
+      ustawDane(nowa.odczytaj());
+      ustawZapisano(!!magazyn);
+      ustawProblemZapisu(undefined);
+      ustawWidok("gra");
+    } catch (problem) {
+      ustawProblemZapisu(
+        problem instanceof Error
+          ? problem.message
+          : "Nie udało się rozpocząć nowej wyprawy.",
+      );
+    } finally {
+      ustawZapisywanie(false);
+      zajete.current = false;
+    }
+  }
 
   const definicje = sesja.current?.definicje;
   const zagadka = dane?.zagadka;
   const miejsce =
     definicje && dane && !dane.profil
-      ? aktualneMiejsce(definicje.lokalizacje, dane.stan)
+      ? aktualneMiejsce(
+          definicje.lokalizacje,
+          dane.stan,
+          definicje.kampania?.scenyMiejsc,
+        )
       : undefined;
   const diagnostyka =
     import.meta.env.DEV &&
     new URLSearchParams(window.location.search).get("debug") === "1";
+  const cele =
+    dane?.opcje.flatMap((opcja) => {
+      const wybor = definicje?.wybory.find(
+        (element) =>
+          element.idSceny === dane.stan.aktualnaScena &&
+          opcja.tagi.some(
+            (tag) => tag.rodzaj === "sygnal" && tag.wartosc === element.id,
+          ),
+      );
+      const docelowa =
+        definicje?.kampania?.scenyMiejsc.find(
+          (element) => element.idSceny === wybor?.nastepnaScena,
+        )?.idLokalizacji ??
+        definicje?.lokalizacje.find(
+          (element) => element.idSceny === wybor?.nastepnaScena,
+        )?.id;
+      return docelowa ? [{ id: docelowa, indeks: opcja.indeks }] : [];
+    }) ?? [];
   const tytul =
     widok === "gra"
       ? (nazwyScen[dane?.stan.aktualnaScena ?? ""] ?? "Opowieść")
@@ -452,6 +518,21 @@ export default function Aplikacja({
                 >
                   {dane ? "Wznów opowieść" : "Rozpocznij opowieść"}
                 </button>
+                {dane && (
+                  <>
+                    <button
+                      type="button"
+                      disabled={ladowanie || zapisywanie || zablokowanyZapis}
+                      onClick={() => void rozpocznijNowa()}
+                    >
+                      Nowa wyprawa bez starego śladu
+                    </button>
+                    <p>
+                      Dotychczasowy zapis pozostanie lokalną kopią. Nowa wyprawa
+                      ma osobny ślad GPS.
+                    </p>
+                  </>
+                )}
                 <p className="uwaga">
                   To wczesna wersja demonstracyjna. Postęp zapisujemy na tym
                   urządzeniu po każdej zakończonej akcji.
@@ -486,6 +567,29 @@ export default function Aplikacja({
                       }
                       lokalizacje={definicje.lokalizacje}
                       stan={dane.stan}
+                      ukonczoneZadania={definicje.zadania
+                        .filter(
+                          (zadanie) => dane.stan.flagi[`zadanie_${zadanie.id}`],
+                        )
+                        .map((zadanie) => zadanie.idLokalizacji)}
+                      scenyMiejsc={definicje.kampania?.scenyMiejsc ?? []}
+                      dostepne={cele.map((cel) => cel.id)}
+                      sladGps={sladGps}
+                      wybierzCel={(id) => {
+                        const cel = cele.find((element) => element.id === id);
+                        if (cel) {
+                          ustawWidok("gra");
+                          void wykonaj((gra) => gra.wybierz(cel.indeks));
+                        }
+                      }}
+                      odtworzPergamin={() =>
+                        audio.current?.wykonaj([
+                          {
+                            rodzaj: "ODTWORZ_DZWIEK",
+                            id: "przewrocenie_kartki",
+                          },
+                        ])
+                      }
                     />
                   </GranicaMapy>
                 </Oczekiwanie>
@@ -552,6 +656,25 @@ export default function Aplikacja({
                       }
                       .
                     </p>
+                    <p>
+                      {
+                        definicje?.zakonczenia.find(
+                          (element) =>
+                            element.id === dane.profil?.zakonczenieGlowne,
+                        )?.tekst
+                      }
+                    </p>
+                    {[
+                      ...dane.profil.epilogiWatkow,
+                      ...dane.profil.konsekwencjeZagadek,
+                    ].map((id) => {
+                      const epilog = definicje?.zakonczenia.find(
+                        (element) => element.id === id,
+                      );
+                      return epilog?.tekst ? (
+                        <p key={id}>{epilog.tekst}</p>
+                      ) : null;
+                    })}
                     <button type="button" onClick={() => ustawWidok("kronika")}>
                       Otwórz swoją Kronikę
                     </button>
@@ -574,6 +697,27 @@ export default function Aplikacja({
                   </p>
                 )}
                 <ul className="lista-kart">
+                  {dane?.wiedza.map((wpis) => (
+                    <li className="karta" key={wpis.id}>
+                      <p className="etykieta">Po obserwacji</p>
+                      <h2>{wpis.nazwa}</h2>
+                      <p>{wpis.tekst}</p>
+                      <p>
+                        {wpis.idZrodla.map((id) => {
+                          const zrodlo = definicje?.zrodla.find(
+                            (element) => element.id === id,
+                          );
+                          return zrodlo?.url ? (
+                            <a key={id} href={zrodlo.url}>
+                              {zrodlo.tytul}
+                            </a>
+                          ) : (
+                            zrodlo?.tytul
+                          );
+                        })}
+                      </p>
+                    </li>
+                  ))}
                   {definicje?.lokalizacje
                     .filter((element) =>
                       dane?.stan.odwiedzoneLokalizacje.includes(element.id),
@@ -624,7 +768,10 @@ export default function Aplikacja({
             )}
             {widok === "watki" && (
               <>
-                <p>Dwie perspektywy jednej podróży.</p>
+                <p>
+                  Odkryte wątki twojej podróży. Kolejne mogą ujawnić się po
+                  obserwacji.
+                </p>
                 {!dane && <p>Rozpocznij opowieść, aby odkryć jej wątki.</p>}
                 <ul className="lista-kart">
                   {definicje?.watki

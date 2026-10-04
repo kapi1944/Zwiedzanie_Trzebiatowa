@@ -32,5 +32,12 @@ export function sprawdzWarunek(warunek: Warunek, stan: StanGry): boolean {
       return stan.odkryteScenki.includes(warunek.id);
     case "powinowactwoCoNajmniej":
       return stan.powinowactwa[warunek.os] >= warunek.wartosc;
+    case "zadanieUkonczone":
+      return stan.flagi[`zadanie_${warunek.id}`] === true;
+    case "podpowiedziCoNajwyzej":
+      return (
+        !!stan.wynikiZagadek[warunek.id] &&
+        (stan.uzytePodpowiedzi[warunek.id] ?? 0) <= warunek.liczba
+      );
   }
 }

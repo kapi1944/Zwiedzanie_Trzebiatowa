@@ -25,11 +25,17 @@ export default zdefiniujKonfiguracje({
       },
       workbox: {
         globPatterns: ["**/*.{html,js,css,png,svg,json}"],
-        globIgnores: ["**/.vite/**", "**/Mapa-*", "**/audio-*"],
+        globIgnores: [
+          "**/.vite/**",
+          "**/Mapa-*",
+          "**/audio-*",
+          "**/geometria-*",
+        ],
         navigateFallback: "index.html",
         runtimeCaching: [
           {
-            urlPattern: /\/assets\/Mapa-[^/]+\.(js|css)$/,
+            urlPattern:
+              /\/assets\/(Mapa-[^/]+\.(js|css)|geometria-[^/]+\.json)$/,
             handler: "CacheFirst",
             options: {
               cacheName: "mapa-na-zadanie",

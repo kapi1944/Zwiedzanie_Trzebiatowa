@@ -38,6 +38,8 @@ export type Warunek =
   | { rodzaj: "wynikZagadkiJest"; id: string; wynik: WynikZagadki }
   | { rodzaj: "stanWatkuJest"; id: string; stan: StanWatku }
   | { rodzaj: "powinowactwoCoNajmniej"; os: OsPowinowactwa; wartosc: number }
+  | { rodzaj: "zadanieUkonczone"; id: string }
+  | { rodzaj: "podpowiedziCoNajwyzej"; id: string; liczba: number }
   | {
       rodzaj: "posiadaPrzedmiot" | "odwiedzono" | "wybrano" | "odkrytoScenke";
       id: string;
@@ -73,6 +75,12 @@ export const schematWarunku: z.ZodType<Warunek> = z.lazy(() =>
       rodzaj: z.literal("powinowactwoCoNajmniej"),
       os: schematOsiPowinowactwa,
       wartosc: z.number().int().min(-5).max(5),
+    }),
+    z.strictObject({ rodzaj: z.literal("zadanieUkonczone"), id: schematId }),
+    z.strictObject({
+      rodzaj: z.literal("podpowiedziCoNajwyzej"),
+      id: schematId,
+      liczba: z.number().int().nonnegative(),
     }),
     ...(
       ["posiadaPrzedmiot", "odwiedzono", "wybrano", "odkrytoScenke"] as const
@@ -127,6 +135,18 @@ export const schematDefinicjiLokalizacji = z
     ...polaElementu,
     idSceny: schematId,
     warunek: schematWarunku.optional(),
+    statusRekonesansu: z
+      .enum(["POTWIERDZONE", "WYMAGA_REKONESANSU", "DO_WERYFIKACJI"])
+      .optional(),
+    wymaganiaDostepu: z.string().min(1).optional(),
+    punktMapy: z
+      .strictObject({
+        szerokosc: z.number().min(-90).max(90),
+        dlugosc: z.number().min(-180).max(180),
+        zrodlo: z.httpUrl(),
+        status: z.enum(["POTWIERDZONE_ZRODLOWO", "DO_WERYFIKACJI"]),
+      })
+      .optional(),
   })
   .refine(
     (miejsce) =>
@@ -142,6 +162,8 @@ export const schematDefinicjiWatku = z.strictObject({
   opcjonalny: z.boolean(),
   wymaganyDoFinalu: z.boolean(),
   warunek: schematWarunku.optional(),
+  warunekAktywacji: schematWarunku.optional(),
+  warunekUkonczenia: schematWarunku.optional(),
 });
 export type DefinicjaWatku = z.infer<typeof schematDefinicjiWatku>;
 export const schematDefinicjiZadania = z.strictObject({
@@ -234,6 +256,7 @@ export function normalizujOdpowiedz(
 const polaZagadki = {
   ...polaElementu,
   idLokalizacji: schematId,
+  idSceny: schematId.optional(),
   pytanie: z.string().min(1),
   podpowiedzi: z.array(z.string().min(1)),
   pomoc: z
@@ -342,6 +365,7 @@ export const schematDefinicjiZakonczenia = z.strictObject({
   priorytet: z.number().int(),
   domyslne: z.boolean(),
   warunek: schematWarunku.optional(),
+  tekst: z.string().min(1).optional(),
 });
 export type DefinicjaZakonczenia = z.infer<typeof schematDefinicjiZakonczenia>;
 export const schematZrodlaHistorycznego = z.strictObject({
@@ -361,7 +385,62 @@ export const schematDefinicjiZasobu = z.strictObject({
 });
 export type DefinicjaZasobu = z.infer<typeof schematDefinicjiZasobu>;
 
+export const schematKandydataMiejsca = z.strictObject({
+  id: schematId,
+  nazwa: z.string().min(1),
+  statusRekonesansu: z.enum([
+    "POTWIERDZONE",
+    "WYMAGA_REKONESANSU",
+    "DO_WERYFIKACJI",
+  ]),
+  pochodzenie: z.string().min(1),
+  obszar: z.string().min(1),
+  kandydaciZadan: z
+    .array(
+      z.strictObject({
+        polecenie: z.string().min(1),
+        odpowiedz: z.string().nullable(),
+        status: z.enum([
+          "WYMAGA_REKONESANSU",
+          "DO_WERYFIKACJI",
+          "POTWIERDZONE_ZRODLOWO",
+        ]),
+        zrodla: z.array(z.string().min(1)),
+      }),
+    )
+    .max(3),
+});
+export const schematKampanii = z.strictObject({
+  scenaRozgalezienia: schematId,
+  scenaFinalu: schematId,
+  warunekFinalu: schematWarunku,
+  scenyMiejsc: z.array(
+    z.strictObject({ idSceny: schematId, idLokalizacji: schematId }),
+  ),
+  powiazaniaNarracji: z.array(
+    z.strictObject({
+      zmiennaInk: schematId,
+      obszar: z.enum([
+        "flagi",
+        "wynikiZagadek",
+        "stanyWatkow",
+        "sladyIPrzedmioty",
+        "odwiedzoneLokalizacje",
+        "dokonaneWybory",
+      ]),
+      klucz: schematId,
+    }),
+  ),
+  wiedza: z.array(
+    z.strictObject({
+      ...polaElementu,
+      tekst: z.string().min(1),
+      warunek: schematWarunku,
+    }),
+  ),
+});
 const schematPakietu = z.strictObject({
+  kampania: schematKampanii.optional(),
   manifest: schematManifestuGry,
   lokalizacje: z.array(schematDefinicjiLokalizacji),
   watki: z.array(schematDefinicjiWatku),
@@ -407,7 +486,11 @@ export const schematDefinicjiGry = schematPakietu.superRefine(
           sprawdzWarunek(warunek.warunek);
           break;
         case "wynikZagadkiJest":
+        case "podpowiedziCoNajwyzej":
           sprawdzId(warunek.id, dane.zagadki);
+          break;
+        case "zadanieUkonczone":
+          sprawdzId(warunek.id, dane.zadania);
           break;
         case "stanWatkuJest":
           sprawdzId(warunek.id, dane.watki);
@@ -467,6 +550,23 @@ export const schematDefinicjiGry = schematPakietu.superRefine(
       }
     };
     dane.wybory.forEach(sprawdzKonsekwencje);
+    for (const watek of dane.watki) {
+      if (watek.warunekAktywacji) sprawdzWarunek(watek.warunekAktywacji);
+      if (watek.warunekUkonczenia) sprawdzWarunek(watek.warunekUkonczenia);
+    }
+    if (dane.kampania) {
+      for (const miejsce of dane.kampania.scenyMiejsc)
+        sprawdzId(miejsce.idLokalizacji, dane.lokalizacje);
+      sprawdzWarunek(dane.kampania.warunekFinalu);
+      for (const wpis of dane.kampania.wiedza) {
+        sprawdzWarunek(wpis.warunek);
+        wpis.idZrodla.forEach((id) => {
+          sprawdzId(id, dane.zrodla);
+        });
+        if (wpis.klasyfikacja !== "FABULARYZOWANE" && !wpis.idZrodla.length)
+          zglos("Wiedza historyczna wymaga zrodla.");
+      }
+    }
     for (const zagadka of dane.zagadki) {
       for (const sposob of zagadka.alternatywneZaliczenia)
         sprawdzWarunek(sposob.warunek);

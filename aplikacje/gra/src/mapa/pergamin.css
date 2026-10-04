@@ -1,0 +1,103 @@
+.pergamin {
+  height: min(65vh, 660px);
+  min-height: 400px;
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+  border: 6px double #80623e;
+  border-radius: 8px;
+  background: #edd8b0;
+  box-shadow: inset 0 0 18px #80623e55;
+}
+.pergamin canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.pergamin-rozwijany {
+  animation: rozwin-pergamin 480ms ease-out;
+}
+@keyframes rozwin-pergamin {
+  from {
+    clip-path: inset(46% 0 46%);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+.narzedzia-mapy {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-block: 12px;
+}
+.narzedzia-mapy button {
+  width: auto;
+  flex: 1 1 120px;
+}
+.narzedzia-mapy button[aria-label] {
+  width: 44px;
+  flex: 0 0 44px;
+  padding: 0;
+  text-align: center;
+}
+.znacznik-miejsca {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  min-height: 44px;
+  background: #f9edce;
+  color: #263e2e;
+  border: 2px solid #304a39;
+  border-radius: 50%;
+  z-index: 2;
+}
+.znacznik-celu {
+  border: 3px solid #983c1c;
+  background: #fff1cc;
+}
+.kotwica-miejsca {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #304a39;
+  pointer-events: none;
+}
+.pozycja-gracza {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  line-height: 19px;
+  color: #113d66;
+  background: #fff7db;
+  border: 3px solid #113d66;
+  border-radius: 50%;
+  z-index: 3;
+  pointer-events: none;
+}
+.kompas-mapy {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font:
+    bold 20px Georgia,
+    serif;
+  color: #423223;
+  background: #f4e6c9;
+  padding: 4px 8px;
+  border: 1px solid #80623e;
+}
+.opis-mapy {
+  font-size: 0.9rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .pergamin-rozwijany {
+    animation: none;
+  }
+}

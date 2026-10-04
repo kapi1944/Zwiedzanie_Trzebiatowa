@@ -69,6 +69,17 @@ function odblokujDostepne(
   stan: StanGry,
   efekty: EfektGry[],
 ): void {
+  // Zadania sa pochodna wynikow, a watki pochodna warunkow contentu.
+  for (const zadanie of definicje.kampania ? definicje.zadania : []) {
+    if (
+      zadanie.idZagadek.length &&
+      zadanie.idZagadek.every((id) => {
+        const wynik = stan.wynikiZagadek[id]?.wynik;
+        return wynik && wynik !== "POMINIETA" && wynik !== "NIEUDANA";
+      })
+    )
+      stan.flagi[`zadanie_${zadanie.id}`] = true;
+  }
   for (const lokalizacja of definicje.lokalizacje) {
     if (
       !stan.odblokowaneLokalizacje.includes(lokalizacja.id) &&
@@ -86,6 +97,18 @@ function odblokujDostepne(
       stan.watki[watek.id] = "DOSTEPNY";
       efekty.push({ rodzaj: "ODBLOKUJ_WATEK", id: watek.id });
     }
+    if (
+      stan.watki[watek.id] === "DOSTEPNY" &&
+      watek.warunekAktywacji &&
+      sprawdzWarunek(watek.warunekAktywacji, stan)
+    )
+      stan.watki[watek.id] = "AKTYWNY";
+    if (
+      stan.watki[watek.id] === "AKTYWNY" &&
+      watek.warunekUkonczenia &&
+      sprawdzWarunek(watek.warunekUkonczenia, stan)
+    )
+      stan.watki[watek.id] = "UKONCZONY";
   }
 }
 
@@ -144,8 +167,14 @@ export function wykonajKrok(
         if (!nowy.odblokowaneLokalizacje.includes(lokalizacja.id))
           throw new Error("Lokalizacja jest zablokowana.");
         dodaj(nowy.odwiedzoneLokalizacje, lokalizacja.id);
-        nowy.aktualnaScena = lokalizacja.idSceny;
-        efekty.push({ rodzaj: "POKAZ_SCENE", id: lokalizacja.idSceny });
+        nowy.aktualnaScena = dane.kampania?.scenyMiejsc.some(
+          (miejsce) =>
+            miejsce.idLokalizacji === lokalizacja.id &&
+            miejsce.idSceny === nowy.aktualnaScena,
+        )
+          ? nowy.aktualnaScena
+          : lokalizacja.idSceny;
+        efekty.push({ rodzaj: "POKAZ_SCENE", id: nowy.aktualnaScena });
         break;
       }
       case "POTWIERDZ_OBECNOSC": {

@@ -24,5 +24,11 @@
     "formatter": {
       "quoteStyle": "double"
     }
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["tresc/mapa/geometria.json"],
+      "formatter": { "enabled": false }
+    }
+  ]
 }

@@ -1,0 +1,2243 @@
+[
+  {
+    "id": "bank_01",
+    "nazwa": "Rynek Staromiejski",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 01; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Stare Miasto",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Stań w wyznaczonym punkcie rynku i obejdź go dookoła. Policz wszystkie wyloty ulic prowadzące bezpośrednio z placu. Wpisz liczbę do gry.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S22"]
+      },
+      {
+        "polecenie": "Spójrz na rynek jak na plan miasta. Który z trzech kształtów najlepiej opisuje plac: koło, prostokąt czy trójkąt? Wybierz poprawną odpowiedź.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S22"]
+      },
+      {
+        "polecenie": "Nie ruszając się dalej niż dookoła rynku, znajdź jednocześnie ratusz, słonicę oraz historyczne sgraffito. Gdy wszystkie trzy będą w Twoim zasięgu wzroku po krótkim obejściu placu, zaznacz „odnalezione”.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S22"]
+      }
+    ]
+  },
+  {
+    "id": "bank_02",
+    "nazwa": "Szachownicowy układ ulic Starego Miasta",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 02; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Urbanistyka",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Na ekranie zobaczysz cztery uproszczone schematy ulic. Porównaj je z tym, jak ulice odchodzą od rynku, i wybierz schemat najbardziej podobny do prawdziwego układu Starego Miasta.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S4, S5, S22"]
+      },
+      {
+        "polecenie": "Odszukaj na mapie gry trzy ulice biegnące mniej więcej równolegle przez starówkę. Zaznacz je kolejno na ekranie, nie zmieniając ich kierunku.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S4, S5, S22"]
+      },
+      {
+        "polecenie": "Wyłącz na chwilę strzałkę prowadzącą. Korzystając wyłącznie z układu przecznic i widoku wieży kościoła, dotrzyj do wskazanego narożnika rynku.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S4, S5, S22"]
+      }
+    ]
+  },
+  {
+    "id": "bank_03",
+    "nazwa": "Ratusz Miejski",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 03; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Architektura świecka",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Obejdź ratusz dookoła i policz duże arkadowe otwory w jego przyziemiu po stronie wskazanej przez grę. Wpisz liczbę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S22"]
+      },
+      {
+        "polecenie": "Ratusz nie jest w całości z jednego okresu. Znajdź część elewacji, która wyraźnie różni się formą od prostych ścian budynku, i wskaż ją na zdjęciu w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S22"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże trzy kadry detali ratusza. Podejdź do budynku i wybierz ten, który rzeczywiście znajduje się nad głównym wejściem.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S22"]
+      }
+    ]
+  },
+  {
+    "id": "bank_04",
+    "nazwa": "Gotyckie arkady Ratusza",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 04; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Detal architektoniczny",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź zachowane gotyckie arkady ratusza. Ile ich widzisz? Wpisz liczbę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S22"]
+      },
+      {
+        "polecenie": "Przyjrzyj się górnej części arkad. Wybierz w aplikacji kształt łuku, który najlepiej pasuje do widocznego detalu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S22"]
+      },
+      {
+        "polecenie": "Znajdź miejsce, gdzie starsza część ratusza styka się z późniejszą architekturą. Zrób zdjęcie tak, aby na jednym kadrze znalazły się oba fragmenty.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S22"]
+      }
+    ]
+  },
+  {
+    "id": "bank_05",
+    "nazwa": "Dziedziniec Ratusza",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 05; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Wnętrze / detal",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wejdź do ratusza w godzinach udostępnienia i odszukaj wewnętrzny dziedziniec. Gdy znajdziesz miejsce otwarte ku niebu, zeskanuj znajdujący się tam znacznik gry.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S22"]
+      },
+      {
+        "polecenie": "Stań pośrodku dostępnej części dziedzińca i policz, ile ścian budynku bezpośrednio go otacza.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S22"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże trzy zdjęcia. Wybierz detal, który można zobaczyć dopiero po wejściu do wnętrza ratusza.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S22"]
+      }
+    ]
+  },
+  {
+    "id": "bank_06",
+    "nazwa": "Wieża ratuszowa, zegary i hejnał",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 06; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Detal / dźwięk",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Obejdź ratusz tak, aby zobaczyć każdą stronę wieżyczki. Ile tarcz zegarowych znajduje się na niej łącznie?",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S19"]
+      },
+      {
+        "polecenie": "Jeśli jesteś na rynku o właściwej porze, posłuchaj hejnału. W aplikacji wybierz spośród trzech krótkich nagrań to, które odpowiada melodii usłyszanej na miejscu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S19"]
+      },
+      {
+        "polecenie": "Bez patrzenia na telefon odczytaj godzinę z tarczy ratuszowego zegara i wybierz najbliższą wartość w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S19"]
+      }
+    ]
+  },
+  {
+    "id": "bank_07",
+    "nazwa": "Sgraffito słonicy Hansken",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 07; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Sztuka / symbol miasta",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odszukaj historyczne sgraffito i przyjrzyj się całej scenie. Czy obok słonicy znajduje się człowiek, drugie zwierzę czy drzewo? Wybierz właściwą odpowiedź.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S11, S22"]
+      },
+      {
+        "polecenie": "Przyjrzyj się powierzchni obrazu. Zadanie: wybierz opis techniki, który najlepiej pasuje do sgraffito – malowanie na płótnie, układanie mozaiki czy odsłanianie warstw tynku.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S11, S22"]
+      },
+      {
+        "polecenie": "Stań przodem do sgraffito i sprawdź, w którą stronę zwrócona jest głowa słonicy. W aplikacji przesuń ikonę słonia w ten sam kierunek.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S11, S22"]
+      }
+    ]
+  },
+  {
+    "id": "bank_08",
+    "nazwa": "Rzeźba słonicy Hansken na rynku",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 08; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Rzeźba współczesna",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Przyjrzyj się rzeźbie. Na ilu nogach słonica opiera się w tej pozie? Wpisz liczbę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S17"]
+      },
+      {
+        "polecenie": "Czy trąba rzeźby skierowana jest głównie w górę, w dół czy poziomo? Wybierz odpowiedź.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S17"]
+      },
+      {
+        "polecenie": "Znajdź takie miejsce na rynku, z którego na jednym zdjęciu zmieścisz słonicę i wieżę ratusza. Zrób fotografię, aby odblokować kolejną wskazówkę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S17"]
+      }
+    ]
+  },
+  {
+    "id": "bank_09",
+    "nazwa": "Zabytkowe kamienice rynku",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 09; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Zabudowa mieszczańska",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź trzy sąsiadujące kamienice, których zwieńczenia wyraźnie się różnią. Wybierz w aplikacji zestaw trzech sylwetek pasujący do rzeczywistych fasad.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S5"]
+      },
+      {
+        "polecenie": "W wyznaczonym fragmencie pierzei porównaj szerokość fasad i wskaż kamienicę, która wydaje się najwęższa.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S5"]
+      },
+      {
+        "polecenie": "Gra pokaże zbliżenie jednego detalu architektonicznego. Odszukaj odpowiadającą mu kamienicę i wpisz numer budynku.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S5"]
+      }
+    ]
+  },
+  {
+    "id": "bank_10",
+    "nazwa": "Kamienica przy Mostowej 12",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 10; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Kamienica zabytkowa",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Na wskazanej części fasady znajdź powtarzający się ornament i policz, ile razy występuje.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S13, S21, S23"]
+      },
+      {
+        "polecenie": "Stań naprzeciw kamienicy. Czy główna część fasady jest symetryczna względem osi wejścia? Wybierz „tak” lub „nie”.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S13, S21, S23"]
+      },
+      {
+        "polecenie": "Otrzymasz w aplikacji powiększony fragment dekoracji. Odszukaj go na budynku i dotknij na ekranie właściwej części schematu fasady.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S13, S21, S23"]
+      }
+    ]
+  },
+  {
+    "id": "bank_11",
+    "nazwa": "Fontanna-kotwica na Placu Zjednoczenia",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 11; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Mała architektura",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Obejdź fontannę dookoła i policz główne ramiona jej formy. Wpisz liczbę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10"]
+      },
+      {
+        "polecenie": "Spójrz na fontannę z kilku stron. Wybierz symbol, który najlepiej opisuje jej kształt: kotwica, korona czy koło młyńskie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10"]
+      },
+      {
+        "polecenie": "Na podstawie informacji przy obiekcie lub wskazówki w aplikacji ustal, jaką rocznicę lokacji miasta upamiętnia powstanie fontanny.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10"]
+      }
+    ]
+  },
+  {
+    "id": "bank_12",
+    "nazwa": "Kościół Macierzyństwa NMP",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 12; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Architektura sakralna",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Obejdź dostępne elewacje kościoła i policz duże wejścia prowadzące do wnętrza, zgodnie z definicją pokazaną w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S17"]
+      },
+      {
+        "polecenie": "Stań w wyznaczonym miejscu i wskaż na ekranie, który element bryły kościoła jest najwyższy.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S17"]
+      },
+      {
+        "polecenie": "Znajdź na elewacji ostrołukowe okno lub portal i dopasuj jego kształt do jednej z trzech ikon w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S17"]
+      }
+    ]
+  },
+  {
+    "id": "bank_13",
+    "nazwa": "Wieża kościoła – dawna latarnia dla żeglarzy",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 13; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Historia / panorama",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Spójrz na wieżę i wybierz, do czego poza funkcją kościelną była według lokalnej historii wykorzystywana: jako latarnia/punkt orientacyjny, wieża kopalniana czy obserwatorium astronomiczne.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S17"]
+      },
+      {
+        "polecenie": "Odszukaj wskazany zaułek, z którego wieża pojawia się dokładnie pomiędzy dwiema pierzejami. Zrób zdjęcie zgodne z konturem pokazanym w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S17"]
+      },
+      {
+        "polecenie": "Na kompasie w aplikacji wskaż przybliżony kierunek, w którym od Trzebiatowa znajduje się morze. Następnie porównaj go z położeniem wieży jako dawnego punktu orientacyjnego.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S17"]
+      }
+    ]
+  },
+  {
+    "id": "bank_14",
+    "nazwa": "Taras widokowy wieży kościoła",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 14; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Punkt widokowy",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Z tarasu odnajdź ratusz i wskaż go na uproszczonej panoramie w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      },
+      {
+        "polecenie": "Rozejrzyj się po panoramie i policz wybrane wysokie obiekty oznaczone w aplikacji jako „dominanty”.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      },
+      {
+        "polecenie": "Z tarasu odszukaj rzekę lub jej koryto i wskaż kierunek, w którym płynie ku morzu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      }
+    ]
+  },
+  {
+    "id": "bank_15",
+    "nazwa": "Dzwon „Maria” z 1515 r.",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 15; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Dzwon / dziedzictwo",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odszukaj informację o największym historycznym dzwonie w wieży. Wpisz jego imię do aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S17"]
+      },
+      {
+        "polecenie": "Gra poda cztery cyfry w losowej kolejności: 1, 5, 1, 5. Ułóż z nich rok powstania dzwonu „Maria”.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S17"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże trzy przedziały masy. Wybierz ten, do którego należy dzwon „Maria”: poniżej 1 t, 1–3 t czy ponad 3 t.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S17"]
+      }
+    ]
+  },
+  {
+    "id": "bank_16",
+    "nazwa": "Bezimienny dzwon z 1399 r.",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 16; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Dzwon / średniowiecze",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Spośród dat 1399, 1515 i 1905 wybierz rok najstarszego dzwonu znajdującego się w wieży.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      },
+      {
+        "polecenie": "Znajdź w opisie wieży dzwon, który nie ma podanego imienia. Jaką ma datę?",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      },
+      {
+        "polecenie": "Ułóż trzy karty z datami dzwonów od najstarszego do najmłodszego.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      }
+    ]
+  },
+  {
+    "id": "bank_17",
+    "nazwa": "Organy z 1848 r.",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 17; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Wnętrze kościoła",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wejdź do kościoła w czasie udostępnienia i odszukaj instrument. Wskaż w aplikacji, w której części świątyni się znajduje: przy ołtarzu, na emporze czy w bocznej kaplicy.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      },
+      {
+        "polecenie": "Patrząc wyłącznie na front instrumentu, policz wyraźnie wydzielone grupy piszczałek wskazane ramką w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      },
+      {
+        "polecenie": "Posłuchaj krótkiego nagrania i wybierz, który z trzech instrumentów słyszysz: organy piszczałkowe, skrzypce czy dzwon.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      }
+    ]
+  },
+  {
+    "id": "bank_18",
+    "nazwa": "Witraże z 1867 r.",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 18; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Wnętrze kościoła",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź wskazany witraż i wybierz kolor, który zajmuje na nim największą powierzchnię spośród trzech proponowanych.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże zbliżenie małego fragmentu witraża. Odszukaj go we wnętrzu i wskaż, w którym oknie się znajduje.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      },
+      {
+        "polecenie": "Na podstawie daty 1867 wybierz, z którego wieku pochodzą te witraże.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      }
+    ]
+  },
+  {
+    "id": "bank_19",
+    "nazwa": "Płyta nagrobna Arnolda Crampla",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 19; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Wnętrze kościoła",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Korzystając ze wskazówki w aplikacji, znajdź płytę nagrobną Arnolda Crampla. Potwierdź odnalezienie, wybierając właściwy kształt płyty spośród trzech konturów.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      },
+      {
+        "polecenie": "Znajdź przy płycie datę jej powstania lub śmierci upamiętnionej osoby i wpisz cztery cyfry.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      },
+      {
+        "polecenie": "Przyjrzyj się płycie i wskaż w aplikacji jeden z symboli, który rzeczywiście na niej występuje.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1"]
+      }
+    ]
+  },
+  {
+    "id": "bank_20",
+    "nazwa": "Pałac nad Młynówką",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 20; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Pałac / historia",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Obejdź dostępny dziedziniec/otoczenie i wybierz w aplikacji schemat najbardziej podobny do rzutu głównej bryły pałacu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S6, S9"]
+      },
+      {
+        "polecenie": "Na podstawie tablicy lub wskazówki wybierz postać związaną z pałacem: Maria Czartoryska- Wirtemberska, Mikołaj Kopernik czy Jan III Sobieski.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S6, S9"]
+      },
+      {
+        "polecenie": "Odszukaj stronę pałacu najbliższą Młynówce i wykonaj zdjęcie, na którym widać jednocześnie fragment pałacu i wodę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S6, S9"]
+      }
+    ]
+  },
+  {
+    "id": "bank_21",
+    "nazwa": "Relikty romańskiego domu księżnej Anastazji",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 21; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Archeologia w pałacu",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź w piwnicy fragment oznaczony jako najstarsza zachowana część. Wybierz, z którym wiekiem jest związany: XIII, XVII czy XX.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S6"]
+      },
+      {
+        "polecenie": "Przyjrzyj się reliktom i wskaż, czy dominującym widocznym materiałem jest kamień, cegła czy drewno.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S6"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże trzy etapy: dom romański, klasztor, pałac. Ułóż je od najstarszego do najmłodszego.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S6"]
+      }
+    ]
+  },
+  {
+    "id": "bank_22",
+    "nazwa": "Relikty klasztoru norbertanek w Pałacu",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 22; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Archeologia / klasztor",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wybierz poprawną odpowiedź: zanim powstał pałac w obecnej formie, w tym miejscu funkcjonował między innymi klasztor norbertanek, kopalnia soli czy stocznia.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S6"]
+      },
+      {
+        "polecenie": "Na podstawie muzealnej wskazówki odszukaj fragment muru należący do starszej fazy i zeskanuj umieszczony obok kod gry.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S6"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże trzy detale z wnętrza. Wskaż ten, który przewodnik/ekspozycja opisuje jako relikt fazy klasztornej.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S6"]
+      }
+    ]
+  },
+  {
+    "id": "bank_23",
+    "nazwa": "Sala Palmowa / Balowa",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 23; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Wnętrze pałacu",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odszukaj w muzeum informację o reprezentacyjnej sali pałacu. Jaką roślinę ma w nazwie?",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S6"]
+      },
+      {
+        "polecenie": "Znajdź w sali wskazany przez aplikację detal dekoracyjny i wybierz jego kształt spośród trzech ikon.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S6"]
+      },
+      {
+        "polecenie": "Stań w wyznaczonym punkcie sali i wybierz w aplikacji, który z trzech schematów najlepiej pozwalałby parom poruszać się bez kolizji między stałymi elementami wnętrza.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S6"]
+      }
+    ]
+  },
+  {
+    "id": "bank_24",
+    "nazwa": "Muzeum Pałacowe / dawna Izba Regionalna",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 24; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Muzeum",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź w ekspozycji trzy obiekty pokazane na ekranie: jeden związany z domem, jeden z pracą i jeden z podróżą. Zaznacz każdy po odnalezieniu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S7, S9"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże trzy eksponaty i ich przybliżone datowanie. Odszukaj je na sali i wybierz najstarszy.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S7, S9"]
+      },
+      {
+        "polecenie": "Znajdź przedmiot, który mógł być używany codziennie przez mieszkańca Trzebiatowa sto lat temu. Zrób zdjęcie i wybierz jego dawną funkcję.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S7, S9"]
+      }
+    ]
+  },
+  {
+    "id": "bank_25",
+    "nazwa": "Strych pałacowy i historyczna więźba dachowa",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 25; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Architektura / muzeum",
+    "kandydaciZadan": [
+      {
+        "polecenie": "W wyznaczonym fragmencie strychu policz widoczne główne ramy/wiązary oznaczone w instrukcji gry.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S7"]
+      },
+      {
+        "polecenie": "Wybierz, z którego stulecia pochodzą najstarsze partie więźby: XVII, XIX czy XXI.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S7"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże zdjęcie jednego rodzaju połączenia drewnianych belek. Odszukaj takie samo nad sobą.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S7"]
+      }
+    ]
+  },
+  {
+    "id": "bank_26",
+    "nazwa": "Galeria Feininger",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 26; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Sztuka",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odczytaj pełną nazwę galerii i wpisz nazwisko jej patrona.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S8, S9"]
+      },
+      {
+        "polecenie": "Znajdź plakat aktualnej wystawy i przepisz jedno słowo z jej tytułu wskazane przez aplikację, np. pierwsze lub ostatnie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S8, S9"]
+      },
+      {
+        "polecenie": "Na reprodukcji lub planszy znajdź motyw Trzebiatowa i wybierz, który obiekt miasta został przedstawiony.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S8, S9"]
+      }
+    ]
+  },
+  {
+    "id": "bank_27",
+    "nazwa": "Ogrody pałacowe",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 27; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Park / pałac",
+    "kandydaciZadan": [
+      {
+        "polecenie": "W wyznaczonej części ogrodu znajdź drzewo o największym obwodzie pnia spośród trzech oznaczonych w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S6, S19"]
+      },
+      {
+        "polecenie": "Znajdź punkt, z którego gałęzie dwóch drzew tworzą naturalną „ramę” dla pałacu. Zrób zdjęcie zgodne z podglądem.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S6, S19"]
+      },
+      {
+        "polecenie": "Bez użycia nawigacji wybierz alejkę, która najszybciej doprowadzi Cię od pałacu do brzegu Młynówki.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S6, S19"]
+      }
+    ]
+  },
+  {
+    "id": "bank_28",
+    "nazwa": "Wczesnośredniowieczne osadnictwo przy pałacu",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 28; oznaczenie autora H nie jest rekonesansem",
+    "obszar": "Archeologia / niewidoczny punkt",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Spójrz przez tryb AR na rekonstrukcję. Wybierz, co istniało w tym rejonie przed lokacyjnym Trzebiatowem: osada rzemieślniczo-targowa, lotnisko czy kamieniołom.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S5"]
+      },
+      {
+        "polecenie": "Przesuń suwak czasu w aplikacji od współczesności do średniowiecza i zatrzymaj go, gdy nałożona rekonstrukcja pasuje do konturu dawnej osady.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S5"]
+      },
+      {
+        "polecenie": "Rozejrzyj się na teren i wskaż element krajobrazu, który mógł pomagać chronić osadę: zakole wody, wydma czy klif morski.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S5"]
+      }
+    ]
+  },
+  {
+    "id": "bank_29",
+    "nazwa": "Młynówka i miejsce dawnego młyna",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 29; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Hydrotechnika / gospodarka",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Stań na wskazanym brzegu i obserwuj powierzchnię wody. W aplikacji wybierz strzałkę pokazującą rzeczywisty kierunek przepływu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S14"]
+      },
+      {
+        "polecenie": "Wybierz poprawną odpowiedź: woda napędzała urządzenia, chłodziła ulice czy służyła wyłącznie do ozdoby.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S14"]
+      },
+      {
+        "polecenie": "Odszukaj w rejonie dawnego młyna widoczny element związany z prowadzeniem lub spiętrzaniem wody i dopasuj go do zdjęcia w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S14"]
+      }
+    ]
+  },
+  {
+    "id": "bank_30",
+    "nazwa": "Elektrownia wodna",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 30; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Zabytek techniki",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź miejsce, w którym najlepiej widać przepływ wody przy elektrowni. Wybierz, jaka energia jest tu wykorzystywana: wody, wiatru czy słońca.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S14, S23, S3"]
+      },
+      {
+        "polecenie": "Na wskazanej elewacji elektrowni policz okna w jednym rzędzie pokazanym w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S14, S23, S3"]
+      },
+      {
+        "polecenie": "Ułóż w kolejności trzy funkcje miejsca: średniowieczny młyn, późniejsza elektrownia, współczesny zabytek techniki.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S14, S23, S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_31",
+    "nazwa": "Baszta Kaszana (Prochowa)",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 31; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Fortyfikacje / legenda",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Obejdź basztę i wybierz jej podstawowy kształt: okrągły, kwadratowy czy trójkątny.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S4, S1, S19"]
+      },
+      {
+        "polecenie": "Spójrz wysoko na basztę i znajdź wystające elementy, które są pozostałością po dawnym ganku. Policz je w wyznaczonym fragmencie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S4, S1, S19"]
+      },
+      {
+        "polecenie": "Na podstawie muralu lub symbolu w aplikacji wybierz przedmiot, który według legendy spadł z baszty: misa kaszy, hełm czy beczka.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S4, S1, S19"]
+      }
+    ]
+  },
+  {
+    "id": "bank_32",
+    "nazwa": "Mury obronne",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 32; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Fortyfikacje",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź odcinek pokazany na ekranie i wskaż, który materiał znajduje się niżej w konstrukcji muru: kamień czy cegła.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S5"]
+      },
+      {
+        "polecenie": "Na wyznaczonym fragmencie muru policz otwory lub blendy zaznaczone w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S5"]
+      },
+      {
+        "polecenie": "Odszukaj jedno z przejść przebitych w murze w późniejszym okresie. Zrób zdjęcie tak, by krawędzie przejścia i stary mur były widoczne jednocześnie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S4, S5"]
+      }
+    ]
+  },
+  {
+    "id": "bank_33",
+    "nazwa": "Czatownie w murach",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 33; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Fortyfikacje / detal",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Idąc wzdłuż murów, odszukaj prostokątną konstrukcję otwartą od strony miasta. Zaznacz w aplikacji, gdy staniesz przed nią.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S4"]
+      },
+      {
+        "polecenie": "Na najlepiej zachowanej czatowni policz widoczne kondygnacje/poziomy otworów.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S4"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże trzy kształty otworów. Wybierz ten, który odpowiada otworom widocznym w czatowni.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S4"]
+      }
+    ]
+  },
+  {
+    "id": "bank_34",
+    "nazwa": "Pozostałości fosy",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 34; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Fortyfikacje / krajobraz",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Stań przy murach i znajdź wyraźne obniżenie terenu będące śladem dawnej fosy. Wskaż na ekranie właściwą stronę muru.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3"]
+      },
+      {
+        "polecenie": "Ułóż trzy elementy średniowiecznej obrony od strony miasta na zewnątrz: mur, fosa, przedpole.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3"]
+      },
+      {
+        "polecenie": "Nakieruj telefon na wskazany fragment. W trybie AR wybierz poziom wody, który najlepiej pasuje do hipotetycznej rekonstrukcji fosy.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_35",
+    "nazwa": "Miejsce dawnej Bramy Gryfickiej",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 35; oznaczenie autora H nie jest rekonesansem",
+    "obszar": "Nieistniejąca brama",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Stań w miejscu dawnej Bramy Gryfickiej i wybierz kierunek, w którym leżą Gryfice.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S2, S11"]
+      },
+      {
+        "polecenie": "Nakieruj telefon na ulicę i dopasuj półprzezroczysty model bramy do linii dawnych murów.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S2, S11"]
+      },
+      {
+        "polecenie": "Na podstawie zachowanych fragmentów po obu stronach spróbuj wskazać w aplikacji, gdzie mniej więcej przebiegało zamknięcie bramy.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S2, S11"]
+      }
+    ]
+  },
+  {
+    "id": "bank_36",
+    "nazwa": "Miejsce dawnej Bramy Kołobrzeskiej",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 36; oznaczenie autora H nie jest rekonesansem",
+    "obszar": "Nieistniejąca brama",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Z miejsca bramy wskaż na kompasie kierunek, w którym znajduje się Kołobrzeg.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S11"]
+      },
+      {
+        "polecenie": "Przejdź przez wyznaczoną w aplikacji linię dawnej bramy. GPS odblokuje animację otwierania wrót.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S11"]
+      },
+      {
+        "polecenie": "Na ekranie zobaczysz trzy rekonstrukcje. Wybierz tę, która przedstawia bramę miejską, a nie basztę ani kościół.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S11"]
+      }
+    ]
+  },
+  {
+    "id": "bank_37",
+    "nazwa": "Miejsce dawnej Bramy Żeglarskiej",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 37; oznaczenie autora H nie jest rekonesansem",
+    "obszar": "Nieistniejąca brama",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wybierz element, z którym nazwa tej bramy wiąże się najbardziej: żegluga, rolnictwo czy górnictwo.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S11"]
+      },
+      {
+        "polecenie": "Stań w miejscu dawnej bramy i wskaż w aplikacji najkrótszy kierunek dojścia do Regi.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S11"]
+      },
+      {
+        "polecenie": "Na uproszczonej mapie narysuj palcem trasę od bramy w kierunku dawnego portowego szlaku. Gra oceni, czy trasa zaczyna się we właściwą stronę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S11"]
+      }
+    ]
+  },
+  {
+    "id": "bank_38",
+    "nazwa": "Miejsce dawnej Bramy Łaziebnej",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 38; oznaczenie autora H nie jest rekonesansem",
+    "obszar": "Nieistniejąca brama",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Użyj mapy historycznej w aplikacji i dopasuj ją do współczesnego układu ulic. Wskaż miejsce, w którym znajdowała się Brama Łaziebna.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S11"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże dawny widok miasta i współczesne zdjęcie. Przesuń suwak, aby dopasować oba obrazy i „odbudować” bramę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S11"]
+      },
+      {
+        "polecenie": "Wybierz z listy nazwę jednej z czterech bram, która związana była z tym punktem: Łaziebna, Morska czy Królewska.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S11"]
+      }
+    ]
+  },
+  {
+    "id": "bank_39",
+    "nazwa": "Most kamienny nad Regą z 1893 r.",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 39; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Most / panorama",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Przyjrzyj się konstrukcji i wybierz główny widoczny materiał: granit, drewno czy szkło.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10"]
+      },
+      {
+        "polecenie": "Stań w wyznaczonym miejscu na moście i odszukaj fragment średniowiecznych murów. Wskaż go na panoramie w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10"]
+      },
+      {
+        "polecenie": "Sprawdź kierunek przepływu Regi pod mostem i wybierz właściwą strzałkę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10"]
+      }
+    ]
+  },
+  {
+    "id": "bank_40",
+    "nazwa": "Most Dworcowy nad Regą z 1905 r.",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 40; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Most / zabytek techniki",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odszukaj informację o moście i wybierz poprawny rok: 1705, 1905 czy 2005.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S22"]
+      },
+      {
+        "polecenie": "Wybierz główny powód budowy mostu: połączenie centrum z dworcem, dojście do kopalni czy dojazd na lotnisko.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S22"]
+      },
+      {
+        "polecenie": "Przejdź most normalnym krokiem i policz kroki. Aplikacja porówna Twój wynik z rzeczywistą długością około 54 m.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S22"]
+      }
+    ]
+  },
+  {
+    "id": "bank_41",
+    "nazwa": "Rzeźbiarskie „smoki/delfiny” Mostu Dworcowego",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 41; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Detal rzeźbiarski",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Przejdź most i policz wszystkie duże kamienne przedstawienia stworów wodnych wskazanego typu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S22"]
+      },
+      {
+        "polecenie": "Przyjrzyj się jednej z rzeźb i wybierz opis używany w grze: stworzenie wodne przypominające delfina/smoka, koń czy gryf.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S22"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże zdjęcie jednego detalu. Odszukaj po przeciwnej stronie mostu jego najbardziej podobny odpowiednik.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S22"]
+      }
+    ]
+  },
+  {
+    "id": "bank_42",
+    "nazwa": "Dworzec kolejowy",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 42; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Kolej / architektura",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odszukaj oficjalny napis z nazwą stacji i wpisz dokładnie pierwsze trzy litery.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3, S22"]
+      },
+      {
+        "polecenie": "Z bezpiecznego, publicznego miejsca policz widoczne krawędzie/perony zgodnie z instrukcją na ekranie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3, S22"]
+      },
+      {
+        "polecenie": "Wybierz rok doprowadzenia linii kolejowej do Trzebiatowa: 1782, 1882 czy 1982.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3, S22"]
+      }
+    ]
+  },
+  {
+    "id": "bank_43",
+    "nazwa": "Kolejowa wieża ciśnień",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 43; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Zabytek techniki",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Rozejrzyj się po terenie stacji i wskaż wysoki obiekt, który służył dawniej do magazynowania wody dla kolei.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S10"]
+      },
+      {
+        "polecenie": "Na górnej części wieży policz widoczne okna z wyznaczonego punktu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S10"]
+      },
+      {
+        "polecenie": "Wybierz, do czego w epoce parowozów potrzebna była duża ilość wody: do wytwarzania pary, mycia szyn czy gaszenia lamp gazowych.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S10"]
+      }
+    ]
+  },
+  {
+    "id": "bank_44",
+    "nazwa": "Dawna stacja kolei wąskotorowej",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 44; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Kolej wąskotorowa",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Aplikacja pokaże dwa schematy torów: normalnego i wąskiego. Wybierz ten, który odpowiada nazwie dawnej kolejki.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3, S14"]
+      },
+      {
+        "polecenie": "Korzystając z archiwalnej miniatury w aplikacji, odnajdź dawny budynek stacji wąskotorowej.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3, S14"]
+      },
+      {
+        "polecenie": "Wybierz jedną miejscowość, z którą Trzebiatów był połączony siecią wąskotorową: Gryfice, Zakopane czy Gdańsk.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3, S14"]
+      }
+    ]
+  },
+  {
+    "id": "bank_45",
+    "nazwa": "Kaplica św. Ducha",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 45; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Gotyk / reformacja",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Na wskazanej elewacji kaplicy policz wszystkie okrągłe okna widoczne z ulicy.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S2, S3"]
+      },
+      {
+        "polecenie": "Wybierz rok sejmu trzebiatowskiego i wprowadzenia reformacji na Pomorzu: 1434, 1534 czy 1634.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S2, S3"]
+      },
+      {
+        "polecenie": "Przyjrzyj się szczytowi kaplicy i wskaż na zdjęciu w aplikacji dekoracyjne wnęki, które nie są prawdziwymi oknami.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S2, S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_46",
+    "nazwa": "Kaplica św. Gertrudy",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 46; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Gotyk / wielokulturowość",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wybierz, z czym historycznie była związana kaplica: ze szpitalem i cmentarzem, z mennicą czy z portem.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S10"]
+      },
+      {
+        "polecenie": "Wybierz, której wspólnocie służy dziś kaplica św. Gertrudy: greckokatolickiej, buddyjskiej czy kalwińskiej.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S10"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże trzy zbliżenia. Odszukaj na elewacji detal gotycki wskazany jako cel i potwierdź znalezienie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S10"]
+      }
+    ]
+  },
+  {
+    "id": "bank_47",
+    "nazwa": "Lapidarium przy kaplicy św. Gertrudy",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 47; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Lapidarium / pamięć",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź na udostępnionych kamieniach najstarszą czytelną datę w wyznaczonym fragmencie lapidarium i wpisz ją.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Wybierz spośród trzech ikon symbol, który rzeczywiście widzisz na jednym z kamieni: krzyż, kotwica lub korona.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Bez wchodzenia między zabytkowe elementy policz płyty ustawione w wskazanym rzędzie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_48",
+    "nazwa": "Dawny cmentarz przy św. Gertrudzie",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 48; oznaczenie autora H nie jest rekonesansem",
+    "obszar": "Miejsce historyczne",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Nałóż półprzezroczystą mapę dawnego cmentarza na współczesny widok i ustaw suwak tak, aby granice najlepiej się pokryły.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3"]
+      },
+      {
+        "polecenie": "Wybierz rok założenia nowego cmentarza przy kaplicy: 1749, 1849 czy 1949.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3"]
+      },
+      {
+        "polecenie": "Znajdź element, który dziś przypomina o dawnej funkcji terenu – lapidarium lub zachowany kamień – i zeskanuj go aparatem.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_49",
+    "nazwa": "Kościół św. Jana Ewangelisty",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 49; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Architektura sakralna",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Stań przed kościołem i policz kondygnacje wieży rozdzielone wyraźnymi pasami/poziomami wskazanymi w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S10"]
+      },
+      {
+        "polecenie": "Wybierz wspólnotę, której służy dziś kościół św. Jana: ewangelicko-augsburską, prawosławną czy greckokatolicką.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S10"]
+      },
+      {
+        "polecenie": "Znajdź charakterystyczne półkoliste zamknięcie okna lub portalu i dopasuj do ikony „łuk półkolisty”.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S10"]
+      }
+    ]
+  },
+  {
+    "id": "bank_50",
+    "nazwa": "Kaplica św. Jerzego",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 50; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Gotyk / dawny szpital",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź budynek dawnej kaplicy i wybierz, jaką funkcję pełni dziś: mieszkalną, dworcową czy przemysłową.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S10"]
+      },
+      {
+        "polecenie": "W aplikacji zaznacz, która z trzech kaplic – Ducha, Gertrudy czy Jerzego – znajduje się właśnie przed Tobą.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S10"]
+      },
+      {
+        "polecenie": "Z chodnika odszukaj wskazany detal dawnej kaplicy i dopasuj go do zdjęcia w aplikacji, bez wchodzenia na posesję.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S10"]
+      }
+    ]
+  },
+  {
+    "id": "bank_51",
+    "nazwa": "Staw św. Jerzego",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 51; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Krajobraz / punkt WAGANT",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Korzystając z krótkiej wskazówki kierunkowej od kaplicy, odnajdź staw i potwierdź dotarcie przez GPS.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Z wyznaczonego punktu policz elementy infrastruktury wskazane w aplikacji, np. mostki lub ławki.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "W aplikacji połącz nazwę „św. Jerzy” z dwoma punktami leżącymi w tej części miasta: kaplicą i stawem.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_52",
+    "nazwa": "Pomnik św. Jerzego",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 52; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Pomnik / punkt WAGANT",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź pomnik i wybierz, którą postać przedstawia: św. Jerzego, św. Mikołaja czy św. Piotra.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Przyjrzyj się figurze i wskaż przedmiot lub stworzenie będące jej najważniejszym atrybutem.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Odczytaj wskazane słowo lub rok z cokołu i wpisz do aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_53",
+    "nazwa": "Spichlerz przy Placu Lipowym",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 53; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Architektura gospodarcza",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wybierz główną dawną funkcję budynku: przechowywanie zboża, mieszkanie rycerzy czy bicie monet.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S14"]
+      },
+      {
+        "polecenie": "Stań w wyznaczonym miejscu i policz widoczne poziomy okien/otworów spichlerza.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S14"]
+      },
+      {
+        "polecenie": "Na wskazanej elewacji odszukaj typ małego otworu magazynowego pokazany w aplikacji i policz jego powtórzenia w jednym rzędzie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S14"]
+      }
+    ]
+  },
+  {
+    "id": "bank_54",
+    "nazwa": "Miejsce dawnej synagogi",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 54; oznaczenie autora H nie jest rekonesansem",
+    "obszar": "Dziedzictwo żydowskie",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Nałóż dawny plan na współczesną ulicę i wskaż parcelę, na której stała synagoga.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Wybierz, z jaką społecznością związany był ten obiekt: żydowską, skandynawską czy francuską.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Jeśli na miejscu istnieje tablica, odczytaj wskazane nazwisko, datę lub słowo i wpisz je w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_55",
+    "nazwa": "Królewski Gaj (park miejski)",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 55; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Park historyczny",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wybierz rok założenia Królewskiego Gaju: 1744, 1844 czy 1944.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3, S14"]
+      },
+      {
+        "polecenie": "Spośród trzech oznaczonych drzew wybierz to o największym obwodzie pnia, mierząc je taśmą/AR aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3, S14"]
+      },
+      {
+        "polecenie": "Bez mapy przejdź od wejścia do parku do Łabędziego Stawu, korzystając z dwóch zagadek kierunkowych opartych na charakterystycznych drzewach/zakrętach.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S2, S3, S14"]
+      }
+    ]
+  },
+  {
+    "id": "bank_56",
+    "nazwa": "Łabędzi Staw",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 56; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Park / woda",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wybierz ptaka, od którego staw wziął nazwę: łabędź, bocian czy mewa.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10, S3"]
+      },
+      {
+        "polecenie": "Z bezpiecznego brzegu sprawdź, czy w stawie widać wyspę lub ślad dawnej wyspy, i zaznacz odpowiedź w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10, S3"]
+      },
+      {
+        "polecenie": "Znajdź punkt, z którego w spokojnej wodzie najlepiej odbijają się drzewa. Zrób zdjęcie zgodne z przykładowym kadrem.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10, S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_57",
+    "nazwa": "Aleja Duchów",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 57; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Park / punkt WAGANT",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Korzystając tylko z dwóch opisowych wskazówek, odnajdź początek alei i potwierdź GPS.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Na wyznaczonym odcinku policz drzewa oznaczone w aplikacji jako „strażnicy alei”.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Idąc aleją, odnajdź trzy dyskretne symbole/znaczniki gry i ułóż z nich trzycyfrowy kod.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_58",
+    "nazwa": "Zieleniec ze szlaku WAGANT",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 58; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Zieleń miejska",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Na podstawie archiwalnej trasy WAGANT i mapy w aplikacji dotrzyj do dawnego punktu „zieleniec”.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "W wyznaczonym sektorze policz jeden powtarzalny element – ławki albo drzewa – wskazany przez grę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Z centralnego punktu wybierz, który z pobliskich zabytków jest widoczny pomiędzy drzewami.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_59",
+    "nazwa": "Wzgórze Wyszków",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 59; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Archeologia / krajobraz",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Dotrzyj do wyznaczonego punktu na Wyszkowie. Gdy GPS potwierdzi wysokość/lokalizację, odblokuje się zagadka o ruinach.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "W obrębie wyznaczonego obszaru wybierz miejsce, które wydaje się najwyższe, i porównaj wskazanie wysokości w telefonie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Rozejrzyj się i wybierz, jaki typ zabytku zachował się tu w ruinie: kaplica, wiatrak czy wieża kolejowa.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_60",
+    "nazwa": "Ruiny Kaplicy Jerozolimskiej",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 60; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Ruiny / sakralne",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Z bezpiecznej ścieżki policz czytelne narożniki/fragmenty obrysu ruin zaznaczone w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S10"]
+      },
+      {
+        "polecenie": "Przesuń na ekranie półprzezroczystą rekonstrukcję tak, aby jej fundamenty pokryły się z ruiną.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S10"]
+      },
+      {
+        "polecenie": "Wybierz poprawną nazwę ruin spośród trzech: Kaplica Jerozolimska, Brama Morska, Wieża Srebrna.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S10"]
+      }
+    ]
+  },
+  {
+    "id": "bank_61",
+    "nazwa": "Krzyż Jakoba Wacholta",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 61; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Miejsce pamięci",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odszukaj krzyż i wybierz jego najbardziej charakterystyczną cechę z trzech zbliżeń pokazanych w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S10"]
+      },
+      {
+        "polecenie": "Wpisz nazwisko osoby, z którą wiąże się miejscowa historia krzyża.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S10"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże dwa zdania: jedno jako potwierdzony opis obiektu, drugie jako tradycję/interpretację. Dopasuj etykiety „źródło” i „tradycja” do właściwych zdań.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S1, S3, S10"]
+      }
+    ]
+  },
+  {
+    "id": "bank_62",
+    "nazwa": "Kompleks koszar / dawnej szkoły podoficerskiej",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 62; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Dziedzictwo wojskowe",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź charakterystyczny budynek wskazany na archiwalnym zdjęciu i dopasuj go do współczesnej bryły.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S14"]
+      },
+      {
+        "polecenie": "Z publicznego chodnika policz okna w jednym wskazanym pionie/skrzydle budynku.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S14"]
+      },
+      {
+        "polecenie": "Wybierz poprawne zachowanie przy czynnym/ograniczonym terenie wojskowym: pozostać w przestrzeni publicznej i respektować zakazy fotografowania.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3, S14"]
+      }
+    ]
+  },
+  {
+    "id": "bank_63",
+    "nazwa": "Wieża bramna jednostki wojskowej",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 63; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Dziedzictwo wojskowe",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Z publicznej przestrzeni odszukaj wieżę w osi dawnego wjazdu i wybierz jej sylwetkę spośród trzech konturów.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Jeżeli brama jest widoczna, policz główne otwory przejazdowe/przejścia w przyziemiu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Podczas uzgodnionych wydarzeń wejdź na wieżę i odszukaj punkt widokowy oznaczony symbolem gry.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_64",
+    "nazwa": "Sala Tradycji",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 64; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Muzealnictwo wojskowe",
+    "kandydaciZadan": [
+      {
+        "polecenie": "W ekspozycji odszukaj wskazany symbol lub numer jednostki i wpisz go do aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Znajdź po jednym eksponacie z trzech okresów wskazanych w aplikacji i zaznacz wykonanie zadania.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże trzy emblematy. Wskaż ten, który znajduje się w Sali Tradycji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_65",
+    "nazwa": "Głaz upamiętniający żołnierzy 36 pułków",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 65; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Miejsce pamięci",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Znajdź na tablicy liczbę „36” i przepisz wyraz stojący bezpośrednio przy niej zgodnie z instrukcją.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Wybierz: żołnierzy, kupców hanzeatyckich czy kolejarzy.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Znajdź symbol graficzny na tablicy i wybierz odpowiadającą mu ikonę w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_66",
+    "nazwa": "Kamień Ofiarny",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 66; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Miejsce zagadkowe / WAGANT",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Po potwierdzeniu lokalizacji gracz otrzyma trzy zdjęcia głazów. Ma odnaleźć w terenie właściwy i wskazać jego cechę wyróżniającą.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Wybierz w aplikacji tylko te informacje o kamieniu, które znajdują potwierdzenie na tablicy lub w źródle – mechanizm uczy odróżniania legendy od faktu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Przyjrzyj się górnej powierzchni kamienia i wybierz schemat najbardziej podobny do widocznych zagłębień/kształtu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_67",
+    "nazwa": "Budynek dawnej rozlewni wód mineralnych",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 67; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Dziedzictwo przemysłowe",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wybierz produkt związany z dawną funkcją budynku: wodę mineralną, lokomotywy czy cegły.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Odszukaj detal, napis lub element architektury wskazujący na przemysłową przeszłość budynku.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże dawne i współczesne zdjęcie. Przesuń suwak i wskaż element bryły, który przetrwał bez większej zmiany.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S3"]
+      }
+    ]
+  },
+  {
+    "id": "bank_68",
+    "nazwa": "Białoboki – miejsce klasztoru norbertanów",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 68; oznaczenie autora H nie jest rekonesansem",
+    "obszar": "Archeologia / klasztor",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Na mapie AR ustaw zarys klasztoru tak, aby pokrył się z dzisiejszym układem ulic i działek.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S15, S16"]
+      },
+      {
+        "polecenie": "Wybierz zakon związany z Białobokami: norbertanie/premonstratensi, templariusze czy cystersi.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S15, S16"]
+      },
+      {
+        "polecenie": "Ułóż chronologicznie trzy procesy: sekularyzacja, pożary, rozbieranie ruin na materiał budowlany.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S15, S16"]
+      }
+    ]
+  },
+  {
+    "id": "bank_69",
+    "nazwa": "Białoboki – klasztorne cmentarzysko",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 69; oznaczenie autora H nie jest rekonesansem",
+    "obszar": "Archeologia",
+    "kandydaciZadan": [
+      {
+        "polecenie": "W aplikacji zobaczysz plan klasztoru. Wskaż, po której stronie kościoła odkryto główną część cmentarzyska.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S16, S15"]
+      },
+      {
+        "polecenie": "Wybierz właściwy przedział: mniej niż 10, ponad 90, ponad 9000.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S16, S15"]
+      },
+      {
+        "polecenie": "Wskaż poprawne zachowanie na stanowisku archeologicznym znajdującym się pod współczesną zabudową: obserwacja z przestrzeni publicznej i korzystanie z AR, bez wchodzenia na posesje.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S16, S15"]
+      }
+    ]
+  },
+  {
+    "id": "bank_70",
+    "nazwa": "Białoboki – średniowieczna cegielnia i pracownia metalurgiczna",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 70; oznaczenie autora H nie jest rekonesansem",
+    "obszar": "Archeologia gospodarcza",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wybierz dwa właściwe elementy związane z odkrytym zapleczem: cegły i wyroby metalowe, szkło okienne i statki, sól i bursztyn.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S16, S15"]
+      },
+      {
+        "polecenie": "Po obejrzeniu rekonstrukcji wybierz narzędzia pasujące do pracowni metalurgicznej, a nie do piekarni.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S16, S15"]
+      },
+      {
+        "polecenie": "Ułóż trzy etapy wytwarzania cegły pokazane na ilustracjach: formowanie, suszenie, wypał.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S16, S15"]
+      }
+    ]
+  },
+  {
+    "id": "bank_71",
+    "nazwa": "Mural Hansken niosącej zabytki miasta",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 71; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Mural",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Przyjrzyj się muralowi i wybierz trzy obiekty Trzebiatowa, które rozpoznajesz na grzbiecie słonicy.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S24"]
+      },
+      {
+        "polecenie": "Policz wyraźnie oddzielone sylwetki budowli znajdujące się na grzbiecie słonia.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S24"]
+      },
+      {
+        "polecenie": "Odszukaj sygnaturę muralisty i wpisz pierwszą literę podpisu lub pseudonim, jeśli jest czytelny.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S24"]
+      }
+    ]
+  },
+  {
+    "id": "bank_72",
+    "nazwa": "Mural „Legenda Baszty Kaszanej”",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 72; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Mural / legenda",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odszukaj na muralu naczynie, od którego pochodzi legenda. Dotknij na ekranie odpowiadającego mu fragmentu ilustracji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S20"]
+      },
+      {
+        "polecenie": "Mural składa się z kilku odrębnych scen. Policz główne sceny narracyjne i wpisz liczbę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S20"]
+      },
+      {
+        "polecenie": "Po rozwiązaniu zagadki wskaż na mapie najbliższy rzeczywisty obiekt przedstawiony na muralu i dotrzyj do niego.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S20"]
+      }
+    ]
+  },
+  {
+    "id": "bank_73",
+    "nazwa": "Mural „Gryf na skale”",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 73; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Mural / herb",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Przyjrzyj się muralowi i odpowiedz, co gryf trzyma w szponach. Wybierz właściwy symbol spośród trzech.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S12"]
+      },
+      {
+        "polecenie": "Odszukaj na muralu niebieski klucz i wskaż, po której stronie gryfa się znajduje.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S12"]
+      },
+      {
+        "polecenie": "Wybierz dominujący kolor gryfa na muralu spośród: czerwony, zielony, czarny.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11, S12"]
+      }
+    ]
+  },
+  {
+    "id": "bank_74",
+    "nazwa": "Mural „Skrzydła Gryfa”",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 74; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Mural / interakcja",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Ustaw się w oznaczonym miejscu tak, aby skrzydła wyglądały jak Twoje. Zrób zdjęcie mieszczące oba skrzydła w kadrze.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      },
+      {
+        "polecenie": "Sprawdź, czy lewe i prawe skrzydło są lustrzane. Wskaż jedną różnicę, jeśli ją zauważysz.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      },
+      {
+        "polecenie": "Zmierz szerokość muralu własnymi krokami od końca jednego skrzydła do drugiego i wpisz wynik.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      }
+    ]
+  },
+  {
+    "id": "bank_75",
+    "nazwa": "Mural „Zaślubiny z morzem”",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 75; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Mural / historia XX w.",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odszukaj na muralu element, który jednoznacznie odnosi scenę do morza lub wody, i wybierz go z trzech ikon.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10, S12"]
+      },
+      {
+        "polecenie": "Policz główne postacie ludzkie przedstawione na muralu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10, S12"]
+      },
+      {
+        "polecenie": "Po obejrzeniu muralu przejdź do mostu i znajdź miejsce, z którego jednocześnie widzisz Regę i fragment murów miejskich.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S10, S12"]
+      }
+    ]
+  },
+  {
+    "id": "bank_76",
+    "nazwa": "Mural „Konie w boksach” / „Stajnia”",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 76; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Mural",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Stań naprzeciw muralu i policz wszystkie wyraźnie przedstawione konie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże zbliżenie jednego konia. Wskaż numer boksu od lewej, w którym się znajduje.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      },
+      {
+        "polecenie": "Znajdź element garażu, który artysta wykorzystał jako część malowanej stajni, i wybierz go na schemacie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      }
+    ]
+  },
+  {
+    "id": "bank_77",
+    "nazwa": "Mural „Rycina Lubinusa – Trzebiatów”",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 77; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Mural / kartografia",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Porównaj mural z dzisiejszą panoramą i wskaż na rycinie element, który może odpowiadać kościołowi Mariackiemu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      },
+      {
+        "polecenie": "Wybierz, czym inspirowany jest mural: XVII-wieczną mapą/ryciną, zdjęciem satelitarnym czy komiksem.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      },
+      {
+        "polecenie": "Na muralu policz wyraźne wieże lub dominanty wskazane przez grę.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      }
+    ]
+  },
+  {
+    "id": "bank_78",
+    "nazwa": "Mural „Spacerujący Lyonel Feininger”",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 78; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Mural / sztuka XX w.",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wybierz zawód/rolę patrona muralu: malarz i grafik, astronom czy dowódca wojskowy.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12, S8"]
+      },
+      {
+        "polecenie": "Przyjrzyj się muralowi i wskaż przedmiot, który łączy postać z tworzeniem sztuki, jeśli jest przedstawiony.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12, S8"]
+      },
+      {
+        "polecenie": "Po obejrzeniu muralu wybierz jeden z dwóch obiektów, które artysta rzeczywiście szkicował w Trzebiatowie: ratusz/Baszta Kaszana versus współczesny skatepark.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12, S8"]
+      }
+    ]
+  },
+  {
+    "id": "bank_79",
+    "nazwa": "Mural „10 w skali Beauforta”",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 79; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Mural / kultura",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Na muralu wskaż dwa elementy, które pokazują, że wieje silny wiatr.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      },
+      {
+        "polecenie": "Wybierz, czego dotyczy skala Beauforta: siły wiatru, temperatury czy głębokości rzeki.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      },
+      {
+        "polecenie": "Odszukaj na muralu lub towarzyszącym opisie liczbę „10” i wskaż jej położenie na ekranie.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      }
+    ]
+  },
+  {
+    "id": "bank_80",
+    "nazwa": "Mural „Miasto Słonia” – garaże przy ul. Morskiej",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 80; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Mural / symbol miasta",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odszukaj główny wizerunek słonia i wybierz, w którą stronę jest zwrócony.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      },
+      {
+        "polecenie": "Policz bramy/segmenty garażowe, które tworzą całą kompozycję.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      },
+      {
+        "polecenie": "Odczytaj słowo występujące w nazwie/napisie muralu bezpośrednio obok określenia „Miasto”.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S12"]
+      }
+    ]
+  },
+  {
+    "id": "bank_81",
+    "nazwa": "Mural / graffiti „Miasto Czterech Kultur – Miasto Słonia”",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 81; oznaczenie autora R nie jest rekonesansem",
+    "obszar": "Mural / tożsamość miasta",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odszukaj dwa napisy na muralu i uzupełnij brakujące słowa: „Miasto ___ Kultur” oraz „Miasto ___”.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11"]
+      },
+      {
+        "polecenie": "Na podstawie hasła muralu wpisz liczbę kultur, do których odwołuje się miasto.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11"]
+      },
+      {
+        "polecenie": "Aplikacja pokaże cztery zdjęcia świątyń Trzebiatowa. Dopasuj je do czterech współczesnych wspólnot wyznaniowych obecnych w mieście.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S11"]
+      }
+    ]
+  },
+  {
+    "id": "bank_82",
+    "nazwa": "Wczesnośredniowieczne osadnictwo na wschód od kościoła Mariackiego",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 82; oznaczenie autora H nie jest rekonesansem",
+    "obszar": "Archeologia / niewidoczny punkt",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Wybierz, czy ślady osadnictwa w tym miejscu są starsze czy młodsze od lokacji miasta z 1277 r.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S5"]
+      },
+      {
+        "polecenie": "Na uproszczonej mapie wskaż drugi obszar wczesnego osadnictwa: na wschód od kościoła, a nie przy dworcu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S5"]
+      },
+      {
+        "polecenie": "Nakieruj telefon na teren i dopasuj rekonstrukcję niskiej zabudowy osadniczej do wskazanego zasięgu.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S5"]
+      }
+    ]
+  },
+  {
+    "id": "bank_83",
+    "nazwa": "Zabytkowa kamienica Rynek 12",
+    "statusRekonesansu": "WYMAGA_REKONESANSU",
+    "pochodzenie": "Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0.1.pdf, pozycja 83; oznaczenie autora V nie jest rekonesansem",
+    "obszar": "Kamienica zabytkowa",
+    "kandydaciZadan": [
+      {
+        "polecenie": "Odszukaj kamienicę o numerze 12 i potwierdź ją, skanując numer lub wybierając właściwą fasadę spośród trzech zdjęć.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S23"]
+      },
+      {
+        "polecenie": "Policz pionowe osie okien na głównej fasadzie zgodnie z przykładem w aplikacji.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S23"]
+      },
+      {
+        "polecenie": "Wskaż jedną cechę, która odróżnia zwieńczenie Rynek 12 od kamienicy bezpośrednio obok.",
+        "odpowiedz": null,
+        "status": "DO_WERYFIKACJI",
+        "zrodla": ["S23"]
+      }
+    ]
+  }
+]

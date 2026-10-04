@@ -110,11 +110,21 @@ export function miejscaNaMapie(
 export function aktualneMiejsce(
   lokalizacje: readonly DefinicjaLokalizacji[],
   stan: StanGry,
+  scenyMiejsc: readonly { idSceny: string; idLokalizacji: string }[] = [],
 ) {
   return (
+    lokalizacje.find((miejsce) =>
+      scenyMiejsc.some(
+        (powiazanie) =>
+          powiazanie.idSceny === stan.aktualnaScena &&
+          powiazanie.idLokalizacji === miejsce.id,
+      ),
+    ) ??
     lokalizacje.find((miejsce) => miejsce.idSceny === stan.aktualnaScena) ??
-    lokalizacje.find(
-      (miejsce) => miejsce.id === stan.odwiedzoneLokalizacje.at(-1),
-    )
+    (stan.flagi.kampania_rozpoczeta
+      ? undefined
+      : lokalizacje.find(
+          (miejsce) => miejsce.id === stan.odwiedzoneLokalizacje.at(-1),
+        ))
   );
 }

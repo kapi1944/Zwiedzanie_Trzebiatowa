@@ -22,6 +22,13 @@ export function wyznaczProfilZakonczenia(
   const kopia = schematStanuGry.parse(stan);
   sprawdzZgodnoscStanu(dane, kopia);
   if (
+    dane.kampania &&
+    kopia.flagi.kampania_rozpoczeta &&
+    (kopia.aktualnaScena !== dane.kampania.scenaFinalu ||
+      !sprawdzWarunek(dane.kampania.warunekFinalu, kopia))
+  )
+    throw new Error("Wyprawa nie doszla jeszcze do finalu rozdzialu.");
+  if (
     dane.watki.some(
       (watek) =>
         (watek.wymaganyDoFinalu || !watek.opcjonalny) &&

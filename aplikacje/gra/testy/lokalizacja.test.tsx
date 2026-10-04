@@ -185,7 +185,7 @@ test("scena ma osobny kontrakt i nie przyjmuje danych terenowych", () => {
     }).success,
   ).toBe(false);
 });
-test("build laduje mape i Leaflet tylko dynamicznie", () => {
+test("build laduje pergamin i geometrie OSM tylko na zadanie", () => {
   const manifest = JSON.parse(
     odczytajPlik(
       new URL("../dist/.vite/manifest.json", import.meta.url),
@@ -208,7 +208,8 @@ test("build laduje mape i Leaflet tylko dynamicznie", () => {
     new URL(`../dist/${mapa.file}`, import.meta.url),
     "utf8",
   );
-  expect(kodMapy).toContain("Leaflet");
+  expect(kodMapy).toContain("geometria-");
+  expect(kodMapy).not.toContain("Leaflet");
   for (const klucz of odwiedzone)
     expect(
       odczytajPlik(

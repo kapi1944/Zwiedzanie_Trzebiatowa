@@ -3,7 +3,9 @@ import {
   mkdirSync as utworzKatalog,
   writeFileSync as zapiszPlik,
 } from "node:fs";
+import { sprawdzGrafKampanii } from "./graf-kampanii.ts";
 import { odczytajPakiet } from "./pakiet-gry.ts";
+import { odczytajKampanie } from "./pakiet-kampanii.ts";
 import { sprawdzDrogi } from "./sciezki-slice.ts";
 import { analizujFlagi, utworzKontroleGrafu } from "./walidacja-contentu.ts";
 
@@ -46,4 +48,34 @@ zapiszPlik(
 );
 console.log(
   `Pakiet Gry: ${raport.liczbaDrog} drog PASS; profile: ${raport.profile.join(", ")}.`,
+);
+const kampania = odczytajKampanie();
+const flagiKampanii = analizujFlagi(kampania.definicje);
+if (flagiKampanii.nigdyNieustawiane.length)
+  throw new Error(
+    `Flagi kampanii bez ustawienia: ${flagiKampanii.nigdyNieustawiane.join(", ")}`,
+  );
+const grafKampanii = sprawdzGrafKampanii(kampania.definicje, kampania.narracja);
+const katalogKampanii = new URL("../tresc/kampania/dist/", import.meta.url);
+utworzKatalog(katalogKampanii, { recursive: true });
+const narracjaKampanii = JSON.stringify(JSON.parse(kampania.narracja));
+zapiszPlik(
+  new URL("pakiet.json", katalogKampanii),
+  JSON.stringify(kampania.definicje),
+);
+zapiszPlik(new URL("glowna.json", katalogKampanii), narracjaKampanii);
+zapiszPlik(
+  new URL("tozsamosc.json", katalogKampanii),
+  JSON.stringify({
+    hashNarracji: hash(narracjaKampanii),
+    hashPakietu: hash(
+      JSON.stringify({
+        definicje: kampania.definicje,
+        narracja: narracjaKampanii,
+      }),
+    ),
+  }),
+);
+console.log(
+  `Kampania: ${grafKampanii.liczbaSwiadectw} swiadectwa PASS; zakonczenia: ${grafKampanii.zakonczenia.join(", ")}`,
 );

@@ -1,0 +1,1766 @@
+{
+  "lokalizacje": [
+    {
+      "klasyfikacja": "FAKT",
+      "idZrodla": ["gmina_zabytki"],
+      "wymagaWeryfikacjiTerenowej": true,
+      "id": "ratusz",
+      "nazwa": "Ratusz — wieżyczka zegarowa",
+      "idSceny": "ratusz_obserwacja",
+      "statusRekonesansu": "WYMAGA_REKONESANSU",
+      "trybPotwierdzenia": "TYLKO_RECZNIE",
+      "wymaganiaDostepu": "Obejście z przestrzeni publicznej. Nie wchodź do urzędu ani na jezdnię dla lepszego kadru.",
+      "warunek": {
+        "rodzaj": "flagaJest",
+        "id": "kampania_rozpoczeta",
+        "wartosc": true
+      },
+      "punktMapy": {
+        "szerokosc": 54.0622979,
+        "dlugosc": 15.2656994,
+        "zrodlo": "https://www.openstreetmap.org/way/298917315",
+        "status": "DO_WERYFIKACJI"
+      }
+    },
+    {
+      "klasyfikacja": "FAKT",
+      "idZrodla": ["wuoz_urbanistyka"],
+      "wymagaWeryfikacjiTerenowej": true,
+      "id": "mury",
+      "nazwa": "Zachodnie mury obronne",
+      "idSceny": "mury_obserwacja",
+      "statusRekonesansu": "WYMAGA_REKONESANSU",
+      "trybPotwierdzenia": "TYLKO_RECZNIE",
+      "wymaganiaDostepu": "Obserwacja z ogólnodostępnej alejki przy murach. Nie wspinaj się na mur. Jeśli dojście jest zamknięte, pomiń zadanie.",
+      "warunek": {
+        "rodzaj": "flagaJest",
+        "id": "kampania_rozpoczeta",
+        "wartosc": true
+      },
+      "punktMapy": {
+        "szerokosc": 54.0614292,
+        "dlugosc": 15.2635643,
+        "zrodlo": "https://www.openstreetmap.org/way/299707927",
+        "status": "DO_WERYFIKACJI"
+      }
+    },
+    {
+      "klasyfikacja": "FAKT",
+      "idZrodla": ["nid_palac"],
+      "wymagaWeryfikacjiTerenowej": true,
+      "id": "palac",
+      "nazwa": "Pałac Książęcy — zewnętrzna bryła",
+      "idSceny": "palac_obserwacja",
+      "statusRekonesansu": "WYMAGA_REKONESANSU",
+      "trybPotwierdzenia": "TYLKO_RECZNIE",
+      "wymaganiaDostepu": "Wojska Polskiego 67; widok skrzydeł z dostępnego terenu. Nie wchodź za zamkniętą bramę.",
+      "warunek": {
+        "rodzaj": "wszystkie",
+        "warunki": [
+          {
+            "rodzaj": "flagaJest",
+            "id": "kampania_rozpoczeta",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "dowolny",
+            "warunki": [
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_ratusz",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_mury",
+                "wartosc": true
+              }
+            ]
+          }
+        ]
+      },
+      "punktMapy": {
+        "szerokosc": 54.0634354,
+        "dlugosc": 15.2705588,
+        "zrodlo": "https://www.openstreetmap.org/way/299734923",
+        "status": "DO_WERYFIKACJI"
+      }
+    }
+  ],
+  "watki": [
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "watek_znakow",
+      "nazwa": "Znaki i ich świadkowie",
+      "opcjonalny": true,
+      "wymaganyDoFinalu": false,
+      "warunek": {
+        "rodzaj": "flagaJest",
+        "id": "kampania_rozpoczeta",
+        "wartosc": true
+      },
+      "warunekAktywacji": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "flagaJest",
+            "id": "zapisano_ratusz",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "flagaJest",
+            "id": "zapisano_hansken",
+            "wartosc": true
+          }
+        ]
+      },
+      "warunekUkonczenia": {
+        "rodzaj": "wszystkie",
+        "warunki": [
+          {
+            "rodzaj": "zadanieUkonczone",
+            "id": "zad_teren_hansken"
+          },
+          {
+            "rodzaj": "zadanieUkonczone",
+            "id": "zad_teren_ratusz"
+          }
+        ]
+      }
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "watek_granic",
+      "nazwa": "Granice widzialne i opowiadane",
+      "opcjonalny": true,
+      "wymaganyDoFinalu": false,
+      "warunek": {
+        "rodzaj": "flagaJest",
+        "id": "kampania_rozpoczeta",
+        "wartosc": true
+      },
+      "warunekAktywacji": {
+        "rodzaj": "flagaJest",
+        "id": "zapisano_mury",
+        "wartosc": true
+      },
+      "warunekUkonczenia": {
+        "rodzaj": "zadanieUkonczone",
+        "id": "zad_teren_mury"
+      }
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "watek_rezydencji",
+      "nazwa": "Dom o wielu warstwach",
+      "opcjonalny": true,
+      "wymaganyDoFinalu": false,
+      "warunek": {
+        "rodzaj": "flagaJest",
+        "id": "kampania_rozpoczeta",
+        "wartosc": true
+      },
+      "warunekAktywacji": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "flagaJest",
+            "id": "zapisano_ratusz",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "flagaJest",
+            "id": "zapisano_mury",
+            "wartosc": true
+          }
+        ]
+      },
+      "warunekUkonczenia": {
+        "rodzaj": "zadanieUkonczone",
+        "id": "zad_teren_palac"
+      }
+    }
+  ],
+  "zadania": [
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "zad_teren_hansken",
+      "nazwa": "Kto towarzyszy słonicy?",
+      "idLokalizacji": "hansken",
+      "idZagadek": ["teren_hansken"]
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "zad_teren_ratusz",
+      "nazwa": "Czas oglądany z czterech stron",
+      "idLokalizacji": "ratusz",
+      "idZagadek": ["teren_ratusz"]
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "zad_teren_mury",
+      "nazwa": "Dwa materiały jednego muru",
+      "idLokalizacji": "mury",
+      "idZagadek": ["teren_mury"]
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "zad_teren_palac",
+      "nazwa": "Litera zapisana w skrzydłach",
+      "idLokalizacji": "palac",
+      "idZagadek": ["teren_palac"]
+    }
+  ],
+  "zagadki": [
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": ["gmina_sgraffito"],
+      "wymagaWeryfikacjiTerenowej": true,
+      "id": "teren_hansken",
+      "nazwa": "Kto towarzyszy słonicy?",
+      "idLokalizacji": "hansken",
+      "idSceny": "hansken_powrot",
+      "typ": "TEKST",
+      "pytanie": "Odszukaj sgraffito przy Rynku 26. Przyjrzyj się figurze towarzyszącej słonicy. Nazwij tę postać jednym słowem — bez odczytywania opisu turystycznego.",
+      "poprawneOdpowiedzi": ["poganiacz", "kornak", "opiekun", "czlowiek"],
+      "normalizacja": {
+        "trim": true,
+        "ignorujWielkoscLiter": true,
+        "usunPolskieZnaki": true
+      },
+      "podpowiedzi": [
+        "Obejrzyj całą scenę, nie tylko zwierzę.",
+        "Szukasz ludzkiej postaci towarzyszącej zwierzęciu."
+      ],
+      "pomoc": {
+        "tekst": "Opis gminny: obok słonicy jest poganiacz. Możesz zapisać ten trop z pomocą.",
+        "pozwalaZaliczyc": true
+      },
+      "moznaPominac": true,
+      "moznaZakonczycBezRozwiazania": true,
+      "limitProb": 5,
+      "alternatywneZaliczenia": [],
+      "konsekwencje": {
+        "ROZWIAZANA_SAMODZIELNIE": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_postaci"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Źródło gminne opisuje słonia z poganiaczem. Daty i opowieść o wizycie wymagają osobnego porównania źródeł; nie wynikają z samego oglądania tynku."
+            }
+          ]
+        },
+        "ROZWIAZANA_Z_PODPOWIEDZIA": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_postaci"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Źródło gminne opisuje słonia z poganiaczem. Daty i opowieść o wizycie wymagają osobnego porównania źródeł; nie wynikają z samego oglądania tynku."
+            }
+          ]
+        },
+        "ROZWIAZANA_Z_POMOCA": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_postaci"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Źródło gminne opisuje słonia z poganiaczem. Daty i opowieść o wizycie wymagają osobnego porównania źródeł; nie wynikają z samego oglądania tynku."
+            }
+          ]
+        },
+        "POMINIETA": {
+          "zmiany": [],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "Pozostawiasz otwarte pytanie w Kronice. Objaśnienie będzie dostępne jako lektura źródłowa; nie uznajesz go za własną obserwację."
+            }
+          ]
+        },
+        "NIEUDANA": {
+          "zmiany": [],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "Pozostawiasz otwarte pytanie w Kronice. Objaśnienie będzie dostępne jako lektura źródłowa; nie uznajesz go za własną obserwację."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": ["gmina_zabytki"],
+      "wymagaWeryfikacjiTerenowej": true,
+      "id": "teren_ratusz",
+      "nazwa": "Czas oglądany z czterech stron",
+      "idLokalizacji": "ratusz",
+      "idSceny": "ratusz_obserwacja",
+      "typ": "TEKST",
+      "pytanie": "Obejdź Ratusz i spójrz na kolejne ściany jego wieżyczki. Ile tarcz zegarowych dostrzegasz łącznie? Nie licz wskazówek ani dzwonów.",
+      "poprawneOdpowiedzi": ["4", "cztery"],
+      "normalizacja": {
+        "trim": true,
+        "ignorujWielkoscLiter": true,
+        "usunPolskieZnaki": true
+      },
+      "podpowiedzi": [
+        "Z jednego miejsca możesz nie widzieć wszystkich stron.",
+        "Zapisz każdą obejrzaną stronę, aby nie policzyć jej ponownie."
+      ],
+      "pomoc": {
+        "tekst": "Opis gminny: zegar ma cztery tarcze. Możesz zapisać ich liczbę z pomocą.",
+        "pozwalaZaliczyc": true
+      },
+      "moznaPominac": true,
+      "moznaZakonczycBezRozwiazania": true,
+      "limitProb": 5,
+      "alternatywneZaliczenia": [],
+      "konsekwencje": {
+        "ROZWIAZANA_SAMODZIELNIE": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_czasu"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Opis gminny podaje czterotarczowy zegar. Różne punkty obserwacji odsłaniają części jednej budowli. W Kronice zachowujesz tę lekcję patrzenia, nie tylko liczbę."
+            }
+          ]
+        },
+        "ROZWIAZANA_Z_PODPOWIEDZIA": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_czasu"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Opis gminny podaje czterotarczowy zegar. Różne punkty obserwacji odsłaniają części jednej budowli. W Kronice zachowujesz tę lekcję patrzenia, nie tylko liczbę."
+            }
+          ]
+        },
+        "ROZWIAZANA_Z_POMOCA": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_czasu"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Opis gminny podaje czterotarczowy zegar. Różne punkty obserwacji odsłaniają części jednej budowli. W Kronice zachowujesz tę lekcję patrzenia, nie tylko liczbę."
+            }
+          ]
+        },
+        "POMINIETA": {
+          "zmiany": [],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "Pozostawiasz otwarte pytanie w Kronice. Objaśnienie będzie dostępne jako lektura źródłowa; nie uznajesz go za własną obserwację."
+            }
+          ]
+        },
+        "NIEUDANA": {
+          "zmiany": [],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "Pozostawiasz otwarte pytanie w Kronice. Objaśnienie będzie dostępne jako lektura źródłowa; nie uznajesz go za własną obserwację."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": ["wuoz_urbanistyka"],
+      "wymagaWeryfikacjiTerenowej": true,
+      "id": "teren_mury",
+      "nazwa": "Dwa materiały jednego muru",
+      "idLokalizacji": "mury",
+      "idSceny": "mury_obserwacja",
+      "typ": "TEKST",
+      "pytanie": "Znajdź zachowany odcinek muru z odsłoniętą dolną partią. Rozpoznaj dwa materiały po obu stronach poziomej granicy. Zapisz je w kolejności od dołu do góry, oddzielając spacją. Nie porównuj z pobliskim współczesnym ogrodzeniem.",
+      "poprawneOdpowiedzi": [
+        "kamien cegla",
+        "kamienie cegly",
+        "kamien i cegla",
+        "kamienie i cegly",
+        "kamien cegly",
+        "granit cegla"
+      ],
+      "normalizacja": {
+        "trim": true,
+        "ignorujWielkoscLiter": true,
+        "usunPolskieZnaki": true
+      },
+      "podpowiedzi": [
+        "Porównaj kształt elementów przy ziemi i w wyższych warstwach.",
+        "Dolna partia ma nieregularne głazy; wyżej szukaj powtarzalnych prostokątnych elementów."
+      ],
+      "pomoc": {
+        "tekst": "WUOZ: na kamiennej podstawie stoją ceglane mury. Kolejność od dołu: kamień, cegła.",
+        "pozwalaZaliczyc": true
+      },
+      "moznaPominac": true,
+      "moznaZakonczycBezRozwiazania": true,
+      "limitProb": 5,
+      "alternatywneZaliczenia": [],
+      "konsekwencje": {
+        "ROZWIAZANA_SAMODZIELNIE": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_muru"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Opracowanie konserwatorskie opisuje ceglane mury na kamiennej podstawie. Dzisiejsze luki nie określają automatycznie miejsc dawnych bram. LEGENDA o kaszy pozostaje odrębną warstwą."
+            }
+          ]
+        },
+        "ROZWIAZANA_Z_PODPOWIEDZIA": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_muru"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Opracowanie konserwatorskie opisuje ceglane mury na kamiennej podstawie. Dzisiejsze luki nie określają automatycznie miejsc dawnych bram. LEGENDA o kaszy pozostaje odrębną warstwą."
+            }
+          ]
+        },
+        "ROZWIAZANA_Z_POMOCA": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_muru"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Opracowanie konserwatorskie opisuje ceglane mury na kamiennej podstawie. Dzisiejsze luki nie określają automatycznie miejsc dawnych bram. LEGENDA o kaszy pozostaje odrębną warstwą."
+            }
+          ]
+        },
+        "POMINIETA": {
+          "zmiany": [],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "Pozostawiasz otwarte pytanie w Kronice. Objaśnienie będzie dostępne jako lektura źródłowa; nie uznajesz go za własną obserwację."
+            }
+          ]
+        },
+        "NIEUDANA": {
+          "zmiany": [],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "Pozostawiasz otwarte pytanie w Kronice. Objaśnienie będzie dostępne jako lektura źródłowa; nie uznajesz go za własną obserwację."
+            }
+          ]
+        }
+      }
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": ["wuoz_urbanistyka"],
+      "wymagaWeryfikacjiTerenowej": true,
+      "id": "teren_palac",
+      "nazwa": "Litera zapisana w skrzydłach",
+      "idLokalizacji": "palac",
+      "idSceny": "palac_obserwacja",
+      "typ": "TEKST",
+      "pytanie": "Obejrzyj z zewnątrz dwa główne skrzydła Pałacu Książęcego. Jaką literę tworzy ich połączenie w planie? Podaj literę. Gdy oba skrzydła są niewidoczne, wybierz pomoc lub pominięcie.",
+      "poprawneOdpowiedzi": ["l", "litera l"],
+      "normalizacja": {
+        "trim": true,
+        "ignorujWielkoscLiter": true,
+        "usunPolskieZnaki": true
+      },
+      "podpowiedzi": [
+        "Sprawdź, gdzie kończy się jedno skrzydło, a zaczyna drugie.",
+        "Dwa główne skrzydła spotykają się pod kątem."
+      ],
+      "pomoc": {
+        "tekst": "WUOZ: skrzydła tworzą rzut litery L. Możesz zapisać kształt z pomocą.",
+        "pozwalaZaliczyc": true
+      },
+      "moznaPominac": true,
+      "moznaZakonczycBezRozwiazania": true,
+      "limitProb": 5,
+      "alternatywneZaliczenia": [],
+      "konsekwencje": {
+        "ROZWIAZANA_SAMODZIELNIE": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_skrzydel"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Opracowanie WUOZ opisuje obecną bryłę na rzucie L. Pod późniejszymi elewacjami zachowały się starsze fazy. NID wiąże budowlę z klasztorem i rezydencją — bez dowodzenia legendy o Białej Damie."
+            }
+          ]
+        },
+        "ROZWIAZANA_Z_PODPOWIEDZIA": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_skrzydel"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Opracowanie WUOZ opisuje obecną bryłę na rzucie L. Pod późniejszymi elewacjami zachowały się starsze fazy. NID wiąże budowlę z klasztorem i rezydencją — bez dowodzenia legendy o Białej Damie."
+            }
+          ]
+        },
+        "ROZWIAZANA_Z_POMOCA": {
+          "zmiany": [
+            {
+              "rodzaj": "DODAJ_PRZEDMIOT",
+              "id": "notatka_skrzydel"
+            }
+          ],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "FAKT: Opracowanie WUOZ opisuje obecną bryłę na rzucie L. Pod późniejszymi elewacjami zachowały się starsze fazy. NID wiąże budowlę z klasztorem i rezydencją — bez dowodzenia legendy o Białej Damie."
+            }
+          ]
+        },
+        "POMINIETA": {
+          "zmiany": [],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "Pozostawiasz otwarte pytanie w Kronice. Objaśnienie będzie dostępne jako lektura źródłowa; nie uznajesz go za własną obserwację."
+            }
+          ]
+        },
+        "NIEUDANA": {
+          "zmiany": [],
+          "efekty": [
+            {
+              "rodzaj": "POKAZ_KOMUNIKAT",
+              "tekst": "Pozostawiasz otwarte pytanie w Kronice. Objaśnienie będzie dostępne jako lektura źródłowa; nie uznajesz go za własną obserwację."
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "wybory": [
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "rozpocznij_kampanie",
+      "nazwa": "Rozwijam Kronikę — wybieram dalszą wyprawę.",
+      "idSceny": "mini_final",
+      "nastepnaScena": "rozdroze",
+      "zmiany": [
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "kampania_rozpoczeta",
+          "wartosc": true
+        }
+      ],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "cel_hansken",
+      "nazwa": "Idę do sgraffito Hansken.",
+      "idSceny": "rozdroze",
+      "nastepnaScena": "hansken_powrot",
+      "warunek": {
+        "rodzaj": "flagaJest",
+        "id": "kampania_rozpoczeta",
+        "wartosc": true
+      },
+      "zmiany": [],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "hansken_teren_zapis",
+      "nazwa": "Zachowuję ślad i jego źródło.",
+      "idSceny": "hansken_powrot",
+      "nastepnaScena": "rozdroze",
+      "warunek": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_hansken",
+            "wynik": "ROZWIAZANA_SAMODZIELNIE"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_hansken",
+            "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_hansken",
+            "wynik": "ROZWIAZANA_Z_POMOCA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_hansken",
+            "wynik": "POMINIETA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_hansken",
+            "wynik": "NIEUDANA"
+          }
+        ]
+      },
+      "zmiany": [
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "zapisano_hansken",
+          "wartosc": true
+        }
+      ],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "hansken_glos",
+      "nazwa": "Zostawiam miejsce na opowieści ludzi.",
+      "idSceny": "hansken_powrot",
+      "nastepnaScena": "rozdroze",
+      "warunek": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_hansken",
+            "wynik": "ROZWIAZANA_SAMODZIELNIE"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_hansken",
+            "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_hansken",
+            "wynik": "ROZWIAZANA_Z_POMOCA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_hansken",
+            "wynik": "POMINIETA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_hansken",
+            "wynik": "NIEUDANA"
+          }
+        ]
+      },
+      "zmiany": [
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "zapisano_hansken",
+          "wartosc": true
+        },
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "glos_hansken",
+          "wartosc": true
+        }
+      ],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "cel_ratusz",
+      "nazwa": "Idę do Ratusza.",
+      "idSceny": "rozdroze",
+      "nastepnaScena": "ratusz_obserwacja",
+      "warunek": {
+        "rodzaj": "flagaJest",
+        "id": "kampania_rozpoczeta",
+        "wartosc": true
+      },
+      "zmiany": [],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "ratusz_zapis",
+      "nazwa": "Zachowuję ślad i jego źródło.",
+      "idSceny": "ratusz_obserwacja",
+      "nastepnaScena": "rozdroze",
+      "warunek": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_ratusz",
+            "wynik": "ROZWIAZANA_SAMODZIELNIE"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_ratusz",
+            "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_ratusz",
+            "wynik": "ROZWIAZANA_Z_POMOCA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_ratusz",
+            "wynik": "POMINIETA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_ratusz",
+            "wynik": "NIEUDANA"
+          }
+        ]
+      },
+      "zmiany": [
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "zapisano_ratusz",
+          "wartosc": true
+        }
+      ],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "ratusz_glos",
+      "nazwa": "Zostawiam miejsce na opowieści ludzi.",
+      "idSceny": "ratusz_obserwacja",
+      "nastepnaScena": "rozdroze",
+      "warunek": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_ratusz",
+            "wynik": "ROZWIAZANA_SAMODZIELNIE"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_ratusz",
+            "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_ratusz",
+            "wynik": "ROZWIAZANA_Z_POMOCA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_ratusz",
+            "wynik": "POMINIETA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_ratusz",
+            "wynik": "NIEUDANA"
+          }
+        ]
+      },
+      "zmiany": [
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "zapisano_ratusz",
+          "wartosc": true
+        },
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "glos_ratusz",
+          "wartosc": true
+        }
+      ],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "cel_mury",
+      "nazwa": "Idę do murów obronnych.",
+      "idSceny": "rozdroze",
+      "nastepnaScena": "mury_obserwacja",
+      "warunek": {
+        "rodzaj": "flagaJest",
+        "id": "kampania_rozpoczeta",
+        "wartosc": true
+      },
+      "zmiany": [],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "mury_zapis",
+      "nazwa": "Zachowuję ślad i jego źródło.",
+      "idSceny": "mury_obserwacja",
+      "nastepnaScena": "rozdroze",
+      "warunek": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_mury",
+            "wynik": "ROZWIAZANA_SAMODZIELNIE"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_mury",
+            "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_mury",
+            "wynik": "ROZWIAZANA_Z_POMOCA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_mury",
+            "wynik": "POMINIETA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_mury",
+            "wynik": "NIEUDANA"
+          }
+        ]
+      },
+      "zmiany": [
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "zapisano_mury",
+          "wartosc": true
+        }
+      ],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "mury_glos",
+      "nazwa": "Zostawiam miejsce na opowieści ludzi.",
+      "idSceny": "mury_obserwacja",
+      "nastepnaScena": "rozdroze",
+      "warunek": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_mury",
+            "wynik": "ROZWIAZANA_SAMODZIELNIE"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_mury",
+            "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_mury",
+            "wynik": "ROZWIAZANA_Z_POMOCA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_mury",
+            "wynik": "POMINIETA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_mury",
+            "wynik": "NIEUDANA"
+          }
+        ]
+      },
+      "zmiany": [
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "zapisano_mury",
+          "wartosc": true
+        },
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "glos_mury",
+          "wartosc": true
+        }
+      ],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "cel_palac",
+      "nazwa": "Idę do Pałacu Książęcego.",
+      "idSceny": "rozdroze",
+      "nastepnaScena": "palac_obserwacja",
+      "warunek": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "flagaJest",
+            "id": "zapisano_ratusz",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "flagaJest",
+            "id": "zapisano_mury",
+            "wartosc": true
+          }
+        ]
+      },
+      "zmiany": [],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "palac_zapis",
+      "nazwa": "Zachowuję ślad i jego źródło.",
+      "idSceny": "palac_obserwacja",
+      "nastepnaScena": "rozdroze",
+      "warunek": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_palac",
+            "wynik": "ROZWIAZANA_SAMODZIELNIE"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_palac",
+            "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_palac",
+            "wynik": "ROZWIAZANA_Z_POMOCA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_palac",
+            "wynik": "POMINIETA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_palac",
+            "wynik": "NIEUDANA"
+          }
+        ]
+      },
+      "zmiany": [
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "zapisano_palac",
+          "wartosc": true
+        }
+      ],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "palac_glos",
+      "nazwa": "Zostawiam miejsce na opowieści ludzi.",
+      "idSceny": "palac_obserwacja",
+      "nastepnaScena": "rozdroze",
+      "warunek": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_palac",
+            "wynik": "ROZWIAZANA_SAMODZIELNIE"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_palac",
+            "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_palac",
+            "wynik": "ROZWIAZANA_Z_POMOCA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_palac",
+            "wynik": "POMINIETA"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_palac",
+            "wynik": "NIEUDANA"
+          }
+        ]
+      },
+      "zmiany": [
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "zapisano_palac",
+          "wartosc": true
+        },
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "glos_palac",
+          "wartosc": true
+        }
+      ],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "kampania_final",
+      "nazwa": "Zamykam dzisiejszą wyprawę.",
+      "idSceny": "rozdroze",
+      "nastepnaScena": "final_kampanii",
+      "warunek": {
+        "rodzaj": "dowolny",
+        "warunki": [
+          {
+            "rodzaj": "flagaJest",
+            "id": "zapisano_hansken",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "flagaJest",
+            "id": "zapisano_ratusz",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "flagaJest",
+            "id": "zapisano_mury",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "flagaJest",
+            "id": "zapisano_palac",
+            "wartosc": true
+          }
+        ]
+      },
+      "zmiany": [
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "kampania_zakonczona",
+          "wartosc": true
+        }
+      ],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "cel_splot",
+      "nazwa": "Łączę notatkę o postaci z obserwacją Ratusza.",
+      "idSceny": "rozdroze",
+      "nastepnaScena": "splot_notatek",
+      "warunek": {
+        "rodzaj": "wszystkie",
+        "warunki": [
+          {
+            "rodzaj": "zadanieUkonczone",
+            "id": "zad_teren_hansken"
+          },
+          {
+            "rodzaj": "zadanieUkonczone",
+            "id": "zad_teren_ratusz"
+          }
+        ]
+      },
+      "zmiany": [],
+      "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "splot_powrot",
+      "nazwa": "Wracam do wyboru dalszego celu.",
+      "idSceny": "splot_notatek",
+      "nastepnaScena": "rozdroze",
+      "zmiany": [
+        {
+          "rodzaj": "USTAW_FLAGE",
+          "id": "polaczono_znaki",
+          "wartosc": true
+        }
+      ],
+      "efekty": []
+    }
+  ],
+  "zakonczenia": [
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "kronika_polaczona",
+      "nazwa": "Kronika połączonych śladów",
+      "priorytet": 140,
+      "warunek": {
+        "rodzaj": "wszystkie",
+        "warunki": [
+          {
+            "rodzaj": "flagaJest",
+            "id": "kampania_zakonczona",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "dowolny",
+            "warunki": [
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_hansken",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_ratusz",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_mury",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_palac",
+                "wartosc": true
+              }
+            ]
+          },
+          {
+            "rodzaj": "wszystkie",
+            "warunki": [
+              {
+                "rodzaj": "stanWatkuJest",
+                "id": "watek_znakow",
+                "stan": "UKONCZONY"
+              },
+              {
+                "rodzaj": "stanWatkuJest",
+                "id": "watek_rezydencji",
+                "stan": "UKONCZONY"
+              },
+              {
+                "rodzaj": "zadanieUkonczone",
+                "id": "zad_teren_mury"
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "polaczono_znaki",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "podpowiedziCoNajwyzej",
+                "id": "teren_hansken",
+                "liczba": 0
+              },
+              {
+                "rodzaj": "wynikZagadkiJest",
+                "id": "teren_hansken",
+                "wynik": "ROZWIAZANA_SAMODZIELNIE"
+              },
+              {
+                "rodzaj": "posiadaPrzedmiot",
+                "id": "notatka_muru"
+              }
+            ]
+          }
+        ]
+      },
+      "tekst": "Łączysz miejską postać, odczyt czasu, materialną granicę i plan rezydencji. Kronika nie daje jednej odpowiedzi o mieście: pozwala sprawdzić, skąd pochodzi każda z nich. Nie musiałeś oglądać wszystkich kandydatów z banku.",
+      "rodzaj": "GLOWNE",
+      "domyslne": false
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "kartograf_granic",
+      "nazwa": "Kartograf granic",
+      "priorytet": 130,
+      "warunek": {
+        "rodzaj": "wszystkie",
+        "warunki": [
+          {
+            "rodzaj": "flagaJest",
+            "id": "kampania_zakonczona",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "dowolny",
+            "warunki": [
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_hansken",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_ratusz",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_mury",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_palac",
+                "wartosc": true
+              }
+            ]
+          },
+          {
+            "rodzaj": "wszystkie",
+            "warunki": [
+              {
+                "rodzaj": "stanWatkuJest",
+                "id": "watek_granic",
+                "stan": "UKONCZONY"
+              },
+              {
+                "rodzaj": "zadanieUkonczone",
+                "id": "zad_teren_ratusz"
+              },
+              {
+                "rodzaj": "wybrano",
+                "id": "mury_zapis"
+              },
+              {
+                "rodzaj": "wynikZagadkiJest",
+                "id": "teren_mury",
+                "wynik": "ROZWIAZANA_SAMODZIELNIE"
+              }
+            ]
+          }
+        ]
+      },
+      "tekst": "Wybierasz porządek śladów. Ceglany mur i zegar składają się w zapis granic oraz czasu. Tam, gdzie nie znasz położenia dawnej bramy, zostawiasz przerwę. Taka luka jest uczciwsza od pięknej, zmyślonej kreski.",
+      "rodzaj": "GLOWNE",
+      "domyslne": false
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "opiekun_glosow",
+      "nazwa": "Opiekun głosów",
+      "priorytet": 120,
+      "warunek": {
+        "rodzaj": "wszystkie",
+        "warunki": [
+          {
+            "rodzaj": "flagaJest",
+            "id": "kampania_zakonczona",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "dowolny",
+            "warunki": [
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_hansken",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_ratusz",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_mury",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_palac",
+                "wartosc": true
+              }
+            ]
+          },
+          {
+            "rodzaj": "wszystkie",
+            "warunki": [
+              {
+                "rodzaj": "stanWatkuJest",
+                "id": "watek_rezydencji",
+                "stan": "UKONCZONY"
+              },
+              {
+                "rodzaj": "zadanieUkonczone",
+                "id": "zad_teren_hansken"
+              },
+              {
+                "rodzaj": "wybrano",
+                "id": "ratusz_glos"
+              },
+              {
+                "rodzaj": "odwiedzono",
+                "id": "palac"
+              }
+            ]
+          }
+        ]
+      },
+      "tekst": "Postać przy słonicy przypomina, że historia ma również swoich opowiadaczy. Po obejrzeniu skrzydeł pałacu zachowujesz miejsce na cudze głosy. Legendy podpisujesz jako legendy. Nie zamieniasz spotkania z budowlą w dowód każdej opowieści.",
+      "rodzaj": "GLOWNE",
+      "domyslne": false
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "otwarta_kronika",
+      "nazwa": "Otwarta Kronika",
+      "priorytet": 100,
+      "warunek": {
+        "rodzaj": "wszystkie",
+        "warunki": [
+          {
+            "rodzaj": "flagaJest",
+            "id": "kampania_zakonczona",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "dowolny",
+            "warunki": [
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_hansken",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_ratusz",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_mury",
+                "wartosc": true
+              },
+              {
+                "rodzaj": "flagaJest",
+                "id": "zapisano_palac",
+                "wartosc": true
+              }
+            ]
+          },
+          {
+            "rodzaj": "wszystkie",
+            "warunki": []
+          }
+        ]
+      },
+      "tekst": "Kończysz tę wyprawę z pytaniami, które pozostały otwarte. Pominięte zadania nie są zmyślonymi odkryciami. Twoja droga jest zapisem tego, co rzeczywiście zdecydowałeś się obejrzeć; inną część miasta możesz poznać podczas kolejnej wyprawy.",
+      "rodzaj": "GLOWNE",
+      "domyslne": false
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "epilog_pomocy",
+      "nazwa": "Wspólna droga do obserwacji",
+      "rodzaj": "EPILOG_WATKU",
+      "priorytet": 1,
+      "domyslne": false,
+      "warunek": {
+        "rodzaj": "wszystkie",
+        "warunki": [
+          {
+            "rodzaj": "flagaJest",
+            "id": "kampania_zakonczona",
+            "wartosc": true
+          },
+          {
+            "rodzaj": "dowolny",
+            "warunki": [
+              {
+                "rodzaj": "dowolny",
+                "warunki": [
+                  {
+                    "rodzaj": "wynikZagadkiJest",
+                    "id": "teren_hansken",
+                    "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+                  },
+                  {
+                    "rodzaj": "wynikZagadkiJest",
+                    "id": "teren_hansken",
+                    "wynik": "ROZWIAZANA_Z_POMOCA"
+                  }
+                ]
+              },
+              {
+                "rodzaj": "dowolny",
+                "warunki": [
+                  {
+                    "rodzaj": "wynikZagadkiJest",
+                    "id": "teren_ratusz",
+                    "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+                  },
+                  {
+                    "rodzaj": "wynikZagadkiJest",
+                    "id": "teren_ratusz",
+                    "wynik": "ROZWIAZANA_Z_POMOCA"
+                  }
+                ]
+              },
+              {
+                "rodzaj": "dowolny",
+                "warunki": [
+                  {
+                    "rodzaj": "wynikZagadkiJest",
+                    "id": "teren_mury",
+                    "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+                  },
+                  {
+                    "rodzaj": "wynikZagadkiJest",
+                    "id": "teren_mury",
+                    "wynik": "ROZWIAZANA_Z_POMOCA"
+                  }
+                ]
+              },
+              {
+                "rodzaj": "dowolny",
+                "warunki": [
+                  {
+                    "rodzaj": "wynikZagadkiJest",
+                    "id": "teren_palac",
+                    "wynik": "ROZWIAZANA_Z_PODPOWIEDZIA"
+                  },
+                  {
+                    "rodzaj": "wynikZagadkiJest",
+                    "id": "teren_palac",
+                    "wynik": "ROZWIAZANA_Z_POMOCA"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "tekst": "Kronika zachowuje użyte podpowiedzi i pomoc. Spotkanie z miastem może być wspólne; pomoc nie udaje samodzielnego odkrycia."
+    }
+  ],
+  "zrodla": [
+    {
+      "id": "wuoz_urbanistyka",
+      "tytul": "Trzebiatów — opracowanie konserwatorskie",
+      "opisBibliograficzny": "WUOZ Szczecin, opis zespołu staromiejskiego. Odczyt 2026-10-04. Mury kamienno-ceglane, pałac na rzucie L i relikty fortyfikacji.",
+      "url": "https://www.skz.szczecin.pl/index.php/ochrona-zabytkow/pomniki-historii/trzebiatow"
+    },
+    {
+      "id": "nid_palac",
+      "tytul": "Pałac w Trzebiatowie",
+      "opisBibliograficzny": "NID, karta pałacu, Wojska Polskiego 67. Odczyt 2026-10-04. Historia rezydencji; dostępność do rekonesansu.",
+      "url": "https://zabytek.pl/pl/obiekty/trzebiatow-palac"
+    },
+    {
+      "id": "gmina_sgraffito",
+      "tytul": "Gmina Trzebiatów dla Turysty",
+      "opisBibliograficzny": "Gmina Trzebiatów, sgraffito ze słoniem i poganiaczem. Odczyt 2026-10-04. Datowania i interpretacje opisu nie są odpowiedzią zagadki.",
+      "url": "https://trzebiatow.pl/gmina-trzebiatow-dla-turysty.html"
+    }
+  ],
+  "przedmioty": [
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "notatka_postaci",
+      "nazwa": "Kto towarzyszy słonicy?",
+      "rodzaj": "FRAGMENT_KRONIKI"
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "notatka_czasu",
+      "nazwa": "Czas oglądany z czterech stron",
+      "rodzaj": "FRAGMENT_KRONIKI"
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "notatka_muru",
+      "nazwa": "Dwa materiały jednego muru",
+      "rodzaj": "FRAGMENT_KRONIKI"
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "notatka_skrzydel",
+      "nazwa": "Litera zapisana w skrzydłach",
+      "rodzaj": "FRAGMENT_KRONIKI"
+    }
+  ],
+  "sceny": [
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "kontynuacja_kampanii",
+      "nazwa": "kontynuacja kampanii"
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "rozdroze",
+      "nazwa": "rozdroze"
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "hansken_powrot",
+      "nazwa": "hansken powrot"
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "ratusz_obserwacja",
+      "nazwa": "ratusz obserwacja"
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "mury_obserwacja",
+      "nazwa": "mury obserwacja"
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "palac_obserwacja",
+      "nazwa": "palac obserwacja"
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "splot_notatek",
+      "nazwa": "splot notatek"
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "final_kampanii",
+      "nazwa": "final kampanii"
+    }
+  ],
+  "kampania": {
+    "scenaRozgalezienia": "rozdroze",
+    "scenaFinalu": "final_kampanii",
+    "warunekFinalu": {
+      "rodzaj": "dowolny",
+      "warunki": [
+        {
+          "rodzaj": "flagaJest",
+          "id": "zapisano_hansken",
+          "wartosc": true
+        },
+        {
+          "rodzaj": "flagaJest",
+          "id": "zapisano_ratusz",
+          "wartosc": true
+        },
+        {
+          "rodzaj": "flagaJest",
+          "id": "zapisano_mury",
+          "wartosc": true
+        },
+        {
+          "rodzaj": "flagaJest",
+          "id": "zapisano_palac",
+          "wartosc": true
+        }
+      ]
+    },
+    "scenyMiejsc": [
+      {
+        "idSceny": "hansken_powrot",
+        "idLokalizacji": "hansken"
+      }
+    ],
+    "powiazaniaNarracji": [
+      {
+        "zmiennaInk": "kampania_rozpoczeta",
+        "obszar": "flagi",
+        "klucz": "kampania_rozpoczeta"
+      },
+      {
+        "zmiennaInk": "zapisano_ratusz",
+        "obszar": "flagi",
+        "klucz": "zapisano_ratusz"
+      },
+      {
+        "zmiennaInk": "zapisano_mury",
+        "obszar": "flagi",
+        "klucz": "zapisano_mury"
+      },
+      {
+        "zmiennaInk": "glos_ratusz",
+        "obszar": "flagi",
+        "klucz": "glos_ratusz"
+      },
+      {
+        "zmiennaInk": "glos_mury",
+        "obszar": "flagi",
+        "klucz": "glos_mury"
+      },
+      {
+        "zmiennaInk": "polaczono_znaki",
+        "obszar": "flagi",
+        "klucz": "polaczono_znaki"
+      },
+      {
+        "zmiennaInk": "obserwacja_postaci",
+        "obszar": "wynikiZagadek",
+        "klucz": "teren_hansken"
+      }
+    ],
+    "wiedza": [
+      {
+        "klasyfikacja": "FAKT",
+        "idZrodla": ["gmina_sgraffito"],
+        "wymagaWeryfikacjiTerenowej": false,
+        "id": "wiedza_teren_hansken",
+        "nazwa": "Kto towarzyszy słonicy?",
+        "tekst": "FAKT: Źródło gminne opisuje słonia z poganiaczem. Daty i opowieść o wizycie wymagają osobnego porównania źródeł; nie wynikają z samego oglądania tynku.",
+        "warunek": {
+          "rodzaj": "zadanieUkonczone",
+          "id": "zad_teren_hansken"
+        }
+      },
+      {
+        "klasyfikacja": "FAKT",
+        "idZrodla": ["gmina_zabytki"],
+        "wymagaWeryfikacjiTerenowej": false,
+        "id": "wiedza_teren_ratusz",
+        "nazwa": "Czas oglądany z czterech stron",
+        "tekst": "FAKT: Opis gminny podaje czterotarczowy zegar. Różne punkty obserwacji odsłaniają części jednej budowli. W Kronice zachowujesz tę lekcję patrzenia, nie tylko liczbę.",
+        "warunek": {
+          "rodzaj": "zadanieUkonczone",
+          "id": "zad_teren_ratusz"
+        }
+      },
+      {
+        "klasyfikacja": "FAKT",
+        "idZrodla": ["wuoz_urbanistyka"],
+        "wymagaWeryfikacjiTerenowej": false,
+        "id": "wiedza_teren_mury",
+        "nazwa": "Dwa materiały jednego muru",
+        "tekst": "FAKT: Opracowanie konserwatorskie opisuje ceglane mury na kamiennej podstawie. Dzisiejsze luki nie określają automatycznie miejsc dawnych bram. LEGENDA o kaszy pozostaje odrębną warstwą.",
+        "warunek": {
+          "rodzaj": "zadanieUkonczone",
+          "id": "zad_teren_mury"
+        }
+      },
+      {
+        "klasyfikacja": "FAKT",
+        "idZrodla": ["wuoz_urbanistyka"],
+        "wymagaWeryfikacjiTerenowej": false,
+        "id": "wiedza_teren_palac",
+        "nazwa": "Litera zapisana w skrzydłach",
+        "tekst": "FAKT: Opracowanie WUOZ opisuje obecną bryłę na rzucie L. Pod późniejszymi elewacjami zachowały się starsze fazy. NID wiąże budowlę z klasztorem i rezydencją — bez dowodzenia legendy o Białej Damie.",
+        "warunek": {
+          "rodzaj": "zadanieUkonczone",
+          "id": "zad_teren_palac"
+        }
+      }
+    ]
+  }
+}

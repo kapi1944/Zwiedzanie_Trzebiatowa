@@ -24,10 +24,10 @@ import {
   utworzSesjeNarracji,
   wybierzOpcjeNarracji,
 } from "@zwiedzanie/silnik-narracji";
-import daneNarracji from "../../../tresc/trzebiatow-v1/dist/glowna.json";
-import danePakietu from "../../../tresc/trzebiatow-v1/dist/pakiet.json";
+import daneNarracji from "../../../tresc/kampania/dist/glowna.json";
+import danePakietu from "../../../tresc/kampania/dist/pakiet.json";
 
-import tozsamosc from "../../../tresc/trzebiatow-v1/dist/tozsamosc.json";
+import tozsamosc from "../../../tresc/kampania/dist/tozsamosc.json";
 import {
   ocenZgodnoscZapisu,
   type PakietOffline,
@@ -54,6 +54,7 @@ export interface WidokSesji {
   profil: ProfilZakonczenia | undefined;
   wynikZagadki: WynikZagadki | undefined;
   dostepneZaliczenia: DefinicjeGry["zagadki"][number]["alternatywneZaliczenia"];
+  wiedza: NonNullable<DefinicjeGry["kampania"]>["wiedza"];
 }
 
 export class SesjaGry {
@@ -114,6 +115,7 @@ export class SesjaGry {
         obszar: "sladyIPrzedmioty",
         klucz: "fragment_kroniki_hansken",
       },
+      ...(this.definicje.kampania?.powiazaniaNarracji ?? []),
     ]);
     this.#narracja = utworzSesjeNarracji(narracja, this.#most);
     this.#ramka = this.#czytaj();
@@ -172,10 +174,12 @@ export class SesjaGry {
       hashNarracji: pakiet.hashNarracji,
     });
     sesja.#stan = zapis.stanGry;
-    sesja.#profil =
-      zapis.stanGry.aktualnaScena === "mini_final"
-        ? wyznaczProfilZakonczenia(sesja.definicje, sesja.#stan)
-        : undefined;
+    sesja.#profil = [
+      "mini_final",
+      sesja.definicje.kampania?.scenaFinalu,
+    ].includes(zapis.stanGry.aktualnaScena)
+      ? wyznaczProfilZakonczenia(sesja.definicje, sesja.#stan)
+      : undefined;
     sesja.#most.aktualizujKontekst(sesja.#kontekst());
     przywrocStanNarracji(
       sesja.#narracja,
@@ -200,10 +204,18 @@ export class SesjaGry {
 
   #kontekst() {
     const kontekst = przygotujKontekstNarracji(this.#stan);
+    const flagi = { ...kontekst.flagi };
+    const wyniki = { ...kontekst.wynikiZagadek };
+    for (const { obszar, klucz } of this.definicje.kampania
+      ?.powiazaniaNarracji ?? []) {
+      if (obszar === "flagi") flagi[klucz] = this.#stan.flagi[klucz] ?? false;
+      if (obszar === "wynikiZagadek")
+        wyniki[klucz] = this.#stan.wynikiZagadek[klucz]?.wynik ?? "";
+    }
     return {
       ...kontekst,
       flagi: {
-        ...kontekst.flagi,
+        ...flagi,
         wybrano_dowod: this.#stan.dokonaneWybory.includes("prolog_dowod"),
         wybrano_pamiec: this.#stan.dokonaneWybory.includes("prolog_pamiec"),
         otwarto_notatke: this.#stan.flagi.otwarto_notatke ?? false,
@@ -214,7 +226,7 @@ export class SesjaGry {
           false,
       },
       wynikiZagadek: {
-        ...kontekst.wynikiZagadek,
+        ...wyniki,
         zagadka_hansken: this.#stan.wynikiZagadek.zagadka_hansken?.wynik ?? "",
       },
     };
@@ -272,11 +284,13 @@ export class SesjaGry {
   odczytaj(): WidokSesji {
     const zagadka = this.definicje.zagadki.find(
       (element) =>
-        this.definicje.lokalizacje.some(
-          (miejsce) =>
-            miejsce.id === element.idLokalizacji &&
-            miejsce.idSceny === this.#stan.aktualnaScena,
-        ) && !this.#stan.wynikiZagadek[element.id],
+        (element.idSceny
+          ? element.idSceny === this.#stan.aktualnaScena
+          : this.definicje.lokalizacje.some(
+              (miejsce) =>
+                miejsce.id === element.idLokalizacji &&
+                miejsce.idSceny === this.#stan.aktualnaScena,
+            )) && !this.#stan.wynikiZagadek[element.id],
     );
     const opcje = this.#ramka.opcje.filter((opcja) => {
       const sygnaly = this.#most.odczytajSygnaly(opcja.tagi);
@@ -292,6 +306,10 @@ export class SesjaGry {
       );
     });
     return {
+      wiedza:
+        this.definicje.kampania?.wiedza.filter((wpis) =>
+          ocenWarunek(wpis.warunek, this.#stan),
+        ) ?? [],
       dostepneZaliczenia:
         zagadka?.alternatywneZaliczenia.filter((sposob) =>
           ocenWarunek(sposob.warunek, this.#stan),
@@ -304,11 +322,13 @@ export class SesjaGry {
       profil: this.#profil,
       wynikZagadki: this.definicje.zagadki
         .filter((element) =>
-          this.definicje.lokalizacje.some(
-            (miejsce) =>
-              miejsce.id === element.idLokalizacji &&
-              miejsce.idSceny === this.#stan.aktualnaScena,
-          ),
+          element.idSceny
+            ? element.idSceny === this.#stan.aktualnaScena
+            : this.definicje.lokalizacje.some(
+                (miejsce) =>
+                  miejsce.id === element.idLokalizacji &&
+                  miejsce.idSceny === this.#stan.aktualnaScena,
+              ),
         )
         .map((element) => this.#stan.wynikiZagadek[element.id]?.wynik)[0],
     };
@@ -323,9 +343,18 @@ export class SesjaGry {
     if (!idWyboru) throw new Error("Brak identyfikatora wyboru.");
     this.#komunikaty = [];
     this.#wykonaj({ rodzaj: "DOKONAJ_WYBORU", idWyboru });
-    const miejsce = this.definicje.lokalizacje.find(
-      (element) => element.idSceny === this.#stan.aktualnaScena,
-    );
+    this.#profil = undefined;
+    const miejsce =
+      this.definicje.lokalizacje.find(
+        (element) => element.idSceny === this.#stan.aktualnaScena,
+      ) ??
+      this.definicje.lokalizacje.find((element) =>
+        this.definicje.kampania?.scenyMiejsc.some(
+          (powiazanie) =>
+            powiazanie.idSceny === this.#stan.aktualnaScena &&
+            powiazanie.idLokalizacji === element.id,
+        ),
+      );
     if (miejsce && !this.#stan.odwiedzoneLokalizacje.includes(miejsce.id))
       this.#wykonaj({
         rodzaj: "WEJDZ_DO_LOKALIZACJI",
@@ -340,6 +369,8 @@ export class SesjaGry {
         this.#wykonaj({ rodzaj: "ZAKONCZ_WATEK", idWatku });
       this.#profil = wyznaczProfilZakonczenia(this.definicje, this.#stan);
     }
+    if (this.#stan.aktualnaScena === this.definicje.kampania?.scenaFinalu)
+      this.#profil = wyznaczProfilZakonczenia(this.definicje, this.#stan);
     this.#most.aktualizujKontekst(this.#kontekst());
     wybierzOpcjeNarracji(this.#narracja, indeks);
     this.#ramka = this.#czytaj();

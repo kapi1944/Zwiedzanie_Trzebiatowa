@@ -133,6 +133,10 @@ for (const [indeks, wariant] of macierz.entries()) {
       await kliknij(strona, "Potwierdź ręcznie");
       await kliknij(strona, "Mapa");
       await oczekuj(strona.locator(".mapa")).toBeVisible();
+      await oczekuj(strona.locator(".mapa")).toHaveAttribute(
+        "data-gotowa",
+        "true",
+      );
       await kliknij(strona, "Opowieść");
       if (wariant.offline) {
         await kontekst.setOffline(true);
@@ -152,12 +156,15 @@ for (const [indeks, wariant] of macierz.entries()) {
         await oczekuj(strona.locator("h1")).toContainText("Hansken");
       }
       await kliknij(strona, "Mapa");
-      await oczekuj(
-        strona.getByLabel(
-          "Włącz podkład online OpenStreetMap (wymaga internetu)",
-        ),
-      ).not.toBeChecked();
       await oczekuj(strona.locator(".mapa")).toBeVisible();
+      await oczekuj(strona.locator(".mapa")).toHaveAttribute(
+        "data-gotowa",
+        "true",
+      );
+      await oczekuj(strona.locator(".mapa canvas")).toHaveAttribute(
+        "aria-label",
+        /geometrii OpenStreetMap/,
+      );
       await kliknij(strona, "Opowieść");
       await kliknij(strona, "Pomiń zagadkę i idź dalej");
       await kliknij(
@@ -208,6 +215,11 @@ for (const szerokosc of [320, 360, 390, 412, 768, 1024]) {
       "O grze",
     ]) {
       await kliknij(strona, widok);
+      if (widok === "Mapa")
+        await oczekuj(strona.locator(".mapa")).toHaveAttribute(
+          "data-gotowa",
+          "true",
+        );
       await sprawdzUklad(strona);
       await sprawdzDostepnosc(strona);
     }

@@ -79,6 +79,9 @@ export function WidokZagadki({
   const [potwierdzono, ustawPotwierdzenie] = uzyjStanu(false);
   const blokada = uzyjReferencji(false);
   const postep = stan.postepyZagadek[zagadka.id];
+  const brakObecnosci =
+    !!zagadka.idSceny &&
+    !stan.potwierdzoneLokalizacje.includes(zagadka.idLokalizacji);
   const liczbaProb = postep?.liczbaProb ?? 0;
   const limit =
     zagadka.limitProb !== undefined && liczbaProb >= zagadka.limitProb;
@@ -101,11 +104,18 @@ export function WidokZagadki({
           twoją deklarację, a nie zweryfikowaną odpowiedź terenową.
         </p>
       )}
+      {brakObecnosci && (
+        <p role="status">
+          Zanim zapiszesz odpowiedź, potwierdź obecność przy obiekcie. Jeśli
+          detal jest niedostępny, możesz pominąć zadanie.
+        </p>
+      )}
       <form
         onSubmit={(zdarzenie) => {
           zdarzenie.preventDefault();
           if (
             !limit &&
+            !brakObecnosci &&
             (zagadka.typ === "OBSERWACJA" ? potwierdzono : odpowiedz.length > 0)
           )
             zlec((gra) =>
@@ -115,7 +125,7 @@ export function WidokZagadki({
             );
         }}
       >
-        <fieldset disabled={limit}>
+        <fieldset disabled={limit || brakObecnosci}>
           <legend>{zagadka.pytanie}</legend>
           {zagadka.typ === "WYBOR" &&
             zagadka.odpowiedzi.map((element) => (

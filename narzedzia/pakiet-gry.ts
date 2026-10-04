@@ -95,6 +95,16 @@ export function sprawdzSceny(
           .map((efekt) => efekt.id),
       ),
     ),
+    ...definicje.zagadki.flatMap((element) =>
+      element.idSceny ? [element.idSceny] : [],
+    ),
+    ...(definicje.kampania
+      ? [
+          definicje.kampania.scenaRozgalezienia,
+          definicje.kampania.scenaFinalu,
+          ...definicje.kampania.scenyMiejsc.map((miejsce) => miejsce.idSceny),
+        ]
+      : []),
   ];
   for (const id of [...sceny, ...odwolania]) {
     if (!sceny.includes(id) || !historia.KnotContainerWithName(id))

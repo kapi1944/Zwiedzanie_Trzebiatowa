@@ -13,6 +13,8 @@ export function analizujFlagi(definicje: DefinicjeGry) {
     Object.values(dane).forEach(odwiedz);
   }
   odwiedz(definicje);
+  for (const powiazanie of definicje.kampania?.powiazaniaNarracji ?? [])
+    if (powiazanie.obszar === "flagi") odczytywane.add(powiazanie.klucz);
   return {
     ustawiane: [...ustawiane].sort(),
     odczytywane: [...odczytywane].sort(),

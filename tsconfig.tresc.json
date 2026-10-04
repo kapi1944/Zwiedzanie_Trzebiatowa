@@ -9,6 +9,7 @@
   "include": [
     "narzedzia",
     "testy/vertical-slice.test.ts",
+    "testy/kampania.test.ts",
     "vitest.tresc.config.ts"
   ]
 }
