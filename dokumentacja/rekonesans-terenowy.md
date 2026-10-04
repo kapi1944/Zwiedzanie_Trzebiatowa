@@ -1,5 +1,7 @@
 # Rekonesans terenowy vertical slice
 
+Aktualnie **WYMAGA_REKONESANSU**: wszystkie 7 miejsc runtime, zero zatwierdzonych. Formularz poniżej dotyczy czterech miejsc slice; dla Ratusza, murów i Pałacu należy zastosować te same pola w osobnym protokole. Hansken jest wspólny dla slice i nowego zadania. [Zakres zadań Etapu 12](etap-12-pelna-kampania.md#rzeczywisty-content-i-rekonesans) · [status projektu](status-projektu.md).
+
 Status wszystkich punktów: **NIETESTOWANE / WYMAGA TERENU**.
 Wypełnia człowiek na miejscu. Puste pola nie oznaczają potwierdzenia.
 Nie publikować prywatnych zdjęć ani danych osób postronnych w repozytorium.

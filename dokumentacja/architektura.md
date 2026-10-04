@@ -1,6 +1,6 @@
 # Architektura docelowa
 
-Dokument opisuje założenia docelowe o statusie TYMCZASOWA. Etap 1 tworzy strukturę npm workspaces, ekrany startowe aplikacji i minimalne pakiety TypeScript. Poniższe odpowiedzialności domenowe pozostają docelowe; mechanika, Ink, walidacja, PWA, GPS, mapa, audio i zapis nie są jeszcze zaimplementowane.
+Dokument opisuje założenia docelowe o statusie TYMCZASOWA; D001–D011 pozostają niezatwierdzone. Struktura npm workspaces, mechanika, Ink, walidacja, PWA, opcjonalne GPS/audio, mapa i zapis są zaimplementowane. Bieżący zakres i ograniczenia: [status projektu](status-projektu.md) i [Etap 12](etap-12-pelna-kampania.md). Model docelowy nie stanowi odbioru produktu.
 
 ```text
 aplikacje/

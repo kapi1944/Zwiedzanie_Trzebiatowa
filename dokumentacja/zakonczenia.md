@@ -1,5 +1,7 @@
 # Zakończenia — Etap 3
 
+Bazowy resolver poniżej pozostaje używany. Dla rozpoczętej kampanii Etap 12 dodaje bramkę sceny finału i `warunekFinalu` oraz cztery nowe zakończenia główne. [Reguły Etapu 12](etap-12-pelna-kampania.md#flagi-i-zakończenia) · [status projektu](status-projektu.md).
+
 `wyznaczProfilZakonczenia(definicje, stan)` jest czystą funkcją. Waliduje definicje i stan, sprawdza ich zgodność oraz ukończenie wszystkich nieopcjonalnych wątków i wątków z `wymaganyDoFinalu: true`. Pozostałe opcjonalne wątki mogą być zablokowane, dostępne, aktywne lub pominięte i nie blokują profilu.
 
 `ProfilZakonczenia` zawiera wyłącznie identyfikatory:

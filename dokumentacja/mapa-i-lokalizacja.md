@@ -1,6 +1,6 @@
 # Mapa i lokalizacja — Etap 7
 
-Mapa jest pomocniczym widokiem. Fabuła, odblokowania i potwierdzenia pozostają w Silniku Gry. Gra działa bez otwierania mapy, podkładu online oraz bez zgody na GPS. Etap 8 nie jest zaimplementowany.
+Mapa jest pomocniczym widokiem. Fabuła, odblokowania i potwierdzenia pozostają w Silniku Gry. Gra działa bez otwierania mapy, podkładu online oraz bez zgody na GPS. Poniższy opis zachowuje historyczny zakres Etapu 7. Aktualna panorama używa canvas i lokalnej geometrii OSM; PWA oraz opcjonalny lokalny ślad GPS są zaimplementowane. Opisy Leaflet, braku `watchPosition` i braku historii ruchu poniżej dotyczą wcześniejszej mapy i adaptera potwierdzania obecności. Bieżące zasady: [Etap 12](etap-12-pelna-kampania.md) i [status projektu](status-projektu.md).
 
 ## Scena a lokalizacja
 

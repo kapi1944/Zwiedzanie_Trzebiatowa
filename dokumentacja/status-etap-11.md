@@ -1,5 +1,7 @@
 # Etap 11 — jakość i rekonesans
 
+> Historyczny raport Etapu 11. Bieżący stan: [status projektu](status-projektu.md) i [rozpoczęty Etap 12](etap-12-pelna-kampania.md).
+
 Data: 2026-10-03. Branch: `feat/etapy-7-11`.
 Zakres: utwardzenie istniejącego vertical slice, bez rozszerzania kampanii.
 

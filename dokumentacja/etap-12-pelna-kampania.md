@@ -1,5 +1,18 @@
 # Etap 12 — pierwsza wielowątkowa kampania
 
+**Status: CZĘŚCIOWO GOTOWE — Etap 12 nieukończony.**
+
+[Status projektu i kategorie](status-projektu.md) · [README](../README.md) ·
+[raport Etapu 11](status-etap-11.md) · [rekonesans](rekonesans-terenowy.md)
+
+| Status | Zakres |
+| --- | --- |
+| GOTOWE TECHNICZNIE | Reprezentatywna kampania, cztery nowe zadania i zakończenia, walidacja grafu, lokalny ślad GPS i zachowanie starych zapisów |
+| CZĘŚCIOWO GOTOWE | Pełna kampania i panorama centrum: działają rozszerzenie oraz POC, brak odbioru całości |
+| WYMAGA_REKONESANSU | Wszystkie 7 miejsc runtime i 83 kandydatów banku; zero zatwierdzonych miejsc |
+| DO_WERYFIKACJI | Robocze punkty mapy, kandydaci odpowiedzi, realny GPS, telefon, bateria i historia murów |
+| PLANOWANE | Kolejne punkty i wątki, ręczna ilustracja, docelowy szelest zwoju i nagrania |
+
 Stan: rozpoczęty, 2026-10-04. Działa reprezentatywne rozszerzenie kampanii,
 ale nie zatwierdzono jeszcze contentu w terenie ani docelowej mapy artystycznej.
 Ten dokument nie jest protokołem odbioru całego Etapu 12.
@@ -262,7 +275,9 @@ wszystkich historii. To nie dowód wszystkich możliwych kombinacji warunków;
 nowa gałąź lub reguła bez świadectwa zatrzymuje build i wymaga rozszerzenia
 zestawu. Dawne 1080 dróg to tylko regresja osobnego slice, nie limit kampanii.
 
-Wyniki lokalnej walidacji:
+Historyczne wyniki implementacji z 2026-10-04 (commit `75aef33`).
+Bieżące bramki: [status projektu](status-projektu.md#bieżąca-weryfikacja).
+Poniższe wyniki nie oznaczają odbioru Etapu 12:
 
 | Kontrola | Wynik |
 | --- | --- |

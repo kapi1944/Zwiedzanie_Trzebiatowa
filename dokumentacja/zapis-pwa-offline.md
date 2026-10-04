@@ -1,6 +1,6 @@
 # Zapis gry, PWA i offline — Etap 8
 
-Gra zapisuje postęp lokalnie po zakończonej akcji i pozwala wznowić sesję po odświeżeniu lub ponownym uruchomieniu. Nie ma kont, backendu, cloud sync, płatności, DRM, audio, EKO ani pakietów offline OSM. Etap 9 nie jest rozpoczęty.
+Gra zapisuje postęp lokalnie po zakończonej akcji i pozwala wznowić sesję po odświeżeniu lub ponownym uruchomieniu. Nie ma kont, backendu, cloud sync, płatności ani DRM. Audio i EKO są zaimplementowane. Etap 12 dodaje magazyn `sladyGps` w IndexedDB v2, zachowując format 1 stanu gry i przypięte pakiety; geometria OSM jest cache’owana po pierwszym otwarciu mapy. Szczegóły: [Etap 12](etap-12-pelna-kampania.md) i [status projektu](status-projektu.md). Poniżej opis bazowego zapisu i PWA z Etapu 8.
 
 ## Biblioteki i zgodność
 

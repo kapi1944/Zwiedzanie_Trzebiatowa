@@ -6,6 +6,13 @@ Aktualny status: rozpoczęty Etap 12 — pierwsza wielowątkowa kampania z czter
 
 Gra będzie projektowana przede wszystkim na smartfony i do działania bez internetu, z decyzjami oraz wynikami zagadek wpływającymi na późniejszą narrację i kompozytowe zakończenia.
 
+## Status i dokumentacja
+
+Etap 12 jest **CZĘŚCIOWO GOTOWY i nieukończony**. Mechanizmy są **GOTOWE TECHNICZNIE**;
+wszystkie miejsca pozostają **WYMAGA_REKONESANSU**. Robocze dane i próby na telefonie
+są **DO_WERYFIKACJI**. Kolejny content, docelowa ilustracja i zakup/konto są **PLANOWANE**.
+Znaczenie kategorii i aktualne bramki: [status projektu](dokumentacja/status-projektu.md).
+
 Dokumentacja:
 
 - [Wizja produktu](dokumentacja/wizja.md)
@@ -30,7 +37,7 @@ Wymagane: Node.js 24.15 lub nowszy (testy UI używają jsdom 30) oraz npm 11 lub
 | `npm run typecheck` | Sprawdzenie typów wszystkich workspace'ów |
 | `npm run lint` | Kontrola kodu i formatowania przez Biome |
 | `npm run format` | Formatowanie przez Biome |
-| `npm run test` | Budowa, sześć testów smoke oraz testy Vitest narracji, mechaniki, schematów i interfejsu |
+| `npm run test` | Budowa, osiem testów fundamentu oraz testy Vitest narracji, mechaniki, schematów i interfejsu |
 
 Gra trafia do `aplikacje/gra/dist`, statyczna strona do `aplikacje/strona/out`, a moduły ESM i deklaracje typów do `pakiety/*/dist`. Wyniki budowy nie są wersjonowane. Strona korzysta z App Routera i eksportu statycznego, bez API biznesowego i backendu. Biome jest jedynym linterem i formatterem.
 

@@ -1,5 +1,7 @@
 # Jakość i zależności — Etap 11
 
+> Historyczny przegląd Etapu 11, bez ponownego audytu zależności. Leaflet pozostaje w manifeście, ale panorama Etapu 12 używa canvas i lokalnej geometrii OSM. [Bieżące bramki](status-projektu.md#bieżąca-weryfikacja) · [Etap 12](etap-12-pelna-kampania.md).
+
 Stan odczytany 2026-10-03 z manifestów, lockfile i lokalnych metadanych npm.
 `npm audit`: 0 podatności przed i po dodaniu narzędzi testowych. Pierwsze
 wywołanie bez dostępu sieciowego nie dało wyniku; ponowione z dostępem
