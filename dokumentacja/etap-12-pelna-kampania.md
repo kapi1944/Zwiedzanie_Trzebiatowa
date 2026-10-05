@@ -33,7 +33,7 @@ Vertical slice pozostaje osobno budowany i testowany. Nowa sesja używa
 `kampania-12.1`; stara sesja odtwarza własny, niezmienny pakiet.
 
 Kampania zawiera 7 lokalizacji, 5 wątków (2 wcześniejsze i 3 nowe), 6 zadań,
-6 zagadek, 30 decyzji, 5 przedmiotów i 21 reguł zakończeń/epilogów.
+6 zagadek, 31 decyzji, 5 przedmiotów i 22 reguły zakończeń/epilogów.
 Nowe reguły główne są cztery. Większość miejsc nie musi zostać ukończona,
 żeby zamknąć wyprawę. Powrót do rozdroża działa także po pominięciu zagadki.
 
@@ -44,7 +44,9 @@ Nowe reguły główne są cztery. Większość miejsc nie musi zostać ukończon
 opisuje scenę i emituje tag `sygnal:id_wyboru`. Most sprawdza legalność wyboru
 w silniku, wykonuje zdarzenie, a dopiero potem przesuwa narrację.
 
-`kampania.powiazaniaNarracji` wiąże zmienne Ink z flagami albo wynikami zagadek.
+`kampania.powiazaniaNarracji` wiąże zmienne Ink z kontekstem stanu gry. Opcjonalne
+`warunek` powiązania wylicza wartość logiczną przez istniejący DSL Quest Engine
+w obszarze `flagi`; nie zapisuje jej do `StanGry.flagi`.
 Brak flagi oznacza `false`, brak wyniku pusty tekst. Ink nie ustawia nagród,
 ukończenia zadań, obecności, odblokowania miejsca ani zakończenia.
 `kampania.scenyMiejsc` pozwala odwiedzić to samo miejsce w innej scenie
@@ -157,6 +159,19 @@ Bank przeniesiono z przekazanego `Trzebiatow_Encyklopedia_miejsc_i_bank_zadan_v0
 83 osobne pozycje i 249 kandydatów zadań, z numerami stron. Nie złączono
 Ratusza z Rynkiem, wieży z kościołem ani kilku fortyfikacji w jeden kandydat.
 Niepotwierdzone odpowiedzi pozostają `null` / `DO_WERYFIKACJI`.
+
+Bank jest teraz [centralnym rejestrem lokalizacji](rejestr-lokalizacji.md):
+wszystkie 83 id i nazwy oraz 249 kandydatów zadań zachowano. Rekordy mają
+opisy źródłowe, typy, rozwiniętą bibliografię, osobne statusy informacji,
+rekonesansu i współrzędnych, propozycje motywów oraz odniesienia do istniejącego
+runtime. Brak potwierdzonych współrzędnych oznaczono `null` / `DO_WERYFIKACJI`.
+Walidacja kompletności jest częścią budowy treści. Nie wybrano finalnej trasy.
+
+Następna redakcja [banku kandydatów zadań](bank-zadan-terenowych.md) zachowuje
+249 propozycji, ale zastępuje quizy poleceniami obserwacji rzeczywistego terenu.
+Każdy kandydat ma osobny id, cel, źródła i wymagania rekonesansu. Wszystkie
+odpowiedzi pozostają `null` / `WYMAGA_REKONESANSU`. Rejestr dopuszcza do trzech
+kandydatów na miejsce; żaden nie jest automatycznie wybierany ani aktywowany.
 
 ## Mapa: dane, warstwy i ograniczenia proof-of-concept
 
@@ -314,3 +329,89 @@ poza initial/precache. Powtórny import ze snapshotów daje identyczny SHA-256.
    realnego detalu otwierającego scenę i warunków dostępności.
 6. Docelowy szelest zwoju i nagrania narracji na istniejącym kanale audio,
    z zachowaniem pełnej gry bez dźwięku.
+
+Warstwa źródłowa: [model informacji historycznych](zrodla-contentu.md).
+Walidacja techniczna i cytowania 83 opisów są gotowe; potwierdzenie twierdzeń
+pozostaje DO_WERYFIKACJI. Opisy encyklopedii mają poziom NIEPEWNE,
+rekonesans pozostaje WYMAGA_REKONESANSU. Etap 12 nie jest ukończony.
+Kontrola tej zmiany: build, 245 testów, typecheck, lint śledzonych plików
+oraz `git diff --check` PASS. Pełny lint: FAIL — dwa wcześniejsze błędy
+w nieśledzonym `zastap_teksty_trzebiatow_v2.mjs`. E2E nie ponawiano.
+
+Robocza [sieć narracyjna](siec-narracyjna.md): 8 osi, 38 węzłów,
+16 niezależnych wejść i 6 splotów. Model autora jest walidowany przy budowie;
+nie aktywuje miejsc ani scen w runtime. Finalny wybór contentu pozostaje PLANOWANE.
+
+## Obserwowalne konsekwencje istniejącej kampanii
+
+Wspólny `przygotujKontekstNarracji(stan, powiazania)` obsługuje sesję gracza
+oraz testy Ink. Odczytuje jeden StanGry. Nie powstał drugi stan, nowy format
+zapisu ani mechanika terenowa. Starsze powiązania bez `warunek` nadal działają.
+Warunek jest dozwolony wyłącznie dla wartości logicznych; walidator sprawdza
+jego odwołania do istniejących zagadek, scenek, przedmiotów i wątków.
+
+| Wcześniejsze działanie | Widoczna późniejsza konsekwencja |
+| --- | --- |
+| Decyzja o głosach przy Ratuszu | Inna interpretacja murów przez Kronikarkę |
+| Rozwiązanie, pominięcie lub niepowodzenie Hansken | Ratusz odwołuje się do rozpoznania albo jawnie otwartej notatki |
+| Faktycznie wykorzystana podpowiedź Hansken | Osobny akapit przy Ratuszu i w finale; epilog pomocy z istniejącego resolvera |
+| Odkrycie scenki dwóch notatek w pierwszym rozdziale | Powrót rozróżnienia obserwacji i opowieści przy Pałacu oraz w finale |
+| Ukończenie Granic i posiadanie notatki muru | Wariant celu „Porównuję notatkę murów z Pałacem”, akapit Pałacu i finału |
+
+Wariant celu prowadzi do istniejącego Pałacu; nie dodaje lokalizacji.
+Standardowy cel i możliwość zamknięcia niepełnej wyprawy nadal działają.
+Interpretacje mają oznaczenie FABULARYZOWANE i nie dopisują faktów historycznych.
+Sceny zwięźlej przekazują dotychczasowe instrukcje, zachowując adresy, zasady
+bezpiecznej obserwacji oraz możliwość pominięcia niedostępnego widoku.
+
+Testy porównują rzeczywisty tekst Ink po różnych dziennikach zdarzeń,
+widoczne opcje SesjaGry i późniejsze sceny po wznowieniu zapisu. Sprawdzają
+obecność konsekwencji w wariancie pozytywnym i jej brak w kontrolnym.
+Przebiegi grafu obejmują także nowy wariant celu. Istnienie flagi samo w sobie
+nie jest dowodem widocznej konsekwencji. Nie jest to odbiór Etapu 12 ani terenu.
+
+Kontrola konsekwencji: build, 257 testów, typecheck, lint zmienionego kodu,
+limity gzip/lazy i `git diff --check` PASS. Pełny lint nadal FAIL przez dwa
+wcześniejsze błędy w skrypcie użytkownika; E2E i terenu nie ponawiano.
+
+[Architektura zakończeń](zakonczenia.md): resolver komponuje zakończenie
+główne, warianty, epilogi i odkrycia z przebiegu gry. Nowe reguły kampanii
+mają jawne sceny wejścia; walidacja łączy analizę logiczną i świadectwa resolvera.
+Etap 12 pozostaje nieukończony.
+
+Przykładowe teksty finałów skrócono; dodano jeden wariant Otwartej Kroniki.
+Warunki głównych zakończeń pozostają oparte na przebiegu wyprawy.
+
+[Kronika zdobytej wiedzy](kronika.md) pokazuje wyłącznie odblokowane wpisy,
+wyniki zagadek, ślady i postęp wątków. Rozdziela fakt, przekaz i fabularne zdarzenia;
+brak potwierdzenia oznacza informację do weryfikacji. Filtry i paginacja ograniczają
+liczbę kart. Rozszerzenie widoku nie oznacza ukończenia Etapu 12.
+
+### Wątki i wybór następnego celu
+
+Widok pokazuje tylko rozpoczęte wątki (AKTYWNY, UKONCZONY, POMINIETY),
+ich ogólny stan oraz zdobyte przedmioty/ślady i przeczytane scenki.
+Wskazówki prezentowane są wspólnie: istniejący model nie przypisuje każdej
+z nich do konkretnego wątku. Nie dopisano takich powiązań na podstawie domysłów.
+Wątki ZABLOKOWANY, DOSTEPNY i nieobecne w stanie nie ujawniają nazw.
+
+`czyWyborDostepny` w Quest Engine jest wspólną kontrolą polecenia wyboru
+i adaptera sesji. Most Ink dodaje do zatwierdzonych opcji ich identyfikatory.
+Lekka projekcja `@zwiedzanie/silnik-gry/wyprawa` otrzymuje te opcje i kanoniczny
+stan; zwraca wyłącznie cele aktualnej sceny z odblokowanymi lokalizacjami.
+Nie ocenia ponownie warunków w UI. Osobne wejście projekcji nie importuje
+schematów runtime ani całego silnika do początkowej paczki interfejsu.
+
+Mapa i widok wątków korzystają z tej samej listy celów. Przy równoległych
+kierunkach gracz widzi nazwy miejsc i teksty legalnych opcji Ink; przycisk
+wykonuje istniejący wybór sesji i otwiera Opowieść. Nie dodaje zdarzeń ani stanu.
+Brak celu w bieżącej scenie oznacza kontynuację Opowieści, nie listę przyszłych
+miejsc. W widoku nie ma całego grafu, sekretów ani przyszłych finałów.
+
+Kontrola 2026-10-04: pełny build, 275 testów (8 fundamentu, 21 narracji,
+67 silnika, 66 treści, 113 UI), typecheck, lint zmienionego kodu, dotychczasowe
+limity gzip/lazy i `git diff --check` PASS. Nowe testy obejmują ukrywanie
+przyszłych miejsc, nierozpoczętych wątków i niezdobytych wskazówek, brak nazw
+zakończeń w DOM, wybór Ratusza z rozdroża oraz zgodność projekcji po wznowieniu.
+Pełny lint nadal FAIL przez dwa zastane błędy skryptu użytkownika.
+E2E i odbioru fizycznego telefonu nie ponawiano w tej zmianie.

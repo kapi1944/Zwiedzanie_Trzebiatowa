@@ -1,0 +1,387 @@
+{
+  "data": "2026-10-05",
+  "stan": "Start przed wyprawa; pozostale widoki po normalnym przejsciu rynku i Hansken, przed zagadka przy kosciele. Bez sztucznych danych.",
+  "obrazy": [
+    {
+      "plik": "mobile/light/01-start.png",
+      "widok": "Start",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 953,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/light/02-opowiesc.png",
+      "widok": "Opowieść",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 2137,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/light/02-opowiesc-panel-celu.png",
+      "widok": "Opowieść",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "mobile/light/03-mapa.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 2967,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/light/03-mapa-mapa-i-kontrolki.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "mobile/light/03-mapa-panel-celu.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "mobile/light/04-kronika.png",
+      "widok": "Kronika",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 2204,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/light/04-kronika-pierwsze-wpisy.png",
+      "widok": "Kronika",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "mobile/light/05-watki.png",
+      "widok": "Wątki",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 1122,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/light/06-o-grze.png",
+      "widok": "O grze",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 966,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/light/07-ustawienia.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 1646,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/light/07-ustawienia-audio.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "mobile/light/07-ustawienia-audio-dol.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "mobile/dark/01-start.png",
+      "widok": "Start",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 953,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/dark/02-opowiesc.png",
+      "widok": "Opowieść",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 2137,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/dark/02-opowiesc-panel-celu.png",
+      "widok": "Opowieść",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "mobile/dark/03-mapa.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 2967,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/dark/03-mapa-mapa-i-kontrolki.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "mobile/dark/03-mapa-panel-celu.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "mobile/dark/04-kronika.png",
+      "widok": "Kronika",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 2204,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/dark/04-kronika-pierwsze-wpisy.png",
+      "widok": "Kronika",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "mobile/dark/05-watki.png",
+      "widok": "Wątki",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 1122,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/dark/06-o-grze.png",
+      "widok": "O grze",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 966,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/dark/07-ustawienia.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "wysokosc": 1646,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "mobile/dark/07-ustawienia-audio.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "mobile/dark/07-ustawienia-audio-dol.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "desktop/light/start.png",
+      "widok": "Start",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "wysokosc": 941,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "desktop/light/mapa.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "wysokosc": 2698,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "desktop/light/mapa-mapa-i-kontrolki.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "desktop/light/mapa-panel-celu.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "desktop/light/ustawienia.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "wysokosc": 1608,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "desktop/light/ustawienia-audio.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "desktop/light/ustawienia-audio-dol.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "desktop/dark/start.png",
+      "widok": "Start",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "wysokosc": 941,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "desktop/dark/mapa.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "wysokosc": 2698,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "desktop/dark/mapa-mapa-i-kontrolki.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "desktop/dark/mapa-panel-celu.png",
+      "widok": "Mapa",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "desktop/dark/ustawienia.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "wysokosc": 1608,
+      "typ": "fullPage"
+    },
+    {
+      "plik": "desktop/dark/ustawienia-audio.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "typ": "fragment"
+    },
+    {
+      "plik": "desktop/dark/ustawienia-audio-dol.png",
+      "widok": "Ustawienia",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "typ": "fragment"
+    }
+  ],
+  "problemy": []
+}

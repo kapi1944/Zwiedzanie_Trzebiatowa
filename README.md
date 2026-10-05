@@ -15,6 +15,9 @@ Znaczenie kategorii i aktualne bramki: [status projektu](dokumentacja/status-pro
 
 Dokumentacja:
 
+- [Centralny rejestr 83 lokalizacji — format i walidacja](dokumentacja/rejestr-lokalizacji.md)
+- [Bank 249 kandydatów zadań terenowych — model i rekonesans](dokumentacja/bank-zadan-terenowych.md)
+- [Kronika zdobytej wiedzy — warstwy, filtry i offline](dokumentacja/kronika.md)
 - [Wizja produktu](dokumentacja/wizja.md)
 - [Architektura](dokumentacja/architektura.md)
 - [Rejestr Decyzji](dokumentacja/decyzje.md)
@@ -54,3 +57,14 @@ Pakiety `silnik-gry`, `silnik-narracji` i `schemat-tresci` zawierają czysty rdz
 - [Mapa i lokalizacja](dokumentacja/mapa-i-lokalizacja.md)
 
 - [Zapis, PWA i offline — format, test ręczny i ograniczenia](dokumentacja/zapis-pwa-offline.md)
+
+Warstwa źródłowa i poziomy pewności: [format informacji historycznych](dokumentacja/zrodla-contentu.md).
+
+Robocza [sieć narracyjna](dokumentacja/siec-narracyjna.md): 8 osi, 38 węzłów,
+16 niezależnych wejść i 6 splotów. Model autora jest walidowany przy budowie;
+nie aktywuje miejsc ani scen w runtime. Finalny wybór contentu pozostaje PLANOWANE.
+
+[Architektura zakończeń](dokumentacja/zakonczenia.md): resolver komponuje zakończenie
+główne, warianty, epilogi i odkrycia z przebiegu gry. Nowe reguły kampanii
+mają jawne sceny wejścia; walidacja łączy analizę logiczną i świadectwa resolvera.
+Etap 12 pozostaje nieukończony.

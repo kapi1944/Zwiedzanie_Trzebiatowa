@@ -5,3 +5,9 @@ out/
 *.tsbuildinfo
 test-results/
 playwright-report/
+
+# Lokalne materiały promocyjne i skrypt jednorazowej podmiany tekstów.
+PROMO/
+IIWŚ/
+/zastap_teksty_trzebiatow_v2.mjs
+.kopie-lokalne/
