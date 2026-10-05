@@ -33,6 +33,7 @@ function czyRozwinieto(idSesji: string) {
 }
 export default function Mapa({
   uproszczona = false,
+  ograniczoneAnimacje = false,
   lokalizacje,
   stan,
   dostepne,
@@ -43,6 +44,7 @@ export default function Mapa({
   ukonczoneZadania = [],
 }: {
   uproszczona?: boolean;
+  ograniczoneAnimacje?: boolean;
   lokalizacje: readonly DefinicjaLokalizacji[];
   stan: StanGry;
   dostepne?: readonly string[];
@@ -98,10 +100,10 @@ export default function Mapa({
       () => {
         ustawRozwijanie(false);
       },
-      uproszczona ? 0 : 480,
+      ograniczoneAnimacje ? 0 : 480,
     );
     return () => clearTimeout(czas);
-  }, [rozwijanie, uproszczona]);
+  }, [rozwijanie, ograniczoneAnimacje]);
   uzyjEfektu(() => {
     if (!rozwijanie)
       try {
@@ -260,7 +262,7 @@ export default function Mapa({
       )}
       <div
         ref={kontener}
-        className={`mapa pergamin ${rozwijanie ? "pergamin-rozwijany" : ""}`}
+        className={`mapa pergamin ${rozwijanie && !ograniczoneAnimacje ? "pergamin-rozwijany" : ""}`}
         {...(!rozwijanie ? wskaznik : {})}
         data-gotowa={!rozwijanie && !!geometria}
         data-poziom={poziom}

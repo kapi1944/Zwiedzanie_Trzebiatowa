@@ -4,7 +4,12 @@ import { act as wykonajReact } from "react";
 import { createRoot as utworzKorzen } from "react-dom/client";
 import { expect, afterEach as poTescie, test, vi } from "vitest";
 import Aplikacja from "../src/Aplikacja";
-import { kluczMotywu, odczytajMotyw, zapiszMotyw } from "../src/motyw";
+import {
+  kluczMotywu,
+  odczytajMotyw,
+  odczytajWyborMotywu,
+  zapiszMotyw,
+} from "../src/motyw";
 
 poTescie(() => {
   localStorage.clear();
@@ -20,10 +25,15 @@ test("domyslny motyw wynika z systemu, bledny zapis jest ignorowany", () => {
     vi.fn(() => ({ matches: true })),
   );
   expect(odczytajMotyw()).toBe("dark");
+  expect(odczytajWyborMotywu()).toBe("auto");
   localStorage.setItem(kluczMotywu, "bledny");
   expect(odczytajMotyw()).toBe("dark");
   zapiszMotyw("light");
   expect(odczytajMotyw()).toBe("light");
+  expect(odczytajWyborMotywu()).toBe("light");
+  expect(zapiszMotyw("auto")).toBe(true);
+  expect(odczytajWyborMotywu()).toBe("auto");
+  expect(odczytajMotyw()).toBe("dark");
 });
 
 test("niedostepna pamiec nie blokuje motywu", () => {
@@ -108,7 +118,7 @@ test("motyw jest ustawiany w head przed startem React", () => {
   meta.id = "meta-test-motywu";
   meta.name = "theme-color";
   document.head.append(meta);
-  for (const zapisany of [null, "dark", "light", "bledny"]) {
+  for (const zapisany of [null, "dark", "light", "auto", "bledny"]) {
     for (const ciemnySystem of [false, true]) {
       localStorage.clear();
       if (zapisany) localStorage.setItem(kluczMotywu, zapisany);

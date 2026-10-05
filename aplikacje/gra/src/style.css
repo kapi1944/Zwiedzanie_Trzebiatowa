@@ -499,6 +499,9 @@ h2 {
 .wybor-motywu button {
   text-align: center;
 }
+.wybor-motywu button:first-child {
+  grid-column: 1 / -1;
+}
 select,
 input[type="text"],
 .kronika-filtry input {
@@ -653,15 +656,17 @@ input[type="range"]:not(:disabled):hover {
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  html body *,
-  html body *::before,
-  html body *::after {
+  .aplikacja:not([data-ograniczony-ruch="false"]) *,
+  .aplikacja:not([data-ograniczony-ruch="false"]) *::before,
+  .aplikacja:not([data-ograniczony-ruch="false"]) *::after {
     animation: none;
     transition: none;
     scroll-behavior: auto;
   }
 }
 [data-ograniczony-ruch="true"] *,
+[data-ograniczony-ruch="true"] *::before,
+[data-ograniczony-ruch="true"] *::after,
 [data-profil="EKO"] * {
   animation: none;
   transition: none;

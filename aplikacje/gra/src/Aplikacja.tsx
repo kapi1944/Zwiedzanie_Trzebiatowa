@@ -20,7 +20,13 @@ import {
   type UstawieniaWydajnosci,
   zapiszUstawienia,
 } from "./MenedzerWydajnosci";
-import { type Motyw, odczytajMotyw, zapiszMotyw, zastosujMotyw } from "./motyw";
+import {
+  odczytajMotyw,
+  odczytajWyborMotywu,
+  type WyborMotywu,
+  zapiszMotyw,
+  zastosujMotyw,
+} from "./motyw";
 import { PotwierdzenieObecnosci } from "./PotwierdzenieObecnosci";
 import { type ObslugaPwa, StatusPwa } from "./StatusPwa";
 import type { SesjaGry, WidokSesji } from "./sesja-gry";
@@ -132,12 +138,27 @@ export default function Aplikacja({
   pwa?: ObslugaPwa;
   zaladujAudio?: () => Promise<typeof import("./audio")>;
 }) {
-  const [motyw, ustawMotyw] = uzyjStanu(odczytajMotyw);
+  const [wyborMotywu, ustawWyborMotywu] = uzyjStanu(odczytajWyborMotywu);
+  const [motyw, ustawMotyw] = uzyjStanu(() => odczytajMotyw(wyborMotywu));
   const [zapisanoMotyw, ustawZapisanoMotyw] = uzyjStanu(true);
   uzyjEfektu(() => zastosujMotyw(motyw), [motyw]);
-  function zmienMotyw(nowy: Motyw) {
-    zastosujMotyw(nowy);
-    ustawMotyw(nowy);
+  uzyjEfektu(() => {
+    if (wyborMotywu !== "auto" || typeof matchMedia !== "function") return;
+    const system = matchMedia("(prefers-color-scheme: dark)");
+    const aktualizuj = () => {
+      const aktualny = system.matches ? "dark" : "light";
+      zastosujMotyw(aktualny);
+      ustawMotyw(aktualny);
+    };
+    aktualizuj();
+    system.addEventListener("change", aktualizuj);
+    return () => system.removeEventListener("change", aktualizuj);
+  }, [wyborMotywu]);
+  function zmienMotyw(nowy: WyborMotywu) {
+    const aktualny = odczytajMotyw(nowy);
+    zastosujMotyw(aktualny);
+    ustawMotyw(aktualny);
+    ustawWyborMotywu(nowy);
     ustawZapisanoMotyw(zapiszMotyw(nowy));
   }
   const [widok, ustawWidok] = uzyjStanu<Widok>("start");
@@ -584,9 +605,8 @@ export default function Aplikacja({
                 <Oczekiwanie fallback={<p role="status">Ładuję mapę…</p>}>
                   <GranicaMapy>
                     <Mapa
-                      uproszczona={
-                        wydajnosc.profil === "EKO" || wydajnosc.ograniczonyRuch
-                      }
+                      uproszczona={wydajnosc.profil === "EKO"}
+                      ograniczoneAnimacje={wydajnosc.ograniczonyRuch}
                       lokalizacje={definicje.lokalizacje}
                       stan={dane.stan}
                       ukonczoneZadania={definicje.zadania
@@ -788,33 +808,70 @@ export default function Aplikacja({
             )}
             {widok === "ustawienia" && (
               <section className="karta ustawienia">
-                <h2>Wygląd gry</h2>
+                <h2>Wygląd</h2>
                 <fieldset>
-                  <legend>Motyw</legend>
+                  <legend>Motyw interfejsu</legend>
                   <div className="wybor-motywu">
                     <button
                       type="button"
-                      aria-pressed={motyw === "light"}
-                      onClick={() => zmienMotyw("light")}
+                      aria-pressed={wyborMotywu === "auto"}
+                      onClick={() => zmienMotyw("auto")}
                     >
-                      ☀ Jasny
+                      Zgodnie z ustawieniami systemu
                     </button>
                     <button
                       type="button"
-                      aria-pressed={motyw === "dark"}
+                      aria-pressed={wyborMotywu === "light"}
+                      onClick={() => zmienMotyw("light")}
+                    >
+                      <span aria-hidden="true">☀ </span>Jasny
+                    </button>
+                    <button
+                      type="button"
+                      aria-pressed={wyborMotywu === "dark"}
                       onClick={() => zmienMotyw("dark")}
                     >
-                      ☾ Ciemny
+                      <span aria-hidden="true">☾ </span>Ciemny
                     </button>
                   </div>
                 </fieldset>
+                <p role="status">
+                  Aktywny motyw: {motyw === "light" ? "Jasny" : "Ciemny"}
+                  {wyborMotywu === "auto"
+                    ? " (zgodnie z ustawieniami systemu)"
+                    : ""}
+                  .
+                </p>
                 {!zapisanoMotyw && (
                   <p role="status">
                     Nie udało się zapamiętać motywu. Obowiązuje do zamknięcia
                     aplikacji.
                   </p>
                 )}
-                <h2>Wydajność i ruch</h2>
+                <h2>Animacje interfejsu</h2>
+                <label htmlFor="tryb-ruchu">Animacje interfejsu</label>
+                <p id="opis-animacji">
+                  Określa intensywność animacji i efektów ruchu. Nie wpływa na
+                  rozgrywkę, mapę ani lokalizację.
+                </p>
+                <select
+                  id="tryb-ruchu"
+                  aria-describedby="opis-animacji"
+                  value={ustawienia.ruch}
+                  onChange={(zdarzenie) =>
+                    zmienUstawienia({
+                      ...ustawienia,
+                      ruch: zdarzenie.target.value as TrybRuchu,
+                    })
+                  }
+                >
+                  <option value="SYSTEMOWY">
+                    Zgodnie z ustawieniami systemu
+                  </option>
+                  <option value="OGRANICZONY">Ograniczone animacje</option>
+                  <option value="PELNY">Pełne animacje</option>
+                </select>
+                <h2>Tryb wydajności</h2>
                 <label htmlFor="profil-wydajnosci">Tryb wydajności</label>
                 <select
                   id="profil-wydajnosci"
@@ -834,21 +891,6 @@ export default function Aplikacja({
                   Aktywny tryb: {wydajnosc.profil === "EKO" ? "EKO" : "Pełny"}.
                   Możesz zmienić go w każdej chwili.
                 </p>
-                <label htmlFor="tryb-ruchu">Ogranicz ruch</label>
-                <select
-                  id="tryb-ruchu"
-                  value={ustawienia.ruch}
-                  onChange={(zdarzenie) =>
-                    zmienUstawienia({
-                      ...ustawienia,
-                      ruch: zdarzenie.target.value as TrybRuchu,
-                    })
-                  }
-                >
-                  <option value="SYSTEMOWY">Zgodnie z systemem</option>
-                  <option value="OGRANICZONY">Ręcznie: ogranicz ruch</option>
-                  <option value="PELNY">Ręcznie: pełny ruch</option>
-                </select>
                 <p>
                   Ustawienia dotyczą tego urządzenia. Wybory, zagadki i
                   zakończenia są takie same we wszystkich trybach.

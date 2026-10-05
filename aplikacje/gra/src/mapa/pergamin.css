@@ -98,7 +98,7 @@
   line-height: 1.6;
 }
 @media (prefers-reduced-motion: reduce) {
-  .pergamin-rozwijany {
+  .aplikacja:not([data-ograniczony-ruch="false"]) .pergamin-rozwijany {
     animation: none;
   }
 }
