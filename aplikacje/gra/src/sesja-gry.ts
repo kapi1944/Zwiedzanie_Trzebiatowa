@@ -7,6 +7,7 @@ import {
   type ZdarzenieGry,
 } from "@zwiedzanie/schemat-tresci";
 import {
+  czyWyborDostepny,
   ocenWarunek,
   type ProfilZakonczenia,
   przygotujKontekstNarracji,
@@ -50,7 +51,7 @@ export interface WidokSesji {
   ramka: RamkaNarracji;
   komunikaty: string[];
   zagadka: DefinicjeGry["zagadki"][number] | undefined;
-  opcje: RamkaNarracji["opcje"];
+  opcje: (RamkaNarracji["opcje"][number] & { idWyboru: string })[];
   profil: ProfilZakonczenia | undefined;
   wynikZagadki: WynikZagadki | undefined;
   dostepneZaliczenia: DefinicjeGry["zagadki"][number]["alternatywneZaliczenia"];
@@ -203,19 +204,14 @@ export class SesjaGry {
   }
 
   #kontekst() {
-    const kontekst = przygotujKontekstNarracji(this.#stan);
-    const flagi = { ...kontekst.flagi };
-    const wyniki = { ...kontekst.wynikiZagadek };
-    for (const { obszar, klucz } of this.definicje.kampania
-      ?.powiazaniaNarracji ?? []) {
-      if (obszar === "flagi") flagi[klucz] = this.#stan.flagi[klucz] ?? false;
-      if (obszar === "wynikiZagadek")
-        wyniki[klucz] = this.#stan.wynikiZagadek[klucz]?.wynik ?? "";
-    }
+    const kontekst = przygotujKontekstNarracji(
+      this.#stan,
+      this.definicje.kampania?.powiazaniaNarracji,
+    );
     return {
       ...kontekst,
       flagi: {
-        ...flagi,
+        ...kontekst.flagi,
         wybrano_dowod: this.#stan.dokonaneWybory.includes("prolog_dowod"),
         wybrano_pamiec: this.#stan.dokonaneWybory.includes("prolog_pamiec"),
         otwarto_notatke: this.#stan.flagi.otwarto_notatke ?? false,
@@ -226,7 +222,7 @@ export class SesjaGry {
           false,
       },
       wynikiZagadek: {
-        ...wyniki,
+        ...kontekst.wynikiZagadek,
         zagadka_hansken: this.#stan.wynikiZagadek.zagadka_hansken?.wynik ?? "",
       },
     };
@@ -292,18 +288,16 @@ export class SesjaGry {
                 miejsce.idSceny === this.#stan.aktualnaScena,
             )) && !this.#stan.wynikiZagadek[element.id],
     );
-    const opcje = this.#ramka.opcje.filter((opcja) => {
+    const opcje = this.#ramka.opcje.flatMap((opcja) => {
       const sygnaly = this.#most.odczytajSygnaly(opcja.tagi);
       const wybor = this.definicje.wybory.find((element) =>
         sygnaly.includes(element.id),
       );
       if (!wybor || sygnaly.length !== 1)
         throw new Error("Wybor Ink nie ma jednoznacznej definicji.");
-      return (
-        wybor.idSceny === this.#stan.aktualnaScena &&
-        !this.#stan.dokonaneWybory.includes(wybor.id) &&
-        (!wybor.warunek || ocenWarunek(wybor.warunek, this.#stan))
-      );
+      return czyWyborDostepny(wybor, this.#stan)
+        ? [{ ...opcja, idWyboru: wybor.id }]
+        : [];
     });
     return {
       wiedza:
@@ -339,8 +333,7 @@ export class SesjaGry {
       (element) => element.indeks === indeks,
     );
     if (!opcja) throw new Error("Wybor nie jest dostepny.");
-    const idWyboru = this.#most.odczytajSygnaly(opcja.tagi)[0];
-    if (!idWyboru) throw new Error("Brak identyfikatora wyboru.");
+    const idWyboru = opcja.idWyboru;
     this.#komunikaty = [];
     this.#wykonaj({ rodzaj: "DOKONAJ_WYBORU", idWyboru });
     this.#profil = undefined;

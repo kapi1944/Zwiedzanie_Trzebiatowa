@@ -9,9 +9,25 @@ import { sprawdzWarunek } from "./warunki.js";
 
 export interface ProfilZakonczenia {
   zakonczenieGlowne: string;
+  wariantyZakonczenia: string[];
   epilogiWatkow: string[];
   specjalneOdkrycia: string[];
   konsekwencjeZagadek: string[];
+}
+
+export function pasujeRegulaZakonczenia(
+  definicje: DefinicjeGry,
+  stan: StanGry,
+  regula: DefinicjeGry["zakonczenia"][number],
+): boolean {
+  return (
+    (!regula.idScenyWejscia || regula.idScenyWejscia === stan.aktualnaScena) &&
+    (!regula.warunek || sprawdzWarunek(regula.warunek, stan)) &&
+    (regula.wymaganaWiedza ?? []).every((id) => {
+      const wiedza = definicje.kampania?.wiedza.find((wpis) => wpis.id === id);
+      return !!wiedza && sprawdzWarunek(wiedza.warunek, stan);
+    })
+  );
 }
 
 export function wyznaczProfilZakonczenia(
@@ -38,9 +54,7 @@ export function wyznaczProfilZakonczenia(
     throw new Error("Wymagany watek nie zostal ukonczony.");
   }
   const pasujace = dane.zakonczenia
-    .filter(
-      (element) => !element.warunek || sprawdzWarunek(element.warunek, kopia),
-    )
+    .filter((element) => pasujeRegulaZakonczenia(dane, kopia, element))
     .sort(
       (lewy, prawy) =>
         prawy.priorytet - lewy.priorytet ||
@@ -52,16 +66,29 @@ export function wyznaczProfilZakonczenia(
     ) ??
     pasujace.find((element) => element.rodzaj === "GLOWNE" && element.domyslne);
   if (!glowne) throw new Error("Brak zakonczenia glownego.");
+  const zbierz = (rodzaj: DefinicjeGry["zakonczenia"][number]["rodzaj"]) => {
+    const grupy = new Set<string>();
+    return pasujace
+      .filter((element) => {
+        if (
+          element.rodzaj !== rodzaj ||
+          (element.idZakonczeniaGlownego &&
+            element.idZakonczeniaGlownego !== glowne.id)
+        )
+          return false;
+        const grupa = element.grupa ?? element.idWatku;
+        if (!grupa) return true;
+        if (grupy.has(grupa)) return false;
+        grupy.add(grupa);
+        return true;
+      })
+      .map((element) => element.id);
+  };
   return {
     zakonczenieGlowne: glowne.id,
-    epilogiWatkow: pasujace
-      .filter((element) => element.rodzaj === "EPILOG_WATKU")
-      .map((element) => element.id),
-    specjalneOdkrycia: pasujace
-      .filter((element) => element.rodzaj === "SPECJALNE_ODKRYCIE")
-      .map((element) => element.id),
-    konsekwencjeZagadek: pasujace
-      .filter((element) => element.rodzaj === "KONSEKWENCJA_ZAGADKI")
-      .map((element) => element.id),
+    wariantyZakonczenia: zbierz("WARIANT_ZAKONCZENIA"),
+    epilogiWatkow: zbierz("EPILOG_WATKU"),
+    specjalneOdkrycia: zbierz("SPECJALNE_ODKRYCIE"),
+    konsekwencjeZagadek: zbierz("KONSEKWENCJA_ZAGADKI"),
   };
 }

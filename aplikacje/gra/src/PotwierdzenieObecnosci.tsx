@@ -56,12 +56,18 @@ export function PotwierdzenieObecnosci({
     zajete.current = false;
   }
   return (
-    <section className="karta" aria-label="Potwierdzenie obecności">
+    <section className="karta cel-lokacji" aria-label="Potwierdzenie obecności">
+      <p className="etykieta">Miejsce wyprawy</p>
       <h2>{miejsce.nazwa}</h2>
+      <p className="status-celu">
+        {potwierdzone ? "Cel potwierdzony" : "Cel aktywny"}
+      </p>
+      <h3>Cel</h3>
       <p>
         Cel terenowy · punkt i promień wymagają rekonesansu. Sprawdzenie pozycji
         jest jednorazowe i dobrowolne.
       </p>
+      <h3>Akcje</h3>
       {potwierdzone ? (
         <p role="status">Obecność potwierdzona.</p>
       ) : (

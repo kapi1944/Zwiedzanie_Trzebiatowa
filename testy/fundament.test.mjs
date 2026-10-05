@@ -102,7 +102,8 @@ testuj("budzety gzip i lazy oparte na pomiarze Etapu 8", () => {
     initialJsGzip: 106725,
     sesjaGzip: 45122,
     mapaGzip: 44091,
-    cssInitialGzip: 1491,
+    // Zmierzony fundament dwoch motywow; pozostale budzety pozostaja z Etapu 8.
+    cssInitialGzip: 2823,
     cssMapaGzip: 6371,
   };
   for (const [nazwa, rozmiar] of Object.entries(baza)) {

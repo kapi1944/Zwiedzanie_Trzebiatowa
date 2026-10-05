@@ -14,7 +14,8 @@ export function analizujFlagi(definicje: DefinicjeGry) {
   }
   odwiedz(definicje);
   for (const powiazanie of definicje.kampania?.powiazaniaNarracji ?? [])
-    if (powiazanie.obszar === "flagi") odczytywane.add(powiazanie.klucz);
+    if (powiazanie.obszar === "flagi" && !powiazanie.warunek)
+      odczytywane.add(powiazanie.klucz);
   return {
     ustawiane: [...ustawiane].sort(),
     odczytywane: [...odczytywane].sort(),
@@ -50,6 +51,7 @@ export function utworzKontroleGrafu(definicje: DefinicjeGry, sceny: string[]) {
       }
       for (const id of [
         wynik.profil.zakonczenieGlowne,
+        ...wynik.profil.wariantyZakonczenia,
         ...wynik.profil.epilogiWatkow,
         ...wynik.profil.specjalneOdkrycia,
         ...wynik.profil.konsekwencjeZagadek,

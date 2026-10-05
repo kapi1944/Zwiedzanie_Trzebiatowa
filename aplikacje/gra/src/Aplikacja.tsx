@@ -1,3 +1,4 @@
+import { przygotujWidokWyprawy } from "@zwiedzanie/silnik-gry/wyprawa";
 import {
   Component as Komponent,
   lazy as leniwie,
@@ -19,6 +20,7 @@ import {
   type UstawieniaWydajnosci,
   zapiszUstawienia,
 } from "./MenedzerWydajnosci";
+import { type Motyw, odczytajMotyw, zapiszMotyw, zastosujMotyw } from "./motyw";
 import { PotwierdzenieObecnosci } from "./PotwierdzenieObecnosci";
 import { type ObslugaPwa, StatusPwa } from "./StatusPwa";
 import type { SesjaGry, WidokSesji } from "./sesja-gry";
@@ -28,6 +30,7 @@ import {
   zapiszUstawieniaAudio,
 } from "./ustawienia-audio";
 import { uzyjSladuGps } from "./uzyjSladuGps";
+import { WidokKroniki } from "./WidokKroniki";
 import { InformacjaOWyniku, WidokZagadki } from "./WidokZagadki";
 
 const Mapa = leniwie(() => import("./Mapa"));
@@ -129,6 +132,14 @@ export default function Aplikacja({
   pwa?: ObslugaPwa;
   zaladujAudio?: () => Promise<typeof import("./audio")>;
 }) {
+  const [motyw, ustawMotyw] = uzyjStanu(odczytajMotyw);
+  const [zapisanoMotyw, ustawZapisanoMotyw] = uzyjStanu(true);
+  uzyjEfektu(() => zastosujMotyw(motyw), [motyw]);
+  function zmienMotyw(nowy: Motyw) {
+    zastosujMotyw(nowy);
+    ustawMotyw(nowy);
+    ustawZapisanoMotyw(zapiszMotyw(nowy));
+  }
   const [widok, ustawWidok] = uzyjStanu<Widok>("start");
   const [ustawienia, ustawUstawienia] = uzyjStanu(odczytajUstawienia);
   const [wskazowki, ustawWskazowki] = uzyjStanu(odczytajWskazowki);
@@ -402,24 +413,11 @@ export default function Aplikacja({
   const diagnostyka =
     import.meta.env.DEV &&
     new URLSearchParams(window.location.search).get("debug") === "1";
-  const cele =
-    dane?.opcje.flatMap((opcja) => {
-      const wybor = definicje?.wybory.find(
-        (element) =>
-          element.idSceny === dane.stan.aktualnaScena &&
-          opcja.tagi.some(
-            (tag) => tag.rodzaj === "sygnal" && tag.wartosc === element.id,
-          ),
-      );
-      const docelowa =
-        definicje?.kampania?.scenyMiejsc.find(
-          (element) => element.idSceny === wybor?.nastepnaScena,
-        )?.idLokalizacji ??
-        definicje?.lokalizacje.find(
-          (element) => element.idSceny === wybor?.nastepnaScena,
-        )?.id;
-      return docelowa ? [{ id: docelowa, indeks: opcja.indeks }] : [];
-    }) ?? [];
+  const wyprawa =
+    definicje && dane
+      ? przygotujWidokWyprawy(definicje, dane.stan, dane.opcje)
+      : undefined;
+  const cele = wyprawa?.cele ?? [];
   const tytul =
     widok === "gra"
       ? (nazwyScen[dane?.stan.aktualnaScena ?? ""] ?? "Opowieść")
@@ -442,8 +440,32 @@ export default function Aplikacja({
         >
           Kronika <span>nad Regą</span>
         </button>
-        <span className="etykieta">Trzebiatów</span>
+        <div className="narzedzia-naglowka">
+          <span className="etykieta">Trzebiatów</span>
+          <button
+            type="button"
+            className="przelacznik-motywu cichy"
+            aria-label={
+              motyw === "light" ? "Włącz ciemny motyw" : "Włącz jasny motyw"
+            }
+            onClick={() => zmienMotyw(motyw === "light" ? "dark" : "light")}
+          >
+            <span aria-hidden="true">{motyw === "light" ? "☾" : "☀"}</span>
+          </button>
+        </div>
       </header>
+      <nav className="nawigacja" aria-label="Główna nawigacja">
+        {(Object.keys(nazwyWidokow) as Widok[]).map((id) => (
+          <button
+            type="button"
+            key={id}
+            aria-current={widok === id ? "page" : undefined}
+            onClick={() => ustawWidok(id)}
+          >
+            {nazwyWidokow[id]}
+          </button>
+        ))}
+      </nav>
       <StatusPwa
         pwa={pwa}
         zajete={ladowanie || zapisywanie || zablokowanyZapis}
@@ -665,6 +687,7 @@ export default function Aplikacja({
                       }
                     </p>
                     {[
+                      ...dane.profil.wariantyZakonczenia,
                       ...dane.profil.epilogiWatkow,
                       ...dane.profil.konsekwencjeZagadek,
                     ].map((id) => {
@@ -688,83 +711,7 @@ export default function Aplikacja({
               </button>
             )}
             {widok === "kronika" && (
-              <>
-                <p>Miejsca i ślady z twojej podróży.</p>
-                {!dane?.stan.odwiedzoneLokalizacje.length && (
-                  <p>
-                    Twoja Kronika jest jeszcze pusta. Pierwszy wpis czeka na
-                    rynku.
-                  </p>
-                )}
-                <ul className="lista-kart">
-                  {dane?.wiedza.map((wpis) => (
-                    <li className="karta" key={wpis.id}>
-                      <p className="etykieta">Po obserwacji</p>
-                      <h2>{wpis.nazwa}</h2>
-                      <p>{wpis.tekst}</p>
-                      <p>
-                        {wpis.idZrodla.map((id) => {
-                          const zrodlo = definicje?.zrodla.find(
-                            (element) => element.id === id,
-                          );
-                          return zrodlo?.url ? (
-                            <a key={id} href={zrodlo.url}>
-                              {zrodlo.tytul}
-                            </a>
-                          ) : (
-                            zrodlo?.tytul
-                          );
-                        })}
-                      </p>
-                    </li>
-                  ))}
-                  {definicje?.lokalizacje
-                    .filter((element) =>
-                      dane?.stan.odwiedzoneLokalizacje.includes(element.id),
-                    )
-                    .map((miejsce) => (
-                      <li className="karta" key={miejsce.id}>
-                        <p className="etykieta">Miejsce</p>
-                        <h2>{miejsce.nazwa}</h2>
-                        <p>Odwiedzone w twojej opowieści.</p>
-                      </li>
-                    ))}
-                  {definicje?.przedmioty
-                    .filter((element) =>
-                      dane?.stan.sladyIPrzedmioty.includes(element.id),
-                    )
-                    .map((przedmiot) => (
-                      <li className="karta" key={przedmiot.id}>
-                        <p className="etykieta">Fragment Kroniki</p>
-                        <h2>{przedmiot.nazwa}</h2>
-                        <p>Fikcyjny ślad w twojej Kronice.</p>
-                      </li>
-                    ))}
-                  {definicje?.scenki
-                    .filter((element) =>
-                      dane?.stan.odkryteScenki.includes(element.id),
-                    )
-                    .map((scenka) => (
-                      <li className="karta" key={scenka.id}>
-                        <p className="etykieta">Opowieść</p>
-                        <h2>{scenka.nazwa}</h2>
-                        <p>Przeczytana podczas podróży.</p>
-                      </li>
-                    ))}
-                  {dane?.profil?.specjalneOdkrycia.map((id) => (
-                    <li className="karta" key={id}>
-                      <p className="etykieta">Odkrycie</p>
-                      <h2>
-                        {
-                          definicje?.zakonczenia.find(
-                            (element) => element.id === id,
-                          )?.nazwa
-                        }
-                      </h2>
-                    </li>
-                  ))}
-                </ul>
-              </>
+              <WidokKroniki definicje={definicje} dane={dane} />
             )}
             {widok === "watki" && (
               <>
@@ -773,27 +720,101 @@ export default function Aplikacja({
                   obserwacji.
                 </p>
                 {!dane && <p>Rozpocznij opowieść, aby odkryć jej wątki.</p>}
+                {dane && !wyprawa?.watki.length && (
+                  <p>Nie masz jeszcze rozpoczętych wątków.</p>
+                )}
                 <ul className="lista-kart">
-                  {definicje?.watki
-                    .filter(
-                      (element) =>
-                        dane && dane.stan.watki[element.id] !== "ZABLOKOWANY",
-                    )
-                    .map((watek) => (
-                      <li className="karta" key={watek.id}>
-                        <h2>{watek.nazwa.replace("WĄTEK ", "")}</h2>
-                        <p>
-                          {dane?.stan.watki[watek.id] === "UKONCZONY"
-                            ? "Ukończony"
-                            : "Odkrywasz"}
-                        </p>
-                      </li>
-                    ))}
+                  {wyprawa?.watki.map((watek) => (
+                    <li className="karta" key={watek.id}>
+                      <h2>{watek.nazwa.replace("WĄTEK ", "")}</h2>
+                      <p>
+                        {watek.status === "UKONCZONY"
+                          ? "Ukończony"
+                          : watek.status === "POMINIETY"
+                            ? "Pominięty"
+                            : "Odkrywasz (aktywny)"}
+                      </p>
+                    </li>
+                  ))}
                 </ul>
+                {dane && (
+                  <>
+                    <h2>Odkryte wskazówki</h2>
+                    {wyprawa?.wskazowki.length ? (
+                      <ul>
+                        {wyprawa?.wskazowki.map((wskazowka) => (
+                          <li key={wskazowka.id}>{wskazowka.nazwa}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>Nie znaleziono jeszcze wskazówek.</p>
+                    )}
+                    <h2>Dostępne teraz cele</h2>
+                    {cele.length > 1 && (
+                      <p>
+                        Możesz wybrać kierunek wyprawy. Każda z poniższych opcji
+                        jest teraz dostępna.
+                      </p>
+                    )}
+                    {cele.length ? (
+                      <ul className="lista-kart">
+                        {cele.map((cel) => (
+                          <li className="karta" key={cel.indeks}>
+                            <h3>{cel.nazwa}</h3>
+                            <button
+                              type="button"
+                              disabled={
+                                ladowanie || zapisywanie || zablokowanyZapis
+                              }
+                              onClick={() => {
+                                ustawWidok("gra");
+                                void wykonaj((gra) => gra.wybierz(cel.indeks));
+                              }}
+                            >
+                              {cel.tekst}
+                            </button>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>
+                        Brak nowego celu do wyboru w tej scenie. Kontynuuj
+                        bieżącą opowieść.
+                      </p>
+                    )}
+                  </>
+                )}
               </>
             )}
             {widok === "ustawienia" && (
-              <section className="karta">
+              <section className="karta ustawienia">
+                <h2>Wygląd gry</h2>
+                <fieldset>
+                  <legend>Motyw</legend>
+                  <div className="wybor-motywu">
+                    <button
+                      type="button"
+                      aria-pressed={motyw === "light"}
+                      onClick={() => zmienMotyw("light")}
+                    >
+                      ☀ Jasny
+                    </button>
+                    <button
+                      type="button"
+                      aria-pressed={motyw === "dark"}
+                      onClick={() => zmienMotyw("dark")}
+                    >
+                      ☾ Ciemny
+                    </button>
+                  </div>
+                </fieldset>
+                {!zapisanoMotyw && (
+                  <p role="status">
+                    Nie udało się zapamiętać motywu. Obowiązuje do zamknięcia
+                    aplikacji.
+                  </p>
+                )}
+                <h2>Wydajność i ruch</h2>
                 <label htmlFor="profil-wydajnosci">Tryb wydajności</label>
                 <select
                   id="profil-wydajnosci"
@@ -839,9 +860,8 @@ export default function Aplikacja({
                   </p>
                 )}
                 <h2>Audio</h2>
-                <p>
-                  PLACEHOLDER — DO WYMIANY. Dźwięki techniczne, bez finalnej
-                  muzyki.
+                <p className="uwaga material-tymczasowy">
+                  Materiał tymczasowy · Dźwięki techniczne, bez finalnej muzyki.
                 </p>
                 <label className="odpowiedz">
                   <input
@@ -974,18 +994,6 @@ export default function Aplikacja({
           </>
         )}
       </main>
-      <nav className="nawigacja" aria-label="Główna nawigacja">
-        {(Object.keys(nazwyWidokow) as Widok[]).map((id) => (
-          <button
-            type="button"
-            key={id}
-            aria-current={widok === id ? "page" : undefined}
-            onClick={() => ustawWidok(id)}
-          >
-            {nazwyWidokow[id]}
-          </button>
-        ))}
-      </nav>
     </div>
   );
 }

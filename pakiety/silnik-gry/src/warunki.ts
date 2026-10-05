@@ -1,8 +1,17 @@
 import {
+  type DefinicjaWyboru,
   type StanGry,
   schematWarunku,
   type Warunek,
 } from "@zwiedzanie/schemat-tresci";
+
+export function czyWyborDostepny(wybor: DefinicjaWyboru, stan: StanGry) {
+  return (
+    wybor.idSceny === stan.aktualnaScena &&
+    !stan.dokonaneWybory.includes(wybor.id) &&
+    (!wybor.warunek || sprawdzWarunek(wybor.warunek, stan))
+  );
+}
 
 export function ocenWarunek(warunek: unknown, stan: StanGry): boolean {
   return sprawdzWarunek(schematWarunku.parse(warunek), stan);

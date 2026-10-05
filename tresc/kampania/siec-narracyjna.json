@@ -1,0 +1,730 @@
+{
+  "wersja": 1,
+  "status": "PROPOZYCJA",
+  "osie": [
+    {
+      "id": "historia",
+      "nazwa": "Warstwy miasta",
+      "pytanie": "Jak zestawiać układ miasta i ślady kolejnych zmian?",
+      "status": "PROPOZYCJA"
+    },
+    {
+      "id": "kronika",
+      "nazwa": "Pamięć i kronika",
+      "pytanie": "Co zapisać, gdy obserwacja i źródło nie dają jednej odpowiedzi?",
+      "status": "PROPOZYCJA"
+    },
+    {
+      "id": "fortyfikacje",
+      "nazwa": "Granice i fortyfikacje",
+      "pytanie": "Gdzie kończy się widoczny mur, a zaczyna rekonstrukcja?",
+      "status": "PROPOZYCJA"
+    },
+    {
+      "id": "rega",
+      "nazwa": "Rega i rozwój miasta",
+      "pytanie": "Jak czytać związki rzeki, przepraw i infrastruktury?",
+      "status": "PROPOZYCJA"
+    },
+    {
+      "id": "sakralne",
+      "nazwa": "Miejsca sakralne",
+      "pytanie": "Jak zestawić budowle, funkcje i pamięć wspólnot?",
+      "status": "PROPOZYCJA"
+    },
+    {
+      "id": "mieszkancy",
+      "nazwa": "Dawni mieszkańcy i lokalne opowieści",
+      "pytanie": "Czy ślad osoby i opowieść o niej są tym samym?",
+      "status": "PROPOZYCJA"
+    },
+    {
+      "id": "legendy",
+      "nazwa": "Udokumentowany przekaz legendy",
+      "pytanie": "Jak oddzielić zapis legendy od dowodu wydarzenia?",
+      "status": "PROPOZYCJA"
+    },
+    {
+      "id": "obrazy",
+      "nazwa": "Obrazy miasta",
+      "pytanie": "Jak różne przedstawienia kształtują pamięć o miejscu?",
+      "status": "PROPOZYCJA"
+    }
+  ],
+  "wezly": [
+    {
+      "id": "historia_a",
+      "idOsi": "historia",
+      "idMiejsc": ["bank_01"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja sceny: Jak zestawiać układ miasta i ślady kolejnych zmian? Najpierw obserwacja miejsca, potem porównanie z cytowanym opisem banku.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "historia_b",
+      "idOsi": "historia",
+      "idMiejsc": ["bank_02"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Alternatywne niezależne wejście: Jak zestawiać układ miasta i ślady kolejnych zmian? Dostępność i zakres obserwacji wymagają rekonesansu.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "historia_rozwiniecie",
+      "idOsi": "historia",
+      "idMiejsc": ["bank_77"],
+      "rodzaj": "ROZWINIECIE",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja dalszej sceny: Czy plan i dzisiejszy widok mówią o tym samym?",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["historia_a", "historia_b"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "kronika_a",
+      "idOsi": "kronika",
+      "idMiejsc": ["bank_24"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja sceny: Co zapisać, gdy obserwacja i źródło nie dają jednej odpowiedzi? Najpierw obserwacja miejsca, potem porównanie z cytowanym opisem banku.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "kronika_b",
+      "idOsi": "kronika",
+      "idMiejsc": ["bank_47"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Alternatywne niezależne wejście: Co zapisać, gdy obserwacja i źródło nie dają jednej odpowiedzi? Dostępność i zakres obserwacji wymagają rekonesansu.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "kronika_rozwiniecie",
+      "idOsi": "kronika",
+      "idMiejsc": ["bank_19"],
+      "rodzaj": "ROZWINIECIE",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja dalszej sceny: Jak zachować brak i niepewność w kronice?",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["kronika_a", "kronika_b"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "fortyfikacje_a",
+      "idOsi": "fortyfikacje",
+      "idMiejsc": ["bank_32"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja sceny: Gdzie kończy się widoczny mur, a zaczyna rekonstrukcja? Najpierw obserwacja miejsca, potem porównanie z cytowanym opisem banku.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "fortyfikacje_b",
+      "idOsi": "fortyfikacje",
+      "idMiejsc": ["bank_34"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Alternatywne niezależne wejście: Gdzie kończy się widoczny mur, a zaczyna rekonstrukcja? Dostępność i zakres obserwacji wymagają rekonesansu.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "fortyfikacje_rozwiniecie",
+      "idOsi": "fortyfikacje",
+      "idMiejsc": ["bank_35"],
+      "rodzaj": "ROZWINIECIE",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja dalszej sceny: Czy przerwa w murze wystarcza do wskazania bramy?",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["fortyfikacje_a", "fortyfikacje_b"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "rega_a",
+      "idOsi": "rega",
+      "idMiejsc": ["bank_39"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja sceny: Jak czytać związki rzeki, przepraw i infrastruktury? Najpierw obserwacja miejsca, potem porównanie z cytowanym opisem banku.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "rega_b",
+      "idOsi": "rega",
+      "idMiejsc": ["bank_29"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Alternatywne niezależne wejście: Jak czytać związki rzeki, przepraw i infrastruktury? Dostępność i zakres obserwacji wymagają rekonesansu.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "rega_rozwiniecie",
+      "idOsi": "rega",
+      "idMiejsc": ["bank_40"],
+      "rodzaj": "ROZWINIECIE",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja dalszej sceny: Jak porównać przeprawy i ślady zmian komunikacji?",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["rega_a", "rega_b"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "sakralne_a",
+      "idOsi": "sakralne",
+      "idMiejsc": ["bank_12"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja sceny: Jak zestawić budowle, funkcje i pamięć wspólnot? Najpierw obserwacja miejsca, potem porównanie z cytowanym opisem banku.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "sakralne_b",
+      "idOsi": "sakralne",
+      "idMiejsc": ["bank_45"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Alternatywne niezależne wejście: Jak zestawić budowle, funkcje i pamięć wspólnot? Dostępność i zakres obserwacji wymagają rekonesansu.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "sakralne_rozwiniecie",
+      "idOsi": "sakralne",
+      "idMiejsc": ["bank_46"],
+      "rodzaj": "ROZWINIECIE",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja dalszej sceny: Jak mówić o zmiennych funkcjach bez dopisywania historii?",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["sakralne_a", "sakralne_b"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "mieszkancy_a",
+      "idOsi": "mieszkancy",
+      "idMiejsc": ["bank_09"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja sceny: Czy ślad osoby i opowieść o niej są tym samym? Najpierw obserwacja miejsca, potem porównanie z cytowanym opisem banku.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "mieszkancy_b",
+      "idOsi": "mieszkancy",
+      "idMiejsc": ["bank_26"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Alternatywne niezależne wejście: Czy ślad osoby i opowieść o niej są tym samym? Dostępność i zakres obserwacji wymagają rekonesansu.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "mieszkancy_rozwiniecie",
+      "idOsi": "mieszkancy",
+      "idMiejsc": ["bank_54"],
+      "rodzaj": "ROZWINIECIE",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja dalszej sceny: Jak opowiadać o nieobecnej wspólnocie bez wymyślania jej głosu?",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["mieszkancy_a", "mieszkancy_b"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "legendy_a",
+      "idOsi": "legendy",
+      "idMiejsc": ["bank_31"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja sceny: Jak oddzielić zapis legendy od dowodu wydarzenia? Najpierw obserwacja miejsca, potem porównanie z cytowanym opisem banku.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "legendy_b",
+      "idOsi": "legendy",
+      "idMiejsc": ["bank_72"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Alternatywne niezależne wejście: Jak oddzielić zapis legendy od dowodu wydarzenia? Dostępność i zakres obserwacji wymagają rekonesansu.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "legendy_rozwiniecie",
+      "idOsi": "legendy",
+      "idMiejsc": ["bank_31"],
+      "rodzaj": "ROZWINIECIE",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja dalszej sceny: Co współczesne przedstawienie dopowiada do starszego przekazu?",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["legendy_a", "legendy_b"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "obrazy_a",
+      "idOsi": "obrazy",
+      "idMiejsc": ["bank_07"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja sceny: Jak różne przedstawienia kształtują pamięć o miejscu? Najpierw obserwacja miejsca, potem porównanie z cytowanym opisem banku.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "obrazy_b",
+      "idOsi": "obrazy",
+      "idMiejsc": ["bank_78"],
+      "rodzaj": "WEJSCIE",
+      "widocznosc": "JAWNA",
+      "opis": "Alternatywne niezależne wejście: Jak różne przedstawienia kształtują pamięć o miejscu? Dostępność i zakres obserwacji wymagają rekonesansu.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": []
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "obrazy_rozwiniecie",
+      "idOsi": "obrazy",
+      "idMiejsc": ["bank_71"],
+      "rodzaj": "ROZWINIECIE",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja dalszej sceny: Czy przedstawienie potwierdza historię, czy tylko sposób jej opowiadania?",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["obrazy_a", "obrazy_b"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "rzeka_granice",
+      "idOsi": "rega",
+      "idMiejsc": ["bank_37", "bank_39"],
+      "rodzaj": "SPLOT",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja: Zestawienie przeprawy i domniemanej dawnej granicy. Nie utożsamiać współczesnego przejścia z historyczną bramą.",
+      "warunek": {
+        "rodzaj": "WSZYSTKIE",
+        "idWezlow": ["rega_rozwiniecie", "fortyfikacje_rozwiniecie"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "pamiec_wspolnot",
+      "idOsi": "kronika",
+      "idMiejsc": ["bank_47", "bank_54"],
+      "rodzaj": "SPLOT",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja: Kronika może zapisać potwierdzone ślady i jawne luki dotyczące wspólnot.",
+      "warunek": {
+        "rodzaj": "WSZYSTKIE",
+        "idWezlow": ["kronika_rozwiniecie", "mieszkancy_rozwiniecie"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "sakralne_warstwy",
+      "idOsi": "sakralne",
+      "idMiejsc": ["bank_22", "bank_68"],
+      "rodzaj": "SPLOT",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja: Porównanie opisów różnych miejsc klasztornych bez scalania obiektów i bez przesądzania relacji.",
+      "warunek": {
+        "rodzaj": "WSZYSTKIE",
+        "idWezlow": ["sakralne_rozwiniecie", "historia_rozwiniecie"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "legenda_obraz",
+      "idOsi": "legendy",
+      "idMiejsc": ["bank_31", "bank_72"],
+      "rodzaj": "SPLOT",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja: Porównanie udokumentowanego przekazu legendy kaszanej ze współczesnym muralem. Legendę oznaczyć jako legendę.",
+      "warunek": {
+        "rodzaj": "WSZYSTKIE",
+        "idWezlow": ["legendy_rozwiniecie", "obrazy_rozwiniecie"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "miasto_nad_rzeka",
+      "idOsi": "historia",
+      "idMiejsc": ["bank_02", "bank_53"],
+      "rodzaj": "SPLOT",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja: Hipoteza do sprawdzenia: związki układu miasta, rzeki i magazynowania. Nie ogłaszać związku przyczynowego bez źródła.",
+      "warunek": {
+        "rodzaj": "WSZYSTKIE",
+        "idWezlow": ["historia_rozwiniecie", "rega_rozwiniecie"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "glosy_w_kronice",
+      "idOsi": "mieszkancy",
+      "idMiejsc": ["bank_24", "bank_26"],
+      "rodzaj": "SPLOT",
+      "widocznosc": "UKRYTA",
+      "opis": "Propozycja: Porównanie muzealnego zapisu i artystycznego przedstawienia; fikcyjnego głosu nie przypisywać historycznej osobie.",
+      "warunek": {
+        "rodzaj": "WSZYSTKIE",
+        "idWezlow": ["mieszkancy_rozwiniecie", "obrazy_rozwiniecie"]
+      },
+      "warianty": [],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "historia_pozniej",
+      "idOsi": "historia",
+      "idMiejsc": ["bank_01"],
+      "rodzaj": "SCENA_POZNIEJSZA",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja powrotu do osi „Warstwy miasta”: porównaj pierwszą notatkę z późniejszymi ustaleniami. Nie wymaga ukończenia pozostałych osi.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["historia_rozwiniecie"]
+      },
+      "warianty": [
+        {
+          "id": "historia_po_sakralne_warstwy",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["sakralne_warstwy"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu sakralne_warstwy i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        },
+        {
+          "id": "historia_po_miasto_nad_rzeka",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["miasto_nad_rzeka"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu miasto_nad_rzeka i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        }
+      ],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "kronika_pozniej",
+      "idOsi": "kronika",
+      "idMiejsc": ["bank_24"],
+      "rodzaj": "SCENA_POZNIEJSZA",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja powrotu do osi „Pamięć i kronika”: porównaj pierwszą notatkę z późniejszymi ustaleniami. Nie wymaga ukończenia pozostałych osi.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["kronika_rozwiniecie"]
+      },
+      "warianty": [
+        {
+          "id": "kronika_po_pamiec_wspolnot",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["pamiec_wspolnot"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu pamiec_wspolnot i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        }
+      ],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "fortyfikacje_pozniej",
+      "idOsi": "fortyfikacje",
+      "idMiejsc": ["bank_32"],
+      "rodzaj": "SCENA_POZNIEJSZA",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja powrotu do osi „Granice i fortyfikacje”: porównaj pierwszą notatkę z późniejszymi ustaleniami. Nie wymaga ukończenia pozostałych osi.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["fortyfikacje_rozwiniecie"]
+      },
+      "warianty": [
+        {
+          "id": "fortyfikacje_po_rzeka_granice",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["rzeka_granice"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu rzeka_granice i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        }
+      ],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "rega_pozniej",
+      "idOsi": "rega",
+      "idMiejsc": ["bank_39"],
+      "rodzaj": "SCENA_POZNIEJSZA",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja powrotu do osi „Rega i rozwój miasta”: porównaj pierwszą notatkę z późniejszymi ustaleniami. Nie wymaga ukończenia pozostałych osi.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["rega_rozwiniecie"]
+      },
+      "warianty": [
+        {
+          "id": "rega_po_rzeka_granice",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["rzeka_granice"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu rzeka_granice i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        },
+        {
+          "id": "rega_po_miasto_nad_rzeka",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["miasto_nad_rzeka"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu miasto_nad_rzeka i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        }
+      ],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "sakralne_pozniej",
+      "idOsi": "sakralne",
+      "idMiejsc": ["bank_12"],
+      "rodzaj": "SCENA_POZNIEJSZA",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja powrotu do osi „Miejsca sakralne”: porównaj pierwszą notatkę z późniejszymi ustaleniami. Nie wymaga ukończenia pozostałych osi.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["sakralne_rozwiniecie"]
+      },
+      "warianty": [
+        {
+          "id": "sakralne_po_sakralne_warstwy",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["sakralne_warstwy"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu sakralne_warstwy i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        }
+      ],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "mieszkancy_pozniej",
+      "idOsi": "mieszkancy",
+      "idMiejsc": ["bank_09"],
+      "rodzaj": "SCENA_POZNIEJSZA",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja powrotu do osi „Dawni mieszkańcy i lokalne opowieści”: porównaj pierwszą notatkę z późniejszymi ustaleniami. Nie wymaga ukończenia pozostałych osi.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["mieszkancy_rozwiniecie"]
+      },
+      "warianty": [
+        {
+          "id": "mieszkancy_po_pamiec_wspolnot",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["pamiec_wspolnot"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu pamiec_wspolnot i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        },
+        {
+          "id": "mieszkancy_po_glosy_w_kronice",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["glosy_w_kronice"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu glosy_w_kronice i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        }
+      ],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "legendy_pozniej",
+      "idOsi": "legendy",
+      "idMiejsc": ["bank_31"],
+      "rodzaj": "SCENA_POZNIEJSZA",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja powrotu do osi „Udokumentowany przekaz legendy”: porównaj pierwszą notatkę z późniejszymi ustaleniami. Nie wymaga ukończenia pozostałych osi.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["legendy_rozwiniecie"]
+      },
+      "warianty": [
+        {
+          "id": "legendy_po_legenda_obraz",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["legenda_obraz"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu legenda_obraz i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        }
+      ],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    },
+    {
+      "id": "obrazy_pozniej",
+      "idOsi": "obrazy",
+      "idMiejsc": ["bank_07"],
+      "rodzaj": "SCENA_POZNIEJSZA",
+      "widocznosc": "JAWNA",
+      "opis": "Propozycja powrotu do osi „Obrazy miasta”: porównaj pierwszą notatkę z późniejszymi ustaleniami. Nie wymaga ukończenia pozostałych osi.",
+      "warunek": {
+        "rodzaj": "DOWOLNY",
+        "idWezlow": ["obrazy_rozwiniecie"]
+      },
+      "warianty": [
+        {
+          "id": "obrazy_po_legenda_obraz",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["legenda_obraz"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu legenda_obraz i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        },
+        {
+          "id": "obrazy_po_glosy_w_kronice",
+          "warunek": {
+            "rodzaj": "WSZYSTKIE",
+            "idWezlow": ["glosy_w_kronice"]
+          },
+          "opis": "Propozycja wariantu: przywołaj porównanie ze splotu glosy_w_kronice i zachowaj oznaczenia źródłowe; brak splotu nie blokuje sceny."
+        }
+      ],
+      "status": "PROPOZYCJA",
+      "statusWeryfikacji": "DO_WERYFIKACJI"
+    }
+  ]
+}

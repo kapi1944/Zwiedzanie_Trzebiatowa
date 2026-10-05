@@ -10,19 +10,14 @@ import {
 import type { przejdzDroge } from "./sciezki-slice.ts";
 
 function kontekstMostu(stan: StanGry, definicje?: DefinicjeGry) {
-  const kontekst = przygotujKontekstNarracji(stan);
+  const kontekst = przygotujKontekstNarracji(
+    stan,
+    definicje?.kampania?.powiazaniaNarracji,
+  );
   return {
     ...kontekst,
     flagi: {
       ...kontekst.flagi,
-      ...Object.fromEntries(
-        (definicje?.kampania?.powiazaniaNarracji ?? [])
-          .filter((powiazanie) => powiazanie.obszar === "flagi")
-          .map((powiazanie) => [
-            powiazanie.klucz,
-            stan.flagi[powiazanie.klucz] ?? false,
-          ]),
-      ),
       wybrano_dowod: stan.dokonaneWybory.includes("prolog_dowod"),
       wybrano_pamiec: stan.dokonaneWybory.includes("prolog_pamiec"),
       otwarto_notatke: stan.flagi.otwarto_notatke ?? false,
@@ -36,14 +31,6 @@ function kontekstMostu(stan: StanGry, definicje?: DefinicjeGry) {
     },
     wynikiZagadek: {
       ...kontekst.wynikiZagadek,
-      ...Object.fromEntries(
-        (definicje?.kampania?.powiazaniaNarracji ?? [])
-          .filter((powiazanie) => powiazanie.obszar === "wynikiZagadek")
-          .map((powiazanie) => [
-            powiazanie.klucz,
-            stan.wynikiZagadek[powiazanie.klucz]?.wynik ?? "",
-          ]),
-      ),
       zagadka_hansken: stan.wynikiZagadek.zagadka_hansken?.wynik ?? "",
     },
   };

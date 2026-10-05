@@ -4,10 +4,10 @@
   position: relative;
   overflow: hidden;
   touch-action: none;
-  border: 6px double #80623e;
+  border: 6px double var(--kolor-ramka-mapy);
   border-radius: 8px;
-  background: #edd8b0;
-  box-shadow: inset 0 0 18px #80623e55;
+  background: var(--kolor-pergamin);
+  box-shadow: inset 0 0 18px var(--kolor-cien);
 }
 .pergamin canvas {
   width: 100%;
@@ -15,7 +15,7 @@
   display: block;
 }
 .pergamin-rozwijany {
-  animation: rozwin-pergamin 480ms ease-out;
+  animation: rozwin-pergamin 180ms ease-out;
 }
 @keyframes rozwin-pergamin {
   from {
@@ -48,15 +48,15 @@
   height: 44px;
   padding: 0;
   min-height: 44px;
-  background: #f9edce;
-  color: #263e2e;
-  border: 2px solid #304a39;
+  background: var(--kolor-uniesiona);
+  color: var(--kolor-tekst);
+  border: 2px solid var(--kolor-akcent);
   border-radius: 50%;
   z-index: 2;
 }
 .znacznik-celu {
-  border: 3px solid #983c1c;
-  background: #fff1cc;
+  border: 3px solid var(--kolor-pieczec);
+  background: var(--kolor-powierzchnia);
 }
 .kotwica-miejsca {
   position: absolute;
@@ -64,7 +64,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #304a39;
+  background: var(--kolor-akcent);
   pointer-events: none;
 }
 .pozycja-gracza {
@@ -74,9 +74,9 @@
   height: 24px;
   text-align: center;
   line-height: 19px;
-  color: #113d66;
-  background: #fff7db;
-  border: 3px solid #113d66;
+  color: var(--kolor-akcent);
+  background: var(--kolor-uniesiona);
+  border: 3px solid var(--kolor-akcent);
   border-radius: 50%;
   z-index: 3;
   pointer-events: none;
@@ -88,13 +88,14 @@
   font:
     bold 20px Georgia,
     serif;
-  color: #423223;
-  background: #f4e6c9;
+  color: var(--kolor-tekst);
+  background: var(--kolor-powierzchnia);
   padding: 4px 8px;
-  border: 1px solid #80623e;
+  border: 1px solid var(--kolor-ramka-mapy);
 }
 .opis-mapy {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 @media (prefers-reduced-motion: reduce) {
   .pergamin-rozwijany {

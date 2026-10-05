@@ -1,5 +1,6 @@
 import type {
   DefinicjeGry,
+  StanGry,
   WynikZagadki,
   ZdarzenieGry,
 } from "@zwiedzanie/schemat-tresci";
@@ -10,7 +11,11 @@ import {
   wyznaczProfilZakonczenia,
 } from "@zwiedzanie/silnik-gry";
 import { sprawdzNarracje } from "./narracja-slice.ts";
-import { przejdzDroge } from "./sciezki-slice.ts";
+import {
+  sprawdzRegulyZakonczen,
+  sprawdzSwiadectwaZakonczen,
+} from "./reguly-zakonczen.ts";
+import { type DrogaSlice, przejdzDroge } from "./sciezki-slice.ts";
 
 type Polecenie = ZdarzenieGry extends infer Zdarzenie
   ? Zdarzenie extends ZdarzenieGry
@@ -22,6 +27,7 @@ export interface DrogaKampanii {
   wyniki: WynikZagadki[];
   glosy?: boolean;
   splot?: boolean;
+  poczatek?: Partial<DrogaSlice>;
 }
 export function przejdzKampanie(definicje: DefinicjeGry, droga: DrogaKampanii) {
   const poczatek = przejdzDroge(definicje, {
@@ -32,6 +38,7 @@ export function przejdzKampanie(definicje: DefinicjeGry, droga: DrogaKampanii) {
     kosciol: "zapis",
     baszta: "POMINIETA",
     final: "baszta_obie",
+    ...droga.poczatek,
   });
   let stan = poczatek.stan;
   const kroki = [...poczatek.kroki];
@@ -48,7 +55,17 @@ export function przejdzKampanie(definicje: DefinicjeGry, droga: DrogaKampanii) {
     wykonaj({ rodzaj: "DOKONAJ_WYBORU", idWyboru });
   wybierz("rozpocznij_kampanie");
   droga.miejsca.forEach((id, indeks) => {
-    wybierz(`cel_${id}`);
+    const wariant = definicje.wybory.find(
+      (wybor) => wybor.id === "cel_palac_z_notatka",
+    );
+    wybierz(
+      id === "palac" &&
+        droga.glosy &&
+        wariant?.warunek &&
+        ocenWarunek(wariant.warunek, stan)
+        ? "cel_palac_z_notatka"
+        : `cel_${id}`,
+    );
     wykonaj({ rodzaj: "WEJDZ_DO_LOKALIZACJI", idLokalizacji: id });
     wykonaj({ rodzaj: "POTWIERDZ_OBECNOSC", idLokalizacji: id });
     const idZagadki = `teren_${id}`;
@@ -123,6 +140,7 @@ export function drogiKontrolne(): DrogaKampanii[] {
     { miejsca: ["ratusz", "mury"], wyniki: [], splot: false },
     { miejsca: ["ratusz", "hansken", "palac"], wyniki: [], glosy: true },
     { miejsca: ["hansken"], wyniki: ["POMINIETA"] },
+    { miejsca: ["hansken"], wyniki: [] },
   );
   return drogi;
 }
@@ -133,6 +151,7 @@ export function sprawdzGrafKampanii(
   narracja?: string,
 ) {
   if (!definicje.kampania) throw new Error("Brak kampanii.");
+  const reguly = sprawdzRegulyZakonczen(definicje);
   const krawedzie = new Map<string, Set<string>>();
   const odwrotne = new Map<string, Set<string>>();
   for (const wybor of definicje.wybory) {
@@ -171,8 +190,10 @@ export function sprawdzGrafKampanii(
   const zakonczenia = new Set<string>();
   const sceny = new Set<string>();
   const drogi = drogiKontrolne();
+  const stanyFinalu: StanGry[] = [];
   for (const droga of drogi) {
     const wynik = przejdzKampanie(definicje, droga);
+    stanyFinalu.push(wynik.stan);
     if (narracja)
       sprawdzNarracje(narracja, { ...wynik, dostepnaScenka: false }, definicje);
     wynik.stan.dokonaneWybory.forEach((id) => {
@@ -182,7 +203,12 @@ export function sprawdzGrafKampanii(
       sceny.add(krok.stan.aktualnaScena);
     });
     zakonczenia.add(wynik.profil.zakonczenieGlowne);
-    wynik.profil.epilogiWatkow.forEach((id) => {
+    [
+      ...wynik.profil.wariantyZakonczenia,
+      ...wynik.profil.epilogiWatkow,
+      ...wynik.profil.specjalneOdkrycia,
+      ...wynik.profil.konsekwencjeZagadek,
+    ].forEach((id) => {
       zakonczenia.add(id);
     });
   }
@@ -199,14 +225,18 @@ export function sprawdzGrafKampanii(
   ))
     if (!wybory.has(wybor.id))
       throw new Error(`Martwa galaz lub brak swiadectwa: ${wybor.id}`);
-  for (const zakonczenie of definicje.zakonczenia.filter(
-    (zakonczenie) =>
-      zakonczenie.id === "epilog_pomocy" || zakonczenie.priorytet >= 100,
-  ))
-    if (!zakonczenia.has(zakonczenie.id))
-      throw new Error(`Zakonczenie bez drogi: ${zakonczenie.id}`);
+  sprawdzSwiadectwaZakonczen(
+    definicje,
+    stanyFinalu,
+    definicje.zakonczenia
+      .filter(
+        (regula) => regula.idScenyWejscia === definicje.kampania?.scenaFinalu,
+      )
+      .map((regula) => regula.id),
+  );
   return {
     liczbaSwiadectw: drogi.length,
+    martweGalezieZakonczen: reguly.martweGalezie,
     liczbaScen: sceny.size,
     zakonczenia: [...zakonczenia].sort(),
   };

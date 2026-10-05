@@ -1,0 +1,60 @@
+:root {
+  --promien-komponentu: 6px;
+  --odstep-panelu: clamp(20px, 3vw, 28px);
+  --odstep-sekcji: 24px;
+  --obramowanie-komponentu: 1px solid var(--kolor-obramowanie);
+  --cien-panelu: 0 2px 8px var(--kolor-cien);
+  --cien-wcisniecia: inset 0 2px 4px var(--kolor-cien);
+  --cien-wyboru: inset 0 -3px var(--kolor-akcent);
+  --fokus-komponentu: 3px solid var(--kolor-fokus);
+}
+
+:root,
+html[data-theme="light"] {
+  color-scheme: light;
+  --kolor-tlo: #f3efe4;
+  --kolor-powierzchnia: #f8f3e8;
+  --kolor-uniesiona: #fbf6eb;
+  --kolor-pergamin: #e8dfca;
+  --kolor-tekst: #29372e;
+  --kolor-tekst-pomocniczy: #606252;
+  --kolor-obramowanie: #b7ad96;
+  --kolor-akcent: #304a39;
+  --kolor-na-akcencie: #faf7ef;
+  --kolor-przycisk-glowny: var(--kolor-akcent);
+  --kolor-tekst-przycisku-glownego: var(--kolor-na-akcencie);
+  --kolor-pieczec: #883f36;
+  --kolor-niebezpieczenstwo: #883f36;
+  --kolor-sukces: #3e6344;
+  --kolor-metal: #826538;
+  --kolor-fokus: #8a5722;
+  --kolor-podswietlenie: #e8e8da;
+  --kolor-cien: #3c30251a;
+  --kolor-nawigacja: #eee8da;
+  --kolor-ramka-mapy: #806b49;
+  --kolor-poswiata: #c5ad7720;
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --kolor-tlo: #242720;
+  --kolor-powierzchnia: #303229;
+  --kolor-uniesiona: #393b30;
+  --kolor-pergamin: #3b392c;
+  --kolor-tekst: #eee7d6;
+  --kolor-tekst-pomocniczy: #c3bba7;
+  --kolor-obramowanie: #82765e;
+  --kolor-akcent: #d2bc87;
+  --kolor-na-akcencie: #242720;
+  --kolor-przycisk-glowny: var(--kolor-uniesiona);
+  --kolor-tekst-przycisku-glownego: var(--kolor-akcent);
+  --kolor-pieczec: #d59582;
+  --kolor-niebezpieczenstwo: #efa18d;
+  --kolor-sukces: #b3c49c;
+  --kolor-metal: #c2a66e;
+  --kolor-fokus: #e1c994;
+  --kolor-podswietlenie: #414638;
+  --kolor-cien: #15161050;
+  --kolor-nawigacja: #2d3027;
+  --kolor-ramka-mapy: #a28d60;
+  --kolor-poswiata: #cca5660c;
+}

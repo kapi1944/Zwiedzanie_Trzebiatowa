@@ -1,11 +1,13 @@
 import { readFileSync as odczytajPlik } from "node:fs";
 import {
+  type DefinicjaLokalizacji,
   schematDefinicjiGry,
   schematDefinicjiSceny,
-  schematKandydataMiejsca,
+  schematRejestruMiejsc,
 } from "@zwiedzanie/schemat-tresci";
 import { Compiler as KompilatorInk } from "inkjs/full";
 import { odczytajPakiet, sprawdzSceny } from "./pakiet-gry.ts";
+import { odczytajSiecNarracyjna } from "./siec-narracyjna.ts";
 
 export function odczytajBankMiejsc() {
   const dane: unknown = JSON.parse(
@@ -14,13 +16,30 @@ export function odczytajBankMiejsc() {
       "utf8",
     ),
   );
-  if (!Array.isArray(dane)) throw new Error("Bank musi byc lista.");
-  const bank = dane.map((element: unknown) =>
-    schematKandydataMiejsca.parse(element),
-  );
-  if (new Set(bank.map((miejsce) => miejsce.id)).size !== bank.length)
-    throw new Error("Duplikat w banku miejsc.");
-  return bank;
+  return schematRejestruMiejsc.parse(dane);
+}
+
+export function sprawdzPowiazaniaMiejsc(
+  rejestr: ReturnType<typeof odczytajBankMiejsc>,
+  lokalizacje: DefinicjaLokalizacji[],
+) {
+  for (const miejsce of rejestr)
+    for (const id of miejsce.wykorzystanieWKampanii.idLokalizacji)
+      if (!lokalizacje.some((lokalizacja) => lokalizacja.id === id))
+        throw new Error(
+          `Miejsce ${miejsce.id}: nieistniejaca lokalizacja kampanii ${id}.`,
+        );
+  for (const lokalizacja of lokalizacje) {
+    const odpowiedniki = rejestr.filter(
+      (miejsce) =>
+        miejsce.wykorzystanieWKampanii.status === "WYKORZYSTANE" &&
+        miejsce.wykorzystanieWKampanii.idLokalizacji.includes(lokalizacja.id),
+    );
+    if (odpowiedniki.length !== 1)
+      throw new Error(
+        `Lokalizacja ${lokalizacja.id} wymaga jednego odpowiednika WYKORZYSTANE w rejestrze.`,
+      );
+  }
 }
 
 export function odczytajKampanie() {
@@ -29,6 +48,14 @@ export function odczytajKampanie() {
   const rozszerzenie = JSON.parse(
     odczytajPlik(new URL("kampania.json", katalog), "utf8"),
   );
+  if (
+    !rozszerzenie.zakonczenia.every(
+      (regula: { idScenyWejscia?: string }) => regula.idScenyWejscia,
+    )
+  )
+    throw new Error(
+      "Kazde autorskie zakonczenie kampanii wymaga sceny wejscia.",
+    );
   const definicje = schematDefinicjiGry.parse({
     ...baza.definicje,
     manifest: { ...baza.definicje.manifest, wersjaTresci: "kampania-12.1" },
@@ -78,6 +105,8 @@ export function odczytajKampanie() {
     sceny.map((scena) => scena.id),
     narracja,
   );
-  odczytajBankMiejsc();
+  const bank = odczytajBankMiejsc();
+  sprawdzPowiazaniaMiejsc(bank, definicje.lokalizacje);
+  odczytajSiecNarracyjna(new Set(bank.map((miejsce) => miejsce.id)));
   return { definicje, sceny, narracja };
 }

@@ -285,14 +285,18 @@ opisz("Panorama i kampania", () => {
     () => {
       let gra = doRozdroza();
       wybierz(gra, "cel_ratusz");
-      oczekuj(gra.odczytaj().wiedza).toHaveLength(0);
+      oczekuj(gra.odczytaj().wiedza.map((wpis) => wpis.id)).toEqual([
+        "legenda_kaszy",
+      ]);
       gra.potwierdzObecnosc("ratusz");
       gra.odpowiedz("5");
       gra.podpowiedz();
       gra = SesjaGry.przywroc(gra.eksportujZapis(), gra.eksportujPakiet());
       gra.odpowiedz("4");
       oczekuj(gra.odczytaj().wynikZagadki).toBe("ROZWIAZANA_Z_PODPOWIEDZIA");
-      oczekuj(gra.odczytaj().wiedza).toHaveLength(1);
+      oczekuj(gra.odczytaj().wiedza.map((wpis) => wpis.id)).toEqual(
+        oczekuj.arrayContaining(["legenda_kaszy", "wiedza_teren_ratusz"]),
+      );
       wybierz(gra, "ratusz_glos");
       wybierz(gra, "cel_mury");
       oczekuj(gra.odczytaj().ramka.akapity.join(" ")).toContain("głos");
@@ -307,4 +311,93 @@ opisz("Panorama i kampania", () => {
       oczekuj(odtworzona.odczytaj()).toEqual(gra.odczytaj());
     },
   );
+});
+
+opisz("Konsekwencje w rzeczywistej sesji gracza", () => {
+  testuj("podpowiedz wraca w Ratuszu i finale rowniez po wznowieniu", () => {
+    for (const podpowiedz of [false, true]) {
+      let gra = doRozdroza();
+      wybierz(gra, "cel_hansken");
+      gra.potwierdzObecnosc("hansken");
+      if (podpowiedz) gra.podpowiedz();
+      const zagadka = gra.odczytaj().zagadka;
+      if (zagadka?.typ !== "TEKST") throw new Error("Brak zagadki.");
+      gra.odpowiedz(zagadka.poprawneOdpowiedzi[0] ?? "");
+      wybierz(gra, "hansken_teren_zapis");
+      gra = SesjaGry.przywroc(gra.eksportujZapis(), gra.eksportujPakiet());
+      wybierz(gra, "cel_ratusz");
+      oczekuj(
+        gra
+          .odczytaj()
+          .ramka.akapity.join(" ")
+          .includes("Podpowiedź pomogła ci przy sgraffito"),
+      ).toBe(podpowiedz);
+      gra.pomin();
+      wybierz(gra, "ratusz_zapis");
+      wybierz(gra, "kampania_final");
+      oczekuj(
+        gra
+          .odczytaj()
+          .ramka.akapity.join(" ")
+          .includes("W finale zapisujesz także wykorzystaną podpowiedź"),
+      ).toBe(podpowiedz);
+      oczekuj(
+        gra.odczytaj().profil?.epilogiWatkow.includes("epilog_pomocy"),
+      ).toBe(podpowiedz);
+    }
+  });
+  testuj(
+    "ukonczone Granice i notatka ujawniaja opcje Palacu oraz pozniejszy tekst",
+    () => {
+      for (const zalicz of [false, true]) {
+        let gra = doRozdroza();
+        wybierz(gra, "cel_mury");
+        if (zalicz) {
+          gra.potwierdzObecnosc("mury");
+          const zagadka = gra.odczytaj().zagadka;
+          if (zagadka?.typ !== "TEKST") throw new Error("Brak zagadki.");
+          gra.odpowiedz(zagadka.poprawneOdpowiedzi[0] ?? "");
+        } else gra.pomin();
+        wybierz(gra, "mury_zapis");
+        gra = SesjaGry.przywroc(gra.eksportujZapis(), gra.eksportujPakiet());
+        oczekuj(
+          gra
+            .odczytaj()
+            .opcje.some((opcja) =>
+              opcja.tagi.some((tag) => tag.wartosc === "cel_palac_z_notatka"),
+            ),
+        ).toBe(zalicz);
+        oczekuj(gra.odczytaj().stan.flagi).not.toHaveProperty("granice_gotowe");
+        wybierz(gra, zalicz ? "cel_palac_z_notatka" : "cel_palac");
+        oczekuj(
+          gra
+            .odczytaj()
+            .ramka.akapity.join(" ")
+            .includes("Przynosisz notatkę muru"),
+        ).toBe(zalicz);
+      }
+    },
+  );
+});
+
+opisz("Wariant finalu w sesji gracza", () => {
+  testuj("resolver komponuje wariant i zachowuje go po wznowieniu", () => {
+    const gra = doRozdroza();
+    wybierz(gra, "cel_hansken");
+    gra.potwierdzObecnosc("hansken");
+    const zagadka = gra.odczytaj().zagadka;
+    if (zagadka?.typ !== "TEKST") throw new Error("Brak zagadki.");
+    gra.odpowiedz(zagadka.poprawneOdpowiedzi[0] ?? "");
+    wybierz(gra, "hansken_teren_zapis");
+    wybierz(gra, "kampania_final");
+    oczekuj(gra.odczytaj().profil?.zakonczenieGlowne).toBe("otwarta_kronika");
+    oczekuj(gra.odczytaj().profil?.wariantyZakonczenia).toEqual([
+      "wariant_otwarte_slady",
+    ]);
+    const wznowiona = SesjaGry.przywroc(
+      gra.eksportujZapis(),
+      gra.eksportujPakiet(),
+    );
+    oczekuj(wznowiona.odczytaj().profil).toEqual(gra.odczytaj().profil);
+  });
 });

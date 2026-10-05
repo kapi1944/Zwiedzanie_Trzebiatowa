@@ -1,15 +1,27 @@
 import type { DefinicjeGry, StanGry } from "@zwiedzanie/schemat-tresci";
 import type { KontekstNarracji } from "@zwiedzanie/typy-wspolne";
 
-export function przygotujKontekstNarracji(stan: StanGry): KontekstNarracji {
+import { sprawdzWarunek } from "./warunki.js";
+
+export function przygotujKontekstNarracji(
+  stan: StanGry,
+  powiazania: NonNullable<DefinicjeGry["kampania"]>["powiazaniaNarracji"] = [],
+): KontekstNarracji {
+  const flagi = { ...stan.flagi };
+  const wyniki: Record<string, string> = Object.fromEntries(
+    Object.entries(stan.wynikiZagadek).map(([id, wynik]) => [id, wynik.wynik]),
+  );
+  for (const { obszar, klucz, warunek } of powiazania) {
+    if (obszar === "flagi")
+      flagi[klucz] = warunek
+        ? sprawdzWarunek(warunek, stan)
+        : (stan.flagi[klucz] ?? false);
+    if (obszar === "wynikiZagadek")
+      wyniki[klucz] = stan.wynikiZagadek[klucz]?.wynik ?? "";
+  }
   return {
-    flagi: { ...stan.flagi },
-    wynikiZagadek: Object.fromEntries(
-      Object.entries(stan.wynikiZagadek).map(([id, wynik]) => [
-        id,
-        wynik.wynik,
-      ]),
-    ),
+    flagi,
+    wynikiZagadek: wyniki,
     stanyWatkow: { ...stan.watki },
     sladyIPrzedmioty: [...stan.sladyIPrzedmioty],
     powinowactwa: { ...stan.powinowactwa },

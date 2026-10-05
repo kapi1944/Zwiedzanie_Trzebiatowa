@@ -4,6 +4,10 @@
   "private": true,
   "type": "module",
   "exports": {
+    "./wyprawa": {
+      "types": "./dist/wyprawa.d.ts",
+      "import": "./dist/wyprawa.js"
+    },
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"

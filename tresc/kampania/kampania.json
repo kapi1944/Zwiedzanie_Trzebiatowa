@@ -1168,6 +1168,31 @@
         }
       ],
       "efekty": []
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "cel_palac_z_notatka",
+      "nazwa": "Porównuję notatkę murów z Pałacem.",
+      "idSceny": "rozdroze",
+      "nastepnaScena": "palac_obserwacja",
+      "warunek": {
+        "rodzaj": "wszystkie",
+        "warunki": [
+          {
+            "rodzaj": "stanWatkuJest",
+            "id": "watek_granic",
+            "stan": "UKONCZONY"
+          },
+          {
+            "rodzaj": "posiadaPrzedmiot",
+            "id": "notatka_muru"
+          }
+        ]
+      },
+      "zmiany": [],
+      "efekty": []
     }
   ],
   "zakonczenia": [
@@ -1251,9 +1276,10 @@
           }
         ]
       },
-      "tekst": "Łączysz miejską postać, odczyt czasu, materialną granicę i plan rezydencji. Kronika nie daje jednej odpowiedzi o mieście: pozwala sprawdzić, skąd pochodzi każda z nich. Nie musiałeś oglądać wszystkich kandydatów z banku.",
+      "tekst": "Łączysz postać, czas, granicę i rezydencję, zachowując źródła i pytania.",
       "rodzaj": "GLOWNE",
-      "domyslne": false
+      "domyslne": false,
+      "idScenyWejscia": "final_kampanii"
     },
     {
       "klasyfikacja": "FABULARYZOWANE",
@@ -1320,9 +1346,10 @@
           }
         ]
       },
-      "tekst": "Wybierasz porządek śladów. Ceglany mur i zegar składają się w zapis granic oraz czasu. Tam, gdzie nie znasz położenia dawnej bramy, zostawiasz przerwę. Taka luka jest uczciwsza od pięknej, zmyślonej kreski.",
+      "tekst": "Zapisujesz granice i czas. Nieznana brama pozostaje luką, nie zmyśloną kreską.",
       "rodzaj": "GLOWNE",
-      "domyslne": false
+      "domyslne": false,
+      "idScenyWejscia": "final_kampanii"
     },
     {
       "klasyfikacja": "FABULARYZOWANE",
@@ -1388,9 +1415,10 @@
           }
         ]
       },
-      "tekst": "Postać przy słonicy przypomina, że historia ma również swoich opowiadaczy. Po obejrzeniu skrzydeł pałacu zachowujesz miejsce na cudze głosy. Legendy podpisujesz jako legendy. Nie zamieniasz spotkania z budowlą w dowód każdej opowieści.",
+      "tekst": "Zachowujesz głosy opowiadaczy; legendę podpisujesz jako legendę, nie dowód.",
       "rodzaj": "GLOWNE",
-      "domyslne": false
+      "domyslne": false,
+      "idScenyWejscia": "final_kampanii"
     },
     {
       "klasyfikacja": "FABULARYZOWANE",
@@ -1438,9 +1466,10 @@
           }
         ]
       },
-      "tekst": "Kończysz tę wyprawę z pytaniami, które pozostały otwarte. Pominięte zadania nie są zmyślonymi odkryciami. Twoja droga jest zapisem tego, co rzeczywiście zdecydowałeś się obejrzeć; inną część miasta możesz poznać podczas kolejnej wyprawy.",
+      "tekst": "Niepełna wyprawa zostawia pytania. Pominięcie nie udaje odkrycia.",
       "rodzaj": "GLOWNE",
-      "domyslne": false
+      "domyslne": false,
+      "idScenyWejscia": "final_kampanii"
     },
     {
       "klasyfikacja": "FABULARYZOWANE",
@@ -1526,7 +1555,59 @@
           }
         ]
       },
-      "tekst": "Kronika zachowuje użyte podpowiedzi i pomoc. Spotkanie z miastem może być wspólne; pomoc nie udaje samodzielnego odkrycia."
+      "tekst": "Kronika zachowuje podpowiedzi i pomoc.",
+      "idScenyWejscia": "final_kampanii"
+    },
+    {
+      "klasyfikacja": "FABULARYZOWANE",
+      "idZrodla": [],
+      "wymagaWeryfikacjiTerenowej": false,
+      "id": "wariant_otwarte_slady",
+      "nazwa": "Notatka w otwartym wątku",
+      "rodzaj": "WARIANT_ZAKONCZENIA",
+      "idZakonczeniaGlownego": "otwarta_kronika",
+      "grupa": "notatki",
+      "idScenyWejscia": "final_kampanii",
+      "priorytet": 10,
+      "domyslne": false,
+      "wymaganaWiedza": ["wiedza_teren_hansken"],
+      "warunek": {
+        "rodzaj": "wszystkie",
+        "warunki": [
+          {
+            "rodzaj": "wybrano",
+            "id": "hansken_teren_zapis"
+          },
+          {
+            "rodzaj": "odwiedzono",
+            "id": "hansken"
+          },
+          {
+            "rodzaj": "zadanieUkonczone",
+            "id": "zad_teren_hansken"
+          },
+          {
+            "rodzaj": "posiadaPrzedmiot",
+            "id": "notatka_postaci"
+          },
+          {
+            "rodzaj": "stanWatkuJest",
+            "id": "watek_znakow",
+            "stan": "AKTYWNY"
+          },
+          {
+            "rodzaj": "wynikZagadkiJest",
+            "id": "teren_hansken",
+            "wynik": "ROZWIAZANA_SAMODZIELNIE"
+          },
+          {
+            "rodzaj": "podpowiedziCoNajwyzej",
+            "id": "teren_hansken",
+            "liczba": 0
+          }
+        ]
+      },
+      "tekst": "Zachowujesz notatkę. Wątek Znaki pozostaje otwarty."
     }
   ],
   "zrodla": [
@@ -1677,16 +1758,6 @@
     ],
     "powiazaniaNarracji": [
       {
-        "zmiennaInk": "kampania_rozpoczeta",
-        "obszar": "flagi",
-        "klucz": "kampania_rozpoczeta"
-      },
-      {
-        "zmiennaInk": "zapisano_ratusz",
-        "obszar": "flagi",
-        "klucz": "zapisano_ratusz"
-      },
-      {
         "zmiennaInk": "zapisano_mury",
         "obszar": "flagi",
         "klucz": "zapisano_mury"
@@ -1702,14 +1773,70 @@
         "klucz": "glos_mury"
       },
       {
-        "zmiennaInk": "polaczono_znaki",
-        "obszar": "flagi",
-        "klucz": "polaczono_znaki"
-      },
-      {
         "zmiennaInk": "obserwacja_postaci",
         "obszar": "wynikiZagadek",
         "klucz": "teren_hansken"
+      },
+      {
+        "zmiennaInk": "pomoc_postaci",
+        "obszar": "flagi",
+        "klucz": "pomoc_postaci",
+        "warunek": {
+          "rodzaj": "wszystkie",
+          "warunki": [
+            {
+              "rodzaj": "nie",
+              "warunek": {
+                "rodzaj": "podpowiedziCoNajwyzej",
+                "id": "teren_hansken",
+                "liczba": 0
+              }
+            },
+            {
+              "rodzaj": "dowolny",
+              "warunki": [
+                {
+                  "rodzaj": "zadanieUkonczone",
+                  "id": "zad_teren_hansken"
+                },
+                {
+                  "rodzaj": "wynikZagadkiJest",
+                  "id": "teren_hansken",
+                  "wynik": "POMINIETA"
+                },
+                {
+                  "rodzaj": "wynikZagadkiJest",
+                  "id": "teren_hansken",
+                  "wynik": "NIEUDANA"
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "zmiennaInk": "odkryte_notatki",
+        "obszar": "flagi",
+        "klucz": "odkryte_notatki",
+        "warunek": {
+          "rodzaj": "odkrytoScenke",
+          "id": "scenka_dwie_notatki"
+        }
+      },
+      {
+        "zmiennaInk": "granice_gotowe",
+        "obszar": "flagi",
+        "klucz": "granice_gotowe",
+        "warunek": {
+          "rodzaj": "stanWatkuJest",
+          "id": "watek_granic",
+          "stan": "UKONCZONY"
+        }
+      },
+      {
+        "zmiennaInk": "ma_notatke_muru",
+        "obszar": "sladyIPrzedmioty",
+        "klucz": "notatka_muru"
       }
     ],
     "wiedza": [
@@ -1759,6 +1886,18 @@
         "warunek": {
           "rodzaj": "zadanieUkonczone",
           "id": "zad_teren_palac"
+        }
+      },
+      {
+        "id": "legenda_kaszy",
+        "nazwa": "Legenda kaszana",
+        "klasyfikacja": "LEGENDA",
+        "idZrodla": ["gmina_zabytki"],
+        "wymagaWeryfikacjiTerenowej": false,
+        "tekst": "Opowieść o gorącej kaszy mówi o strażniku, misce strąconej na napastnika i alarmie, który miał pomóc obrońcom. To legenda objaśniająca nazwę; nie potwierdzony raport z bitwy.",
+        "warunek": {
+          "rodzaj": "odwiedzono",
+          "id": "baszta"
         }
       }
     ]

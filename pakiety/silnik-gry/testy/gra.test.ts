@@ -441,6 +441,7 @@ opisz("Warunki i profile zakonczen", () => {
       );
       oczekuj(wyznaczProfilZakonczenia(definicje, bazowy)).toEqual({
         zakonczenieGlowne: "bazowe",
+        wariantyZakonczenia: [],
         epilogiWatkow: [],
         specjalneOdkrycia: [],
         konsekwencjeZagadek: [],

@@ -9,7 +9,7 @@ import {
   type ZmianaGry,
 } from "@zwiedzanie/schemat-tresci";
 import { sprawdzZgodnoscStanu } from "./stan.js";
-import { sprawdzWarunek } from "./warunki.js";
+import { czyWyborDostepny, sprawdzWarunek } from "./warunki.js";
 import { obsluzZagadke } from "./zagadki.js";
 
 export interface WynikKroku {
@@ -199,11 +199,7 @@ export function wykonajKrok(
       }
       case "DOKONAJ_WYBORU": {
         const wybor = znajdz(dane.wybory, polecenie.idWyboru);
-        if (
-          nowy.aktualnaScena !== wybor.idSceny ||
-          nowy.dokonaneWybory.includes(wybor.id) ||
-          (wybor.warunek && !sprawdzWarunek(wybor.warunek, nowy))
-        )
+        if (!czyWyborDostepny(wybor, nowy))
           throw new Error("Wybor nie jest teraz dostepny.");
         dodaj(nowy.dokonaneWybory, wybor.id);
         zastosujZmiany(nowy, wybor.zmiany);

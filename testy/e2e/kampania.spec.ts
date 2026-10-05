@@ -1,3 +1,4 @@
+import { createRequire as utworzRequire } from "node:module";
 import {
   expect as oczekuj,
   type Page as Strona,
@@ -26,6 +27,55 @@ async function rozpocznijKampanie(strona: Strona) {
   );
   await kliknij(strona, "Rozwijam Kronikę — wybieram dalszą wyprawę.");
 }
+testuj(
+  "Kronika na telefonie filtruje tylko zdobyta wiedze i wraca offline",
+  async ({ page: strona, context: kontekst }) => {
+    await strona.setViewportSize({ width: 320, height: 740 });
+    await rozpocznijKampanie(strona);
+    await kliknij(strona, "Ustawienia");
+    await strona.getByLabel("Tryb wydajności").selectOption("EKO");
+    await kliknij(strona, "Kronika");
+    await oczekuj(
+      strona.getByRole("heading", { name: "Legenda kaszana" }),
+    ).toBeVisible();
+    await oczekuj(
+      strona.getByRole("heading", { name: "Czas oglądany z czterech stron" }),
+    ).toHaveCount(0);
+    await strona.getByLabel("Warstwa wpisu").selectOption("LEGENDA / PRZEKAZ");
+    await oczekuj(strona.locator(".kronika-wpisy > li")).toHaveCount(1);
+    await strona
+      .getByLabel("Szukaj w zdobytych wpisach")
+      .fill("nieodkryta treść");
+    await oczekuj(strona.locator(".kronika-wpisy > li")).toHaveCount(0);
+    await strona.getByLabel("Szukaj w zdobytych wpisach").fill("kaszy");
+    await oczekuj(strona.locator(".kronika-wpisy > li")).toHaveCount(1);
+    await oczekuj(strona.locator("body")).toHaveJSProperty("scrollWidth", 320);
+    await strona.addScriptTag({
+      path: utworzRequire(import.meta.url).resolve("axe-core/axe.min.js"),
+    });
+    const naruszenia = await strona.evaluate(async () =>
+      (
+        await window.axe.run(document, {
+          runOnly: {
+            type: "tag",
+            values: ["wcag2a", "wcag2aa", "wcag21aa", "best-practice"],
+          },
+        })
+      ).violations.map((blad) => blad.id),
+    );
+    oczekuj(naruszenia).toEqual([]);
+    await kontekst.setOffline(true);
+    await strona.reload();
+    await kliknij(strona, "Wznów opowieść");
+    await kliknij(strona, "Kronika");
+    await oczekuj(
+      strona.getByRole("heading", { name: "Legenda kaszana" }),
+    ).toBeVisible();
+    await oczekuj(
+      strona.getByRole("heading", { name: "Czas oglądany z czterech stron" }),
+    ).toHaveCount(0);
+  },
+);
 testuj(
   "rozgalezienie, obserwacje, podpowiedz, konsekwencja Ink i final po wznowieniu offline",
   async ({ page: strona, context: kontekst }) => {

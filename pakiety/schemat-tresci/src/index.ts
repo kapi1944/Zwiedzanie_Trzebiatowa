@@ -90,7 +90,87 @@ export const schematWarunku: z.ZodType<Warunek> = z.lazy(() =>
   ]),
 );
 
+export const schematRodzajuZrodla = z.enum([
+  "ENCYKLOPEDIA_ROBOCZA",
+  "OPRACOWANIE",
+  "REJESTR_ZABYTKOW",
+  "SERWIS_INSTYTUCJONALNY",
+  "RELACJA",
+  "INNE",
+  "DO_WERYFIKACJI",
+]);
+export const schematInformacjiHistorycznej = z
+  .strictObject({
+    id: schematId,
+    tekst: z.string().trim().min(1),
+    klasyfikacja: z.enum([
+      "FAKT",
+      "TRADYCJA",
+      "LEGENDA",
+      "SPORNE",
+      "FABULARYZOWANE",
+      "DO_WERYFIKACJI",
+    ]),
+    poziomPewnosci: z.enum([
+      "POTWIERDZONE",
+      "PRAWDOPODOBNE",
+      "NIEPEWNE",
+      "SPRZECZNE_ŹRÓDŁA",
+    ]),
+    wymagaDodatkowejWeryfikacji: z.boolean(),
+    zrodla: z.array(
+      z.strictObject({
+        opisBibliograficzny: z.string().trim().min(1),
+        rodzajZrodla: schematRodzajuZrodla,
+      }),
+    ),
+  })
+  .superRefine((informacja, kontekst) => {
+    if (
+      informacja.klasyfikacja !== "FABULARYZOWANE" &&
+      !informacja.zrodla.length
+    )
+      kontekst.addIssue({
+        code: "custom",
+        path: ["zrodla"],
+        message: "Informacja historyczna wymaga zrodla.",
+      });
+    if (
+      informacja.klasyfikacja === "FAKT" &&
+      informacja.poziomPewnosci !== "POTWIERDZONE"
+    )
+      kontekst.addIssue({
+        code: "custom",
+        path: ["klasyfikacja"],
+        message: "Niepotwierdzonej informacji nie oznaczaj jako FAKT.",
+      });
+    if (
+      informacja.poziomPewnosci !== "POTWIERDZONE" &&
+      !informacja.wymagaDodatkowejWeryfikacji
+    )
+      kontekst.addIssue({
+        code: "custom",
+        path: ["wymagaDodatkowejWeryfikacji"],
+        message: "Niepotwierdzona informacja wymaga dodatkowej weryfikacji.",
+      });
+    if (
+      informacja.poziomPewnosci === "SPRZECZNE_ŹRÓDŁA" &&
+      new Set(informacja.zrodla.map((zrodlo) => zrodlo.opisBibliograficzny))
+        .size < 2
+    )
+      kontekst.addIssue({
+        code: "custom",
+        path: ["zrodla"],
+        message:
+          "Sprzecznosc wymaga wskazania co najmniej dwoch roznych zrodel.",
+      });
+  });
+
 const polaHistoryczne = {
+  informacjeHistoryczne: z
+    .array(schematInformacjiHistorycznej)
+    .min(1)
+    .optional(),
   klasyfikacja: z.enum([
     "FAKT",
     "TRADYCJA",
@@ -356,8 +436,14 @@ export const schematDefinicjiWyboru = z.strictObject({
 export type DefinicjaWyboru = z.infer<typeof schematDefinicjiWyboru>;
 export const schematDefinicjiZakonczenia = z.strictObject({
   ...polaElementu,
+  idZakonczeniaGlownego: schematId.optional(),
+  idWatku: schematId.optional(),
+  grupa: schematId.optional(),
+  idScenyWejscia: schematId.optional(),
+  wymaganaWiedza: z.array(schematId).min(1).optional(),
   rodzaj: z.enum([
     "GLOWNE",
+    "WARIANT_ZAKONCZENIA",
     "EPILOG_WATKU",
     "SPECJALNE_ODKRYCIE",
     "KONSEKWENCJA_ZAGADKI",
@@ -369,6 +455,7 @@ export const schematDefinicjiZakonczenia = z.strictObject({
 });
 export type DefinicjaZakonczenia = z.infer<typeof schematDefinicjiZakonczenia>;
 export const schematZrodlaHistorycznego = z.strictObject({
+  rodzajZrodla: schematRodzajuZrodla.optional(),
   id: schematId,
   tytul: z.string().min(1),
   opisBibliograficzny: z.string().min(1),
@@ -385,9 +472,122 @@ export const schematDefinicjiZasobu = z.strictObject({
 });
 export type DefinicjaZasobu = z.infer<typeof schematDefinicjiZasobu>;
 
+export const schematKandydataZadaniaTerenowego = z
+  .strictObject({
+    id: schematId,
+    typ: z.enum([
+      "LICZENIE",
+      "ODCZYT",
+      "ROZPOZNANIE_DETALU",
+      "POROWNANIE",
+      "PAMIEC",
+      "POLACZENIE_WSKAZOWEK",
+    ]),
+    polecenie: z
+      .string()
+      .trim()
+      .min(1)
+      .refine(
+        (tekst) =>
+          !/(?:odpowiedz|wybierz|zaznacz)\s+[„"']?(?:tak\s*(?:lub|albo|\/)\s*nie|prawda\s*(?:lub|albo|\/)\s*fałsz)/i.test(
+            tekst,
+          ),
+        "Kandydat terenowy nie moze byc pytaniem tak/nie ani prawda/falsz.",
+      ),
+    celObserwacji: z.string().trim().min(1),
+    wymagaObecnosci: z.literal(true),
+    status: z.literal("KANDYDAT_ROBOCZY"),
+    statusWykorzystania: z.literal("BANK_KANDYDATOW"),
+    odpowiedz: z.string().trim().min(1).nullable(),
+    statusOdpowiedzi: z.enum([
+      "WYMAGA_REKONESANSU",
+      "DO_WERYFIKACJI",
+      "POTWIERDZONE_TERENOWO",
+    ]),
+    weryfikacjaTerenowa: z
+      .strictObject({
+        data: z.iso.date(),
+        protokol: z.string().trim().min(1),
+      })
+      .nullable(),
+    rekonesans: z.array(z.string().trim().min(1)).min(1),
+    zrodla: z.array(schematId).min(1),
+  })
+  .superRefine((zadanie, kontekst) => {
+    const potwierdzone = zadanie.statusOdpowiedzi === "POTWIERDZONE_TERENOWO";
+    if (
+      potwierdzone !== (zadanie.odpowiedz !== null) ||
+      potwierdzone !== (zadanie.weryfikacjaTerenowa !== null)
+    )
+      kontekst.addIssue({
+        code: "custom",
+        message:
+          "Odpowiedz terenowa wymaga protokolu; brak odpowiedzi oznacz null i WYMAGA_REKONESANSU lub DO_WERYFIKACJI.",
+      });
+    if (new Set(zadanie.zrodla).size !== zadanie.zrodla.length)
+      kontekst.addIssue({
+        code: "custom",
+        message: "Powtorzone zrodlo kandydata zadania.",
+      });
+  });
+
 export const schematKandydataMiejsca = z.strictObject({
+  informacjeHistoryczne: z.array(schematInformacjiHistorycznej).min(1),
   id: schematId,
   nazwa: z.string().min(1),
+  typ: z.string().trim().min(1),
+  opis: z.string().trim().min(1).max(700),
+  zrodla: z
+    .array(
+      z.discriminatedUnion("rodzaj", [
+        z.strictObject({
+          id: schematId,
+          rodzaj: z.literal("PDF"),
+          plik: z.string().min(1),
+          strona: z.number().int().positive(),
+        }),
+        z.strictObject({
+          id: schematId,
+          rodzaj: z.literal("WWW"),
+          tytul: z.string().min(1),
+          url: z.httpUrl(),
+          status: z.enum(["POTWIERDZONE_ZRODLOWO", "DO_WERYFIKACJI"]),
+        }),
+      ]),
+    )
+    .min(1),
+  klasyfikacjaInformacji: z.enum([
+    "FAKT",
+    "TRADYCJA",
+    "LEGENDA",
+    "SPORNE",
+    "FABULARYZOWANE",
+    "DO_WERYFIKACJI",
+  ]),
+  statusInformacji: z.enum(["POTWIERDZONE_ZRODLOWO", "DO_WERYFIKACJI"]),
+  wspolrzedne: z
+    .strictObject({
+      szerokosc: z.number().min(-90).max(90),
+      dlugosc: z.number().min(-180).max(180),
+      idZrodla: schematId,
+      uzasadnienie: z.string().trim().min(1),
+    })
+    .nullable(),
+  statusWspolrzednych: z.enum(["POTWIERDZONE_ZRODLOWO", "DO_WERYFIKACJI"]),
+  powiazaniaFabularne: z
+    .array(
+      z.strictObject({
+        motyw: schematId,
+        opis: z.string().trim().min(1),
+        status: z.literal("PROPOZYCJA"),
+      }),
+    )
+    .min(1),
+  wykorzystanieWKampanii: z.strictObject({
+    status: z.enum(["WYKORZYSTANE", "POWIAZANE_Z_RUNTIME", "BANK_KANDYDATOW"]),
+    idLokalizacji: z.array(schematId),
+    uwagi: z.string().trim().min(1),
+  }),
   statusRekonesansu: z.enum([
     "POTWIERDZONE",
     "WYMAGA_REKONESANSU",
@@ -395,21 +595,102 @@ export const schematKandydataMiejsca = z.strictObject({
   ]),
   pochodzenie: z.string().min(1),
   obszar: z.string().min(1),
-  kandydaciZadan: z
-    .array(
-      z.strictObject({
-        polecenie: z.string().min(1),
-        odpowiedz: z.string().nullable(),
-        status: z.enum([
-          "WYMAGA_REKONESANSU",
-          "DO_WERYFIKACJI",
-          "POTWIERDZONE_ZRODLOWO",
-        ]),
-        zrodla: z.array(z.string().min(1)),
-      }),
-    )
-    .max(3),
+  kandydaciZadan: z.array(schematKandydataZadaniaTerenowego).min(1).max(3),
 });
+export const schematRejestruMiejsc = z
+  .array(schematKandydataMiejsca)
+  .length(83)
+  .superRefine((miejsca, kontekst) => {
+    const identyfikatory = new Set(miejsca.map((miejsce) => miejsce.id));
+    if (identyfikatory.size !== miejsca.length)
+      kontekst.addIssue({
+        code: "custom",
+        message: "Duplikat w rejestrze miejsc.",
+      });
+    for (let numer = 1; numer <= 83; numer++) {
+      const id = `bank_${String(numer).padStart(2, "0")}`;
+      if (!identyfikatory.has(id))
+        kontekst.addIssue({ code: "custom", message: `Brak miejsca ${id}.` });
+    }
+    const nazwy = new Set(
+      miejsca.map((miejsce) => miejsce.nazwa.trim().toLowerCase()),
+    );
+    if (nazwy.size !== miejsca.length)
+      kontekst.addIssue({
+        code: "custom",
+        message: "Powtorzona nazwa miejsca; nie scalaj obiektow.",
+      });
+    for (const [indeks, miejsce] of miejsca.entries()) {
+      const zrodla = new Set(miejsce.zrodla.map((zrodlo) => zrodlo.id));
+      if (zrodla.size !== miejsce.zrodla.length)
+        kontekst.addIssue({
+          code: "custom",
+          path: [indeks, "zrodla"],
+          message: "Duplikat zrodla.",
+        });
+      const identyfikatoryZadan = new Set(
+        miejsce.kandydaciZadan.map((zadanie) => zadanie.id),
+      );
+      const celeZadan = new Set(
+        miejsce.kandydaciZadan.map((zadanie) =>
+          zadanie.celObserwacji.toLowerCase(),
+        ),
+      );
+      const polecenia = new Set(
+        miejsce.kandydaciZadan.map((zadanie) =>
+          zadanie.polecenie.toLowerCase(),
+        ),
+      );
+      if (
+        identyfikatoryZadan.size !== miejsce.kandydaciZadan.length ||
+        celeZadan.size !== miejsce.kandydaciZadan.length ||
+        polecenia.size !== miejsce.kandydaciZadan.length
+      )
+        kontekst.addIssue({
+          code: "custom",
+          path: [indeks, "kandydaciZadan"],
+          message: "Kandydaci musza miec osobne id, cele i polecenia.",
+        });
+      for (const zadanie of miejsce.kandydaciZadan) {
+        if (!new RegExp(`^${miejsce.id}_zadanie_[abc]$`).test(zadanie.id))
+          kontekst.addIssue({
+            code: "custom",
+            path: [indeks, "kandydaciZadan"],
+            message: `Kandydat ${zadanie.id} nie nalezy do miejsca ${miejsce.id}.`,
+          });
+        for (const id of zadanie.zrodla)
+          if (!zrodla.has(id))
+            kontekst.addIssue({
+              code: "custom",
+              path: [indeks, "zrodla"],
+              message: `Brak zrodla zadania ${id}.`,
+            });
+      }
+      if (
+        (miejsce.wspolrzedne !== null) !==
+          (miejsce.statusWspolrzednych === "POTWIERDZONE_ZRODLOWO") ||
+        (miejsce.wspolrzedne && !zrodla.has(miejsce.wspolrzedne.idZrodla))
+      )
+        kontekst.addIssue({
+          code: "custom",
+          path: [indeks, "wspolrzedne"],
+          message:
+            "Wspolrzedne wymagaja potwierdzenia i zrodla; braki oznacz null / DO_WERYFIKACJI.",
+        });
+      const wykorzystanie = miejsce.wykorzystanieWKampanii;
+      if (
+        (wykorzystanie.status === "BANK_KANDYDATOW") !==
+          (wykorzystanie.idLokalizacji.length === 0) ||
+        new Set(wykorzystanie.idLokalizacji).size !==
+          wykorzystanie.idLokalizacji.length
+      )
+        kontekst.addIssue({
+          code: "custom",
+          path: [indeks, "wykorzystanieWKampanii"],
+          message: "Niespojny status wykorzystania lub powtorzone powiazanie.",
+        });
+    }
+  });
 export const schematKampanii = z.strictObject({
   scenaRozgalezienia: schematId,
   scenaFinalu: schematId,
@@ -420,6 +701,7 @@ export const schematKampanii = z.strictObject({
   powiazaniaNarracji: z.array(
     z.strictObject({
       zmiennaInk: schematId,
+      warunek: schematWarunku.optional(),
       obszar: z.enum([
         "flagi",
         "wynikiZagadek",
@@ -558,6 +840,13 @@ export const schematDefinicjiGry = schematPakietu.superRefine(
       for (const miejsce of dane.kampania.scenyMiejsc)
         sprawdzId(miejsce.idLokalizacji, dane.lokalizacje);
       sprawdzWarunek(dane.kampania.warunekFinalu);
+      for (const powiazanie of dane.kampania.powiazaniaNarracji) {
+        if (powiazanie.warunek) {
+          if (powiazanie.obszar !== "flagi")
+            zglos("Warunek narracji wymaga obszaru flagi.");
+          sprawdzWarunek(powiazanie.warunek);
+        }
+      }
       for (const wpis of dane.kampania.wiedza) {
         sprawdzWarunek(wpis.warunek);
         wpis.idZrodla.forEach((id) => {
@@ -572,6 +861,41 @@ export const schematDefinicjiGry = schematPakietu.superRefine(
         sprawdzWarunek(sposob.warunek);
       for (const konsekwencja of Object.values(zagadka.konsekwencje))
         sprawdzKonsekwencje(konsekwencja);
+    }
+    for (const zakonczenie of dane.zakonczenia) {
+      if (zakonczenie.idWatku) {
+        sprawdzId(zakonczenie.idWatku, dane.watki);
+        if (zakonczenie.rodzaj !== "EPILOG_WATKU")
+          zglos("Tylko epilog wskazuje watek.");
+      }
+      if (zakonczenie.domyslne && zakonczenie.wymaganaWiedza)
+        zglos("Domyslne zakonczenie nie moze wymagac wiedzy.");
+      if (zakonczenie.rodzaj === "WARIANT_ZAKONCZENIA") {
+        if (
+          !zakonczenie.idZakonczeniaGlownego ||
+          !zakonczenie.grupa ||
+          !zakonczenie.warunek
+        )
+          zglos("Wariant wymaga glownego zakonczenia, grupy i warunku.");
+        if (
+          !dane.zakonczenia.some(
+            (element) =>
+              element.id === zakonczenie.idZakonczeniaGlownego &&
+              element.rodzaj === "GLOWNE",
+          )
+        )
+          zglos("Wariant wskazuje nieistniejace zakonczenie glowne.");
+      } else if (zakonczenie.idZakonczeniaGlownego)
+        zglos("Tylko wariant wskazuje zakonczenie glowne.");
+      if (zakonczenie.wymaganaWiedza) {
+        for (const id of zakonczenie.wymaganaWiedza)
+          sprawdzId(id, dane.kampania?.wiedza ?? []);
+        if (
+          new Set(zakonczenie.wymaganaWiedza).size !==
+          zakonczenie.wymaganaWiedza.length
+        )
+          zglos("Powtorzona wymagana wiedza.");
+      }
     }
     const domyslne = dane.zakonczenia.filter(
       (element) => element.rodzaj === "GLOWNE" && element.domyslne,
