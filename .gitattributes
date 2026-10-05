@@ -1,2 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto eol=lf
+
+# PDF zachowujemy bajt w bajt, bez normalizacji końców linii.
+*.pdf binary
