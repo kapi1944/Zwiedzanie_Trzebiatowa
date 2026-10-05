@@ -1,6 +1,7 @@
 # Status projektu po rozpoczęciu Etapu 12
 
-Stan: 2026-10-05, przygotowane połączenie z `main`; implementacja i źródła
+Stan: 2026-10-05, praca połączona z lokalnym `main` przez fast-forward do `cd8a572`;
+implementacja i źródła
 zapisane w commitach `1830525` oraz `3efade4`. Wcześniejsze etapy zachowują historię.
 **Etap 12 pozostaje nieukończony.** Działa reprezentatywne rozszerzenie kampanii;
 brak odbioru pełnej gry terenowej. Status techniczny nie zastępuje rekonesansu.

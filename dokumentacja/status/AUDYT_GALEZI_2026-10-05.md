@@ -9,7 +9,8 @@ spójnym commicie zamiast tworzyć przejściowo niespójne kontrakty.
 Formatowanie CSS i kolejność selektorów poprawiono lokalnie. Pełne `sprawdz`:
 PASS (build, typy, lint i 279 testów); końcowe E2E: 18/18 PASS.
 Dokumentacja, snapshoty i reguły ignorowania stanowią osobny commit.
-Przygotowana metoda połączenia z main: fast-forward, bez przepisywania historii.
+Połączono pracę z lokalnym main przez fast-forward z `26f7458` do `cd8a572`,
+bez konfliktów i bez przepisywania historii. Aktywna gałąź to main.
 Nie wykonano push.
 
 Kopia 184 roboczych plików istnieje w `.kopie-lokalne/scalenie-2026-10-05/`,
