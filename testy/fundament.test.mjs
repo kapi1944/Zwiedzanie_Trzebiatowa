@@ -140,7 +140,7 @@ testuj("Gra ma zbudowany punkt wejscia", async () => {
     "utf8",
   );
   sprawdz.match(dokument, /lang="pl"/);
-  sprawdz.match(dokument, /Kronika nad Regą/);
+  sprawdz.match(dokument, /Tajemnice Trzebiatowa/);
   sprawdz.match(dokument, /type="module"/);
 });
 

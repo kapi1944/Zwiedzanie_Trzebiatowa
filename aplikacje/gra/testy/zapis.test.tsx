@@ -273,8 +273,8 @@ test("manifest PWA ma polski jezyk, standalone i lokalne ikony PNG", () => {
     lang: "pl",
     display: "standalone",
     start_url: "/",
-    name: expect.any(String),
-    short_name: "Kronika",
+    name: "Tajemnice Trzebiatowa",
+    short_name: "Tajemnice",
   });
   for (const ikona of manifest.icons) {
     const bajty = odczytajPlik(new URL(`../dist${ikona.src}`, import.meta.url));

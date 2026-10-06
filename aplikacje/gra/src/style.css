@@ -510,6 +510,13 @@ button.glowny:not(:disabled):active {
   padding: 32px var(--odstep-panelu);
   border-top: 3px double var(--kolor-metal);
 }
+.powitanie h1 {
+  margin: 16px 0 20px;
+}
+.powitanie .linia-regi {
+  font-size: 3rem;
+  margin: 16px 0;
+}
 .narracja {
   padding: var(--odstep-panelu);
 }

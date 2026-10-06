@@ -119,7 +119,7 @@ test("GPS w promieniu wymaga swiadomego potwierdzenia bez przekazania wspolrzedn
 test("start jest semantyczny, bez spoilerow i bez ladowania silnika", async () => {
   const uruchom = vi.fn(async () => new SesjaGry());
   await pokaz(uruchom);
-  expect(kontener.querySelector("h1")?.textContent).toBe("Kronika nad Regą");
+  expect(kontener.querySelector("h1")?.textContent).toBe("Tajemnice Trzebiatowa");
   expect(kontener.textContent).toContain("To wczesna wersja demonstracyjna.");
   expect(kontener.querySelector("main")).not.toBeNull();
   expect(

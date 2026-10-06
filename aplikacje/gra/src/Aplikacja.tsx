@@ -459,7 +459,7 @@ export default function Aplikacja({
           onClick={() => ustawWidok("start")}
           className="marka"
         >
-          Kronika <span>nad Regą</span>
+          Tajemnice <span>Trzebiatowa</span>
         </button>
         <div className="narzedzia-naglowka">
           <span className="etykieta">Trzebiatów</span>
@@ -542,7 +542,7 @@ export default function Aplikacja({
             {widok === "start" ? (
               <section className="powitanie">
                 <p className="etykieta">Miasto · ślady · opowieści</p>
-                <h1>Kronika nad Regą</h1>
+                <h1>Tajemnice Trzebiatowa</h1>
                 <p className="wprowadzenie">
                   Interaktywna opowieść prowadząca przez Trzebiatów.
                 </p>

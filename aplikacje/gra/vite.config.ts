@@ -10,8 +10,8 @@ export default zdefiniujKonfiguracje({
       injectRegister: false,
       includeAssets: ["ikona-192.png", "ikona-512.png"],
       manifest: {
-        name: "Kronika nad Regą — Zwiedzanie Trzebiatowa",
-        short_name: "Kronika",
+        name: "Tajemnice Trzebiatowa",
+        short_name: "Tajemnice",
         lang: "pl",
         start_url: "/",
         scope: "/",

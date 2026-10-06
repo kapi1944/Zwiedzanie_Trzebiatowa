@@ -249,7 +249,7 @@ testuj(
         name: "Ostatnia zaakceptowana pozycja gracza",
       }),
     ).toBeVisible();
-    await kliknij(strona, "Kronika nad Regą");
+    await kliknij(strona, "Tajemnice Trzebiatowa");
     await kliknij(strona, "Nowa wyprawa bez starego śladu");
     await kliknij(strona, "Mapa");
     await oczekuj(strona.locator(".mapa")).toHaveAttribute(
