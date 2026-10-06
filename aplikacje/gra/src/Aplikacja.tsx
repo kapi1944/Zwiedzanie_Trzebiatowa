@@ -1,5 +1,6 @@
 import { przygotujWidokWyprawy } from "@zwiedzanie/silnik-gry/wyprawa";
 import {
+  type ErrorInfo as InformacjaOBledzie,
   Component as Komponent,
   lazy as leniwie,
   Suspense as Oczekiwanie,
@@ -94,17 +95,43 @@ export class GranicaBledu extends Komponent<
   }
 }
 
-class GranicaMapy extends Komponent<
-  { children: ReactNode },
+export class GranicaMapy extends Komponent<
+  {
+    children: ReactNode;
+    motyw: string;
+    trybAnimacji: TrybRuchu;
+    ograniczoneAnimacje: boolean;
+    profilWydajnosci: string;
+  },
   { blad: boolean }
 > {
   state = { blad: false };
   static getDerivedStateFromError() {
     return { blad: true };
   }
+  componentDidCatch(blad: Error, informacje: InformacjaOBledzie) {
+    if (import.meta.env.DEV || import.meta.env.MODE === "test") {
+      console.error("MAP-RENDER-0001", {
+        nazwa: blad.name,
+        message: blad.message,
+        stack: blad.stack,
+        componentStack: informacje.componentStack,
+        motyw: this.props.motyw,
+        trybAnimacji: this.props.trybAnimacji,
+        ograniczoneAnimacje: this.props.ograniczoneAnimacje,
+        profilWydajnosci: this.props.profilWydajnosci,
+        online: typeof navigator === "undefined" ? null : navigator.onLine,
+        geolokalizacjaDostepna:
+          typeof navigator !== "undefined" && !!navigator.geolocation,
+      });
+    }
+  }
   render() {
     return this.state.blad ? (
-      <p role="status">Mapa jest niedostępna. Kontynuuj w widoku Opowieść.</p>
+      <p role="status">
+        Mapa jest niedostępna. Kontynuuj w widoku Opowieść. Kod diagnostyczny:
+        MAP-RENDER-0001
+      </p>
     ) : (
       this.props.children
     );
@@ -603,7 +630,12 @@ export default function Aplikacja({
             {widok === "mapa" &&
               (dane && definicje ? (
                 <Oczekiwanie fallback={<p role="status">Ładuję mapę…</p>}>
-                  <GranicaMapy>
+                  <GranicaMapy
+                    motyw={motyw}
+                    trybAnimacji={ustawienia.ruch}
+                    ograniczoneAnimacje={wydajnosc.ograniczonyRuch}
+                    profilWydajnosci={wydajnosc.profil}
+                  >
                     <Mapa
                       uproszczona={wydajnosc.profil === "EKO"}
                       ograniczoneAnimacje={wydajnosc.ograniczonyRuch}

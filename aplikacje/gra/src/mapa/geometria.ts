@@ -1,3 +1,4 @@
+import { z as schemat } from "zod";
 import adresGeometrii from "../../../../tresc/mapa/geometria.json?url";
 import type { Pozycja } from "../lokalizacja";
 
@@ -15,10 +16,31 @@ export interface GeometriaMapy {
   odczyt: string;
   zrodlo: string;
 }
+const schematPunktu = schemat.tuple([
+  schemat.number().min(-180).max(180),
+  schemat.number().min(-90).max(90),
+]);
+const schematGeometrii = schemat.object({
+  obiekty: schemat.array(
+    schemat.object({
+      id: schemat.string(),
+      wersja: schemat.number().finite(),
+      rodzaj: schemat.string(),
+      tagi: schemat.record(schemat.string(), schemat.string()),
+      punkty: schemat.array(schematPunktu),
+      otwory: schemat.array(schemat.array(schematPunktu)).optional(),
+    }),
+  ),
+  atrybucja: schemat.string(),
+  odczyt: schemat.string(),
+  zrodlo: schemat.string(),
+});
 export async function zaladujGeometrie(): Promise<GeometriaMapy> {
   const odpowiedz = await fetch(adresGeometrii);
   if (!odpowiedz.ok) throw new Error("Brak lokalnego podkladu mapy.");
-  return odpowiedz.json();
+  const dane: unknown = await odpowiedz.json();
+  schematGeometrii.parse(dane);
+  return dane as GeometriaMapy;
 }
 export const srodek = { szerokosc: 54.0627, dlugosc: 15.2675 };
 const radiany = Math.PI / 180;
