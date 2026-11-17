@@ -189,6 +189,11 @@ test("motywy wszystkich ekranow, zapis offline i szerokosci terenowe", async ({
   await strona
     .getByRole("button", { name: "Rozpocznij opowieść", exact: true })
     .click();
+  // Poczekaj, az sesja sie uruchomi i widok gry zastapi ekran startowy,
+  // zanim test zacznie nawigowac (inaczej rozpocznij() moze nadpisac widok).
+  await expect(strona.getByRole("heading", { level: 1 })).toHaveText(
+    "Rynek i Ratusz",
+  );
   for (const szerokosc of [360, 390, 768, 1280]) {
     await strona.setViewportSize({ width: szerokosc, height: 900 });
     for (const motyw of ["light", "dark"]) {
@@ -228,6 +233,7 @@ test("motywy wszystkich ekranow, zapis offline i szerokosci terenowe", async ({
       }
       await strona.reload();
       await expect(strona.locator("html")).toHaveAttribute("data-theme", motyw);
+      await expect(strona.getByRole("navigation")).toBeVisible();
     }
   }
   await strona.emulateMedia({ reducedMotion: "reduce" });
