@@ -94,11 +94,13 @@ h2,
   line-height: 1.2;
 }
 h1 {
+  color: var(--kolor-tekst);
   font-size: clamp(2rem, 6vw, 3rem);
   margin: 24px 0 28px;
   text-wrap: balance;
 }
 h2 {
+  color: var(--kolor-akcent);
   font-size: 1.5rem;
   margin: 10px 0 18px;
 }
@@ -292,7 +294,9 @@ pre {
 @media (max-width: 759px) {
   :root {
     --wysokosc-nawigacji: calc(
-      2 * var(--wysokosc-rzedu-nawigacji) + 19px +
+      2 *
+      var(--wysokosc-rzedu-nawigacji) +
+      19px +
       env(safe-area-inset-bottom, 0px)
     );
   }
@@ -519,12 +523,6 @@ button.glowny:not(:disabled):active {
 }
 .narracja {
   padding: var(--odstep-panelu);
-}
-h1 {
-  color: var(--kolor-tekst);
-}
-h2 {
-  color: var(--kolor-akcent);
 }
 
 .nawigacja {
