@@ -1,5 +1,6 @@
 import {
   type IDBPDatabase as BazaDanych,
+  type IDBPTransaction,
   openDB as otworzBaze,
   type DBSchema as SchematBazy,
 } from "idb";
@@ -16,7 +17,12 @@ interface BazaZapisu extends SchematBazy {
   pakiety: { key: string; value: PakietOffline };
   sladyGps: { key: string; value: StanSladu };
 }
+/** Ile zarchiwizowanych sesji zostaje w pamieci urzadzenia. */
+export const MAKS_ARCHIWOW = 5;
+const PREFIKS_ARCHIWUM = "archiwum_";
+
 export class MagazynZapisu {
+  #prosbaOTrwalosc = false;
   #baza: Promise<BazaDanych<BazaZapisu>> | undefined;
   #nazwa: string;
   #kolejka: Promise<void> = Promise.resolve();
@@ -41,6 +47,16 @@ export class MagazynZapisu {
         throw blad;
       });
     return this.#baza;
+  }
+  /** Prosi przegladarke, aby nie usuwala danych gry przy braku miejsca. */
+  #poprosOTrwalyMagazyn() {
+    if (this.#prosbaOTrwalosc) return;
+    this.#prosbaOTrwalosc = true;
+    try {
+      void navigator.storage?.persist?.().catch(() => undefined);
+    } catch {
+      /* Brak obslugi lub odmowa nie wplywa na dzialanie gry. */
+    }
   }
   async odczytaj() {
     await this.#kolejka;
@@ -95,6 +111,7 @@ export class MagazynZapisu {
           await transakcja.objectStore("pakiety").put(pakiet, pakiet.idPakietu);
         await transakcja.objectStore("zapisy").put(zapis, "aktywna");
         await transakcja.done;
+        this.#poprosOTrwalyMagazyn();
       } catch (blad) {
         try {
           transakcja.abort();
@@ -127,9 +144,11 @@ export class MagazynZapisu {
       const { SesjaGry } = await import("./sesja-gry");
       SesjaGry.przywroc(zapis, pakiet);
       const baza = await this.#otworz();
-      const transakcja = baza.transaction(["zapisy", "pakiety"], "readwrite", {
-        durability: "strict",
-      });
+      const transakcja = baza.transaction(
+        ["zapisy", "pakiety", "sladyGps"],
+        "readwrite",
+        { durability: "strict" },
+      );
       try {
         const poprzedni = await transakcja.objectStore("zapisy").get("aktywna");
         if (
@@ -141,10 +160,12 @@ export class MagazynZapisu {
           );
         await transakcja
           .objectStore("zapisy")
-          .put(poprzedni, `archiwum_${idPoprzedniejSesji}`);
+          .put(poprzedni, `${PREFIKS_ARCHIWUM}${idPoprzedniejSesji}`);
         await transakcja.objectStore("pakiety").put(pakiet, pakiet.idPakietu);
         await transakcja.objectStore("zapisy").put(zapis, "aktywna");
+        await this.#przytnijArchiwa(transakcja, zapis.idPakietu);
         await transakcja.done;
+        this.#poprosOTrwalyMagazyn();
       } catch (blad) {
         try {
           transakcja.abort();
@@ -158,6 +179,51 @@ export class MagazynZapisu {
     this.#kolejka = operacja.catch(() => undefined);
     return operacja;
   }
+  /**
+   * Zostawia MAKS_ARCHIWOW najdalej zaawansowanych archiwow (wg dziennika
+   * zdarzen, bo zapis nie ma czasu zegarowego) razem z sladami i pakietami.
+   */
+  async #przytnijArchiwa(
+    transakcja: IDBPTransaction<
+      BazaZapisu,
+      ("zapisy" | "pakiety" | "sladyGps")[],
+      "readwrite"
+    >,
+    idAktywnegoPakietu: string,
+  ) {
+    const zapisy = transakcja.objectStore("zapisy");
+    const klucze = await zapisy.getAllKeys(
+      IDBKeyRange.bound(PREFIKS_ARCHIWUM, `${PREFIKS_ARCHIWUM}\uffff`),
+    );
+    const archiwa = await Promise.all(
+      klucze.map(async (klucz) => {
+        const zapis = await zapisy.get(klucz);
+        return {
+          klucz,
+          zapis,
+          czas: zapis?.stanGry.dziennikZdarzen.at(-1)?.czas ?? 0,
+        };
+      }),
+    );
+    archiwa.sort(
+      (a, b) =>
+        b.czas - a.czas || String(a.klucz).localeCompare(String(b.klucz)),
+    );
+    const zostaja = archiwa.slice(0, MAKS_ARCHIWOW);
+    const potrzebnePakiety = new Set([
+      idAktywnegoPakietu,
+      ...zostaja.flatMap((a) => (a.zapis ? [a.zapis.idPakietu] : [])),
+    ]);
+    for (const { klucz, zapis } of archiwa.slice(MAKS_ARCHIWOW)) {
+      await zapisy.delete(klucz);
+      if (zapis) await transakcja.objectStore("sladyGps").delete(zapis.idSesji);
+    }
+    for (const idPakietu of await transakcja
+      .objectStore("pakiety")
+      .getAllKeys())
+      if (!potrzebnePakiety.has(idPakietu))
+        await transakcja.objectStore("pakiety").delete(idPakietu);
+  }
   async odczytajSlad(idSesji: string) {
     await this.#kolejka;
     const dane = await (await this.#otworz()).get("sladyGps", idSesji);
@@ -169,13 +235,17 @@ export class MagazynZapisu {
       const baza = await this.#otworz();
       const transakcja = baza.transaction("sladyGps", "readwrite");
       const poprzedni = await transakcja.store.get(idSesji);
+      // Sprawdzamy w stalym czasie: pierwszy i ostatni zapisany punkt musza
+      // pozostac na miejscu (slad tylko rosnie), co wykrywa zapis z innej karty.
       if (
         poprzedni &&
         (poprzedni.generacja !== slad.generacja ||
           poprzedni.punkty.length > slad.punkty.length ||
-          poprzedni.punkty.some(
-            (punkt, indeks) =>
-              JSON.stringify(punkt) !== JSON.stringify(slad.punkty[indeks]),
+          [0, poprzedni.punkty.length - 1].some(
+            (indeks) =>
+              poprzedni.punkty[indeks] !== undefined &&
+              JSON.stringify(poprzedni.punkty[indeks]) !==
+                JSON.stringify(slad.punkty[indeks]),
           ))
       ) {
         transakcja.abort();

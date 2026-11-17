@@ -6,7 +6,7 @@ import inkSlice from "../../../tresc/trzebiatow-v1/dist/glowna.json";
 import pakietSlice from "../../../tresc/trzebiatow-v1/dist/pakiet.json";
 import tozsamoscSlice from "../../../tresc/trzebiatow-v1/dist/tozsamosc.json";
 import { aktualneMiejsce } from "../src/lokalizacja";
-import { MagazynZapisu } from "../src/MagazynZapisu";
+import { MAKS_ARCHIWOW, MagazynZapisu } from "../src/MagazynZapisu";
 import { naEkran, odprojektuj, projektuj } from "../src/mapa/geometria";
 import {
   elementyDoRysowania,
@@ -15,6 +15,7 @@ import {
 import { miejscaGameplay, rozmiescZnaczniki } from "../src/mapa/warstwy-gracza";
 import { SesjaGry } from "../src/sesja-gry";
 import {
+  MAKS_PUNKTOW_SLADU,
   odczytajSlad,
   type PunktSladu,
   przyjmijPomiar,
@@ -115,6 +116,60 @@ opisz("Slad rzeczywistych pomiarow", () => {
     ).toContain(zakret);
     oczekuj(punkty).toHaveLength(6);
   });
+  testuj(
+    "slad ma twardy limit punktow, a pozycja nadal sie aktualizuje",
+    () => {
+      let slad = { ...pustySlad(), rejestracja: true };
+      for (let i = 0; i < MAKS_PUNKTOW_SLADU + 50; i++) {
+        const czas = 10000 + i * 5000;
+        slad = przyjmijPomiar(slad, pomiar(i * 10, czas), czas);
+      }
+      oczekuj(slad.punkty).toHaveLength(MAKS_PUNKTOW_SLADU);
+      oczekuj(slad.pozycja?.czas).toBe(
+        10000 + (MAKS_PUNKTOW_SLADU + 49) * 5000,
+      );
+    },
+  );
+  testuj(
+    "rozpocznijNowa zostawia tylko najnowsze archiwa wraz z sladami i pakietami",
+    async () => {
+      const nazwa = `archiwa_${crypto.randomUUID()}`;
+      const magazyn = new MagazynZapisu(nazwa);
+      let gra = new SesjaGry(
+        pakietSlice,
+        JSON.stringify(inkSlice),
+        tozsamoscSlice,
+      );
+      await magazyn.zapisz(gra.eksportujZapis(), gra.eksportujPakiet());
+      const idPierwszej = gra.odczytaj().stan.idSesji;
+      await magazyn.zapiszSlad(
+        idPierwszej,
+        przyjmijPomiar({ ...pustySlad(), rejestracja: true }, pomiar(), 10000),
+      );
+      for (let i = 0; i < MAKS_ARCHIWOW + 2; i++) {
+        const nowa = new SesjaGry();
+        nowa.wybierz(0);
+        await magazyn.rozpocznijNowa(
+          gra.odczytaj().stan.idSesji,
+          nowa.eksportujZapis(),
+          nowa.eksportujPakiet(),
+        );
+        gra = nowa;
+      }
+      await magazyn.zamknij();
+      const baza = await otworzBaze(nazwa, 2);
+      const archiwa = (await baza.getAllKeys("zapisy")).filter((klucz) =>
+        String(klucz).startsWith("archiwum_"),
+      );
+      oczekuj(archiwa).toHaveLength(MAKS_ARCHIWOW);
+      oczekuj(await baza.get("zapisy", "aktywna")).toBeDefined();
+      oczekuj(
+        await baza.get("zapisy", `archiwum_${idPierwszej}`),
+      ).toBeUndefined();
+      oczekuj(await baza.get("sladyGps", idPierwszej)).toBeUndefined();
+      baza.close();
+    },
+  );
   testuj("uszkodzony zapis nie jest cicho zastapiony pustym", () => {
     oczekuj(() => odczytajSlad({})).toThrow();
     oczekuj(() => odczytajSlad({ ...pustySlad(), punkty: [null] })).toThrow();

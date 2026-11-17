@@ -15,6 +15,8 @@ export interface StanSladu {
   nowyOdcinek: boolean;
   generacja: number;
 }
+/** Twardy limit punktow jednej sesji; po nim pozycja dziala, ale slad nie rosnie. */
+export const MAKS_PUNKTOW_SLADU = 5000;
 export function pustySlad(): StanSladu {
   return {
     punkty: [],
@@ -64,6 +66,7 @@ export function przyjmijPomiar(
     stan.nowyOdcinek || !ostatni || pomiar.czas - ostatni.czas > 60000;
   const dodac =
     stan.rejestracja &&
+    stan.punkty.length < MAKS_PUNKTOW_SLADU &&
     (nowyOdcinek ||
       (ostatni &&
         pomiar.czas - ostatni.czas >= 3000 &&
